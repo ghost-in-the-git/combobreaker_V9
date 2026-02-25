@@ -4568,7 +4568,7 @@
         // Show action buttons inline in chat (below countdown)
         function showInlineButtons() {
             btnEngage.disabled = false;
-            btnRetreat.dataset.baseText = btnRetreat.textContent;
+            btnRetreat.dataset.baseText = btnRetreat.textContent.replace(/\s*\[\d+ fuel\]$/, '');
             updateEvadeButton();
             chatMessages.appendChild(btnContainer);
             btnContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
