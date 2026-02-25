@@ -2776,7 +2776,8 @@
                         const isRefiner = dest.destinationType === 'refiner';
                         const isHerald = dest.encounterName === 'The Herald';
                         const isMapmaker = dest.encounterName === 'The Mapmaker';
-                        const prefix = isMine ? '[MINE]' : isRefiner ? '[REFINER]' : isHerald ? '[BEACON]' : isMapmaker ? '[MAPS]' : '[VENDOR]';
+                        const isBoss = BOSS_ENCOUNTERS.some(b => b.enemy.name === dest.encounterName);
+                        const prefix = isMine ? '[MINE]' : isRefiner ? '[REFINER]' : isHerald ? '[BEACON]' : isMapmaker ? '[MAPS]' : isBoss ? '[BOSS]' : '[VENDOR]';
                         opt.textContent = `${prefix} ${dest.encounterName.replace(/^\[COMMON\] /, '')}`;
                         select.appendChild(opt);
                     }
