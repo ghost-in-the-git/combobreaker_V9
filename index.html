@@ -504,15 +504,15 @@
         }
 
         .action-btn.retreat {
-            background: #2a1a1a;
-            border-color: #ff4444;
-            color: #ff4444;
+            background: #2a1a0a;
+            border-color: #ff8800;
+            color: #ff8800;
         }
 
         .action-btn.retreat:hover:not(:disabled) {
-            background: #ff4444;
+            background: #ff8800;
             color: #0a0a0f;
-            box-shadow: 0 0 20px #ff444455;
+            box-shadow: 0 0 20px #ff880055;
         }
 
         /* Dialogue Buttons */
@@ -2179,7 +2179,7 @@
         btnRetreat.className = 'action-btn retreat';
         btnRetreat.id = 'btn-retreat';
         btnRetreat.disabled = true;
-        btnRetreat.textContent = 'Decline';
+        btnRetreat.textContent = 'Evade';
         btnContainer.appendChild(btnEngage);
         btnContainer.appendChild(btnRetreat);
 
@@ -4146,7 +4146,7 @@
             }
             clearCountdown();
 
-            addMessage(`Encounter declined. Moving on.`, 'player');
+            addMessage(`Signal evaded. Moving on.`, 'player');
             currentEncounter = null;
             shopItems = [];
             startWaveTimer();
@@ -4369,7 +4369,7 @@
             }
             clearCountdown();
 
-            addMessage(`Mining operation declined. Asteroid ignored.`, 'player');
+            addMessage(`Mining operation evaded. Asteroid ignored.`, 'player');
             currentMiningEvent = null;
             startWaveTimer();
         }
@@ -4638,7 +4638,7 @@
                 if (game.currentWave && !game.inBattle) {
                     addMessage(`[CONTACT] No time left — they're on you!`, 'enemy');
                     hideInlineButtons();
-                    btnRetreat.textContent = 'Decline';
+                    btnRetreat.textContent = 'Evade';
                     engageBattle();
                 }
             }, game.WAVE_EXPIRE);
@@ -4668,12 +4668,12 @@
                 game.isAmbush = false;
                 game.isBossEncounter = false;
                 currentBossEncounter = null;
-                btnRetreat.textContent = 'Decline';
+                btnRetreat.textContent = 'Evade';
                 startWaveTimer();
             } else {
                 addMessage(`[EVADE FAILED] They've cut off your escape — combat is unavoidable!`, 'enemy');
                 removeBossDialogue();
-                btnRetreat.textContent = 'Decline';
+                btnRetreat.textContent = 'Evade';
                 engageBattle();
             }
         }
@@ -4694,7 +4694,7 @@
             game.isAmbush = false;
             game.isBossEncounter = false;
             currentBossEncounter = null;
-            btnRetreat.textContent = 'Decline';
+            btnRetreat.textContent = 'Evade';
             startWaveTimer();
         }
 
@@ -4777,7 +4777,7 @@
                     addMessage(`[CONTACT] The ${bossEnemy.name} is on you — no time to talk!`, 'enemy');
                     hideInlineButtons();
                     removeBossDialogue();
-                    btnRetreat.textContent = 'Decline';
+                    btnRetreat.textContent = 'Evade';
                     engageBattle();
                 }
             }, game.WAVE_EXPIRE);
@@ -4936,15 +4936,14 @@
 
             showInlineButtons();
 
-            // Set expiration timer
+            // Set expiration timer — auto-engage when signal timer runs out
             if (game.waveExpireTimer) clearTimeout(game.waveExpireTimer);
             game.waveExpireTimer = setTimeout(() => {
                 clearCountdown();
                 if (game.currentWave && !game.inBattle) {
-                    addMessage(`Signal lost. Scanning...`, 'system', { image: 'images/Comp 1.gif' });
-                    game.currentWave = null;
+                    addMessage(`Signal lock expired. Auto-engaging hostiles.`, 'system', { image: 'images/Comp 1.gif' });
                     hideInlineButtons();
-                    startWaveTimer();
+                    engageBattle();
                 }
             }, game.WAVE_EXPIRE);
         }
@@ -5236,7 +5235,7 @@
             game.isAmbush = false;
             game.isBossEncounter = false;
             currentBossEncounter = null;
-            btnRetreat.textContent = 'Decline';
+            btnRetreat.textContent = 'Evade';
             updateStats();
             startRegen();
             startWaveTimer();
@@ -5322,7 +5321,7 @@
             }
             clearCountdown();
 
-            addMessage(`Engagement denied. Live to fight another day.`, 'player');
+            addMessage(`Evasion successful. Live to fight another day.`, 'player');
             game.currentWave = null;
             startWaveTimer();
         }
@@ -5431,7 +5430,7 @@
                     addMessage(`[] Engagement Protocols Approved [Autopilot Deactivated] `, 'system');
                     addMessage(`[K E Y //::X2Y***_***_***_***_***_LZ7`, 'system');
                     addMessage(`BreakerPilot Command Key Accepted.`, 'system');
-                    addMessage(`Engagement commands now available. [Engage] or [Decline]`, 'system');
+                    addMessage(`Engagement commands now available. [Engage] or [Evade]`, 'system');
                     updateStats();
                     startFuelRegen();
                     setTimeout(() => {
