@@ -3997,6 +3997,7 @@
                 secondsLeft--;
                 if (secondsLeft > 0) {
                     countdownMsg.textContent = `Signal available for [${secondsLeft}] seconds.`;
+                    updateEvadeButton();
                 } else {
                     clearCountdown();
                 }
@@ -4138,6 +4139,13 @@
         // Decline encounter
         function declineEncounter() {
             if (!currentEncounter) return;
+            if (game.player.fuel < EVADE_FUEL_COST) {
+                addMessage(`[NOT ENOUGH FUEL] Need ${EVADE_FUEL_COST} fuel to evade. You have ${game.player.fuel}.`, 'system');
+                return;
+            }
+
+            game.player.fuel -= EVADE_FUEL_COST;
+            updateStats();
 
             // Clear expire timer and countdown
             if (game.waveExpireTimer) {
@@ -4146,7 +4154,7 @@
             }
             clearCountdown();
 
-            addMessage(`Signal evaded. Moving on.`, 'player');
+            addMessage(`Signal evaded. Moving on. [-${EVADE_FUEL_COST} fuel]`, 'player');
             currentEncounter = null;
             shopItems = [];
             startWaveTimer();
@@ -4211,6 +4219,7 @@
                 secondsLeft--;
                 if (secondsLeft > 0) {
                     countdownMsg.textContent = `Asteroid in range for [${secondsLeft}] seconds.`;
+                    updateEvadeButton();
                 } else {
                     clearCountdown();
                 }
@@ -4361,6 +4370,13 @@
         // Decline mining event
         function declineMining() {
             if (!currentMiningEvent) return;
+            if (game.player.fuel < EVADE_FUEL_COST) {
+                addMessage(`[NOT ENOUGH FUEL] Need ${EVADE_FUEL_COST} fuel to evade. You have ${game.player.fuel}.`, 'system');
+                return;
+            }
+
+            game.player.fuel -= EVADE_FUEL_COST;
+            updateStats();
 
             // Clear expire timer and countdown
             if (game.waveExpireTimer) {
@@ -4369,7 +4385,7 @@
             }
             clearCountdown();
 
-            addMessage(`Mining operation evaded. Asteroid ignored.`, 'player');
+            addMessage(`Mining operation evaded. Asteroid ignored. [-${EVADE_FUEL_COST} fuel]`, 'player');
             currentMiningEvent = null;
             startWaveTimer();
         }
@@ -4539,10 +4555,21 @@
             });
         });
 
+        const EVADE_FUEL_COST = 50;
+
+        // Update evade button state based on fuel
+        function updateEvadeButton() {
+            const canEvade = game.player.fuel >= EVADE_FUEL_COST;
+            btnRetreat.disabled = !canEvade;
+            const baseText = btnRetreat.dataset.baseText || 'Evade';
+            btnRetreat.textContent = `${baseText} [${EVADE_FUEL_COST} fuel]`;
+        }
+
         // Show action buttons inline in chat (below countdown)
         function showInlineButtons() {
             btnEngage.disabled = false;
-            btnRetreat.disabled = false;
+            btnRetreat.dataset.baseText = btnRetreat.textContent;
+            updateEvadeButton();
             chatMessages.appendChild(btnContainer);
             btnContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
@@ -4622,6 +4649,7 @@
                 secondsLeft--;
                 if (secondsLeft > 0) {
                     countdownMsg.textContent = `Contact in [${secondsLeft}] seconds.`;
+                    updateEvadeButton();
                 } else {
                     clearCountdown();
                 }
@@ -4649,6 +4677,13 @@
         // Evade an ambush using breaker stat (requires Speedbreaker key)
         function evadeAmbush() {
             if (!game.currentWave || game.inBattle) return;
+            if (game.player.fuel < EVADE_FUEL_COST) {
+                addMessage(`[NOT ENOUGH FUEL] Need ${EVADE_FUEL_COST} fuel to evade. You have ${game.player.fuel}.`, 'system');
+                return;
+            }
+
+            game.player.fuel -= EVADE_FUEL_COST;
+            updateStats();
 
             // Clear expire timer and countdown
             if (game.waveExpireTimer) {
@@ -4681,6 +4716,13 @@
         // Evade a boss encounter — always succeeds (100% evasion)
         function evadeBoss() {
             if (!game.currentWave || game.inBattle) return;
+            if (game.player.fuel < EVADE_FUEL_COST) {
+                addMessage(`[NOT ENOUGH FUEL] Need ${EVADE_FUEL_COST} fuel to evade. You have ${game.player.fuel}.`, 'system');
+                return;
+            }
+
+            game.player.fuel -= EVADE_FUEL_COST;
+            updateStats();
 
             if (game.waveExpireTimer) {
                 clearTimeout(game.waveExpireTimer);
@@ -4760,6 +4802,7 @@
                 secondsLeft--;
                 if (secondsLeft > 0) {
                     countdownMsg.textContent = `The ${bossEnemy.name} is closing in. [${secondsLeft}] seconds.`;
+                    updateEvadeButton();
                 } else {
                     clearCountdown();
                 }
@@ -4929,6 +4972,7 @@
                 secondsLeft--;
                 if (secondsLeft > 0) {
                     countdownMsg.textContent = `Enemy signal locked. [${secondsLeft}] seconds until signal loss.`;
+                    updateEvadeButton();
                 } else {
                     clearCountdown();
                 }
@@ -5313,6 +5357,13 @@
         // Decline battle
         function declineBattle() {
             if (!game.currentWave || game.inBattle) return;
+            if (game.player.fuel < EVADE_FUEL_COST) {
+                addMessage(`[NOT ENOUGH FUEL] Need ${EVADE_FUEL_COST} fuel to evade. You have ${game.player.fuel}.`, 'system');
+                return;
+            }
+
+            game.player.fuel -= EVADE_FUEL_COST;
+            updateStats();
 
             // Clear expire timer and countdown
             if (game.waveExpireTimer) {
@@ -5321,7 +5372,7 @@
             }
             clearCountdown();
 
-            addMessage(`Evasion successful. Live to fight another day.`, 'player');
+            addMessage(`Evasion successful. Live to fight another day. [-${EVADE_FUEL_COST} fuel]`, 'player');
             game.currentWave = null;
             startWaveTimer();
         }
