@@ -316,6 +316,13 @@
         }
         .message.system .message-label { color: #00ff88; }
 
+        .message.mining {
+            background: #1a1208;
+            border-color: #ff8800;
+            color: #ffaa44;
+        }
+        .message.mining .message-label { color: #ff8800; }
+
         .message.systemblue {
             background: #0a0a12;
             border-color: #4488ff;
@@ -2948,6 +2955,7 @@
         const MESSAGE_LABELS = {
             system: 'SYSTEM',
             systemblue: 'SYSTEM',
+            mining: 'MINING',
             enemy: 'ENEMY',
             player: 'MECH',
             battle: 'BATTLE',
@@ -2966,7 +2974,7 @@
 
         // Add message to chat with delay
         async function addMessage(text, type = 'system', options = {}) {
-            const img = options.image || (type === 'system' ? 'images/system.gif' : type === 'victory' ? 'images/PLUS.gif' : type === 'player' ? 'images/MECH_BUBBLE.gif' : type === 'enemy' ? 'images/ENEMY_BUBBLE.gif' : 'images/IMAGE.gif');
+            const img = options.image || (type === 'system' ? 'images/system.gif' : type === 'mining' ? 'images/MINING.gif' : type === 'victory' ? 'images/PLUS.gif' : type === 'player' ? 'images/MECH_BUBBLE.gif' : type === 'enemy' ? 'images/ENEMY_BUBBLE.gif' : 'images/IMAGE.gif');
             const label = options.label || MESSAGE_LABELS[type] || type.toUpperCase();
 
             const msg = document.createElement('div');
@@ -4220,19 +4228,19 @@
                 stability: asteroid.stability
             };
 
-            addMessage(`[MINING EVENT] An asteroid with ${asteroid.mineral} deposits at ${asteroid.depth}ft has been detected.`, 'system');
-            addMessage(`Asteroid stability: ${asteroid.stability} | Your mining power: ${game.player.mining}`, 'system');
+            addMessage(`[MINING EVENT] An asteroid with ${asteroid.mineral} deposits at ${asteroid.depth}ft has been detected.`, 'mining');
+            addMessage(`Asteroid stability: ${asteroid.stability} | Your mining power: ${game.player.mining}`, 'mining');
 
             // Create countdown message
             let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
             const countdownMsg = document.createElement('div');
-            countdownMsg.className = 'message system';
+            countdownMsg.className = 'message mining';
             countdownMsg.textContent = `Asteroid in range for [${secondsLeft}] seconds.`;
             chatMessages.appendChild(countdownMsg);
             chatMessages.scrollTop = chatMessages.scrollHeight;
             game.countdownMsg = countdownMsg;
 
-            addMessage(`Do you want to attempt to mine it?`, 'system');
+            addMessage(`Do you want to attempt to mine it?`, 'mining');
 
             // Update countdown every second
             game.countdownInterval = setInterval(() => {
@@ -4252,7 +4260,7 @@
             game.waveExpireTimer = setTimeout(() => {
                 clearCountdown();
                 if (currentMiningEvent) {
-                    addMessage(`Asteroid has drifted out of range.`, 'system');
+                    addMessage(`Asteroid has drifted out of range.`, 'mining');
                     currentMiningEvent = null;
                     hideInlineButtons();
                     startWaveTimer();
@@ -4291,14 +4299,14 @@
                     const dest = zoneConfig.destinations.find(d => d.encounterName === asteroidName);
                     if (dest && !(game.storyItems || []).includes(dest.mapItem)) {
                         addStoryItem(dest.mapItem);
-                        await addMessage(`You've logged this asteroid's coordinates. ${asteroidName} can now be found directly from the ${LOCATION_NAMES[currentLocation]} destination list.`, 'system');
+                        await addMessage(`You've logged this asteroid's coordinates. ${asteroidName} can now be found directly from the ${LOCATION_NAMES[currentLocation]} destination list.`, 'mining');
                         updateDestinationDropdown();
                     }
                 }
             }
 
             await addMessage(`Mining operation commencing on ${mining.mineral} asteroid...`, 'player');
-            await addMessage(`> > >  M I N I N G  S T A R T  < < <`, 'system');
+            await addMessage(`> > >  M I N I N G  S T A R T  < < <`, 'mining');
 
             // Mining loop
             let turn = 0;
@@ -4327,7 +4335,7 @@
                     await addMessage(`[STONEBREAKER TRIGGERED] Bolt reinforces the rock! +${game.player.mining} stability`, 'player');
                 }
 
-                await addMessage(`Asteroid stability at ${mining.stability}`, 'system');
+                await addMessage(`Asteroid stability at ${mining.stability}`, 'mining');
 
                 // Check for collapse
                 if (mining.stability <= 0) {
@@ -4351,7 +4359,7 @@
                         updateStats();
                     }
 
-                    await addMessage(`Mining operation failed. No minerals recovered.`, 'system');
+                    await addMessage(`Mining operation failed. No minerals recovered.`, 'mining');
 
                     if (p.hp <= 0) {
                         game.deaths++;
@@ -4391,7 +4399,7 @@
         function declineMining() {
             if (!currentMiningEvent) return;
             if (game.player.fuel < EVADE_FUEL_COST) {
-                addMessage(`[NOT ENOUGH FUEL] Need ${EVADE_FUEL_COST} fuel to evade. You have ${game.player.fuel}.`, 'system');
+                addMessage(`[NOT ENOUGH FUEL] Need ${EVADE_FUEL_COST} fuel to evade. You have ${game.player.fuel}.`, 'mining');
                 return;
             }
 
@@ -4405,7 +4413,7 @@
             }
             clearCountdown();
 
-            addMessage(`Mining operation evaded. Asteroid ignored. [-${EVADE_FUEL_COST} fuel]`, 'player');
+            addMessage(`Mining operation evaded. Asteroid ignored. [-${EVADE_FUEL_COST} fuel]`, 'mining');
             currentMiningEvent = null;
             startWaveTimer();
         }
@@ -4923,7 +4931,7 @@
                     if (game.player.mining > 0) {
                         spawnMiningEvent();
                     } else {
-                        addMessage(`[NO DRILL EQUIPPED] Mining drill required to operate in this zone.`, 'system');
+                        addMessage(`[NO DRILL EQUIPPED] Mining drill required to operate in this zone.`, 'mining');
                     }
                 } else {
                     spawnEncounter();
@@ -4937,10 +4945,10 @@
             if (!loc.enemies && !loc.encounters && loc.mining) {
                 if (game.player.mining > 0) {
                     if (!spawnMiningEvent()) {
-                        addMessage(`[NO NEW ASTEROIDS] All asteroid types in this field have been mapped. Select a known asteroid from the destination list.`, 'system');
+                        addMessage(`[NO NEW ASTEROIDS] All asteroid types in this field have been mapped. Select a known asteroid from the destination list.`, 'mining');
                     }
                 } else {
-                    addMessage(`[NO DRILL EQUIPPED] Mining drill required to operate in this zone.`, 'system');
+                    addMessage(`[NO DRILL EQUIPPED] Mining drill required to operate in this zone.`, 'mining');
                 }
                 return;
             }
