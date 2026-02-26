@@ -4433,7 +4433,6 @@
                 const progressPercent = (mining.currentDepth / mining.depth) * 100;
                 progressBarHTML.querySelector('.mining-bar-fill').style.width = `${progressPercent}%`;
                 progressBarHTML.querySelector('.mining-bar-text').textContent = `MINING PROGRESS ${mining.currentDepth} / ${mining.depth}ft`;
-                progressBarMsg.scrollIntoView({ behavior: 'smooth', block: 'end' });
                 await new Promise(resolve => setTimeout(resolve, 1000));
 
                 // Check if deposit reached
@@ -4463,7 +4462,6 @@
                     stabilityFill.classList.remove('low');
                 }
                 stabilityBarHTML.querySelector('.mining-bar-text').textContent = `STABILITY ${mining.stability} / ${mining.maxStability}`;
-                stabilityBarMsg.scrollIntoView({ behavior: 'smooth', block: 'end' });
                 await new Promise(resolve => setTimeout(resolve, 1000));
 
                 // Check for collapse
