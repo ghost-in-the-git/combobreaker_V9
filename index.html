@@ -4408,7 +4408,6 @@
             let turn = 0;
             while (mining.stability > 0 && mining.currentDepth < mining.depth) {
                 turn++;
-                await addMessage(`- - - - - - - - - - - - - - - - - - - - -[${numberToWord(turn)}]- - - - - - - - - - - - - - - - - - - - -`, 'turncounter');
 
                 // Player mines deeper
                 mining.currentDepth = Math.min(mining.currentDepth + game.player.mining, mining.depth);
