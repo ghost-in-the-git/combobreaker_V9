@@ -323,6 +323,53 @@
         }
         .message.mining .message-label { color: #ff8800; }
 
+        .mining-bar-container {
+            margin: 4px 0;
+        }
+        .mining-bar-label {
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        .mining-bar-outer {
+            background: #0a0a12;
+            border: 1px solid #ff880055;
+            border-radius: 3px;
+            height: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+        .mining-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+        .mining-bar-fill.progress {
+            background: linear-gradient(90deg, #4488ff, #66aaff);
+        }
+        .mining-bar-fill.stability {
+            background: linear-gradient(90deg, #ff8800, #ffaa44);
+        }
+        .mining-bar-fill.stability.low {
+            background: linear-gradient(90deg, #ff4444, #ff6644);
+        }
+        .mining-bar-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 4px #000;
+            letter-spacing: 1px;
+        }
+
         .message.systemblue {
             background: #0a0a12;
             border-color: #4488ff;
@@ -4225,7 +4272,8 @@
                 depth: asteroid.depth,
                 stabilityLoss: asteroid.stabilityLoss,
                 currentDepth: 0,
-                stability: asteroid.stability
+                stability: asteroid.stability,
+                maxStability: asteroid.stability
             };
 
             addMessage(`[MINING EVENT] An asteroid with ${asteroid.mineral} deposits at ${asteroid.depth}ft has been detected.`, 'mining');
@@ -4308,6 +4356,54 @@
             await addMessage(`Mining operation commencing on ${mining.mineral} asteroid...`, 'player');
             await addMessage(`> > >  M I N I N G  S T A R T  < < <`, 'mining');
 
+            // Create persistent progress bar message
+            const progressBarMsg = document.createElement('div');
+            progressBarMsg.className = 'message player';
+            const progressAvatar = document.createElement('div');
+            progressAvatar.className = 'message-avatar';
+            const progressAvatarImg = document.createElement('img');
+            progressAvatarImg.src = 'images/MECH_BUBBLE.gif';
+            progressAvatarImg.alt = '';
+            progressAvatar.appendChild(progressAvatarImg);
+            const progressContent = document.createElement('div');
+            progressContent.className = 'message-content';
+            const progressLabel = document.createElement('div');
+            progressLabel.className = 'message-label';
+            progressLabel.textContent = 'MECH';
+            progressContent.appendChild(progressLabel);
+            const progressBarHTML = document.createElement('div');
+            progressBarHTML.className = 'mining-bar-container';
+            progressBarHTML.innerHTML = `<div class="mining-bar-outer"><div class="mining-bar-fill progress" style="width: 0%"></div><div class="mining-bar-text">MINING PROGRESS 0 / ${mining.depth}ft</div></div>`;
+            progressContent.appendChild(progressBarHTML);
+            progressBarMsg.appendChild(progressAvatar);
+            progressBarMsg.appendChild(progressContent);
+            chatMessages.appendChild(progressBarMsg);
+
+            // Create persistent stability bar message
+            const stabilityBarMsg = document.createElement('div');
+            stabilityBarMsg.className = 'message mining';
+            const stabilityAvatar = document.createElement('div');
+            stabilityAvatar.className = 'message-avatar';
+            const stabilityAvatarImg = document.createElement('img');
+            stabilityAvatarImg.src = 'images/MINING.gif';
+            stabilityAvatarImg.alt = '';
+            stabilityAvatar.appendChild(stabilityAvatarImg);
+            const stabilityContent = document.createElement('div');
+            stabilityContent.className = 'message-content';
+            const stabilityLabel = document.createElement('div');
+            stabilityLabel.className = 'message-label';
+            stabilityLabel.textContent = 'MINING';
+            stabilityContent.appendChild(stabilityLabel);
+            const stabilityBarHTML = document.createElement('div');
+            stabilityBarHTML.className = 'mining-bar-container';
+            stabilityBarHTML.innerHTML = `<div class="mining-bar-outer"><div class="mining-bar-fill stability" style="width: 100%"></div><div class="mining-bar-text">STABILITY ${mining.stability} / ${mining.maxStability}</div></div>`;
+            stabilityContent.appendChild(stabilityBarHTML);
+            stabilityBarMsg.appendChild(stabilityAvatar);
+            stabilityBarMsg.appendChild(stabilityContent);
+            chatMessages.appendChild(stabilityBarMsg);
+
+            progressBarMsg.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
             // Mining loop
             let turn = 0;
             while (mining.stability > 0 && mining.currentDepth < mining.depth) {
@@ -4316,7 +4412,11 @@
 
                 // Player mines deeper
                 mining.currentDepth = Math.min(mining.currentDepth + game.player.mining, mining.depth);
-                await addMessage(`Mech mines to ${mining.currentDepth} / ${mining.depth}ft`, 'player');
+                const progressPercent = (mining.currentDepth / mining.depth) * 100;
+                progressBarHTML.querySelector('.mining-bar-fill').style.width = `${progressPercent}%`;
+                progressBarHTML.querySelector('.mining-bar-text').textContent = `MINING PROGRESS ${mining.currentDepth} / ${mining.depth}ft`;
+                progressBarMsg.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                await new Promise(resolve => setTimeout(resolve, 1000));
 
                 // Check if deposit reached
                 if (mining.currentDepth >= mining.depth) {
@@ -4335,7 +4435,17 @@
                     await addMessage(`[STONEBREAKER TRIGGERED] Bolt reinforces the rock! +${game.player.mining} stability`, 'player');
                 }
 
-                await addMessage(`Asteroid stability at ${mining.stability}`, 'mining');
+                const stabilityPercent = (mining.stability / mining.maxStability) * 100;
+                const stabilityFill = stabilityBarHTML.querySelector('.mining-bar-fill');
+                stabilityFill.style.width = `${stabilityPercent}%`;
+                if (stabilityPercent <= 25) {
+                    stabilityFill.classList.add('low');
+                } else {
+                    stabilityFill.classList.remove('low');
+                }
+                stabilityBarHTML.querySelector('.mining-bar-text').textContent = `STABILITY ${mining.stability} / ${mining.maxStability}`;
+                stabilityBarMsg.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                await new Promise(resolve => setTimeout(resolve, 1000));
 
                 // Check for collapse
                 if (mining.stability <= 0) {
