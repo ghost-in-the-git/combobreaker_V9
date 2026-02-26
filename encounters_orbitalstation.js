@@ -109,7 +109,7 @@ const ENCOUNTERS_ORBITALSTATION = [
     },
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman in a patched EVA suit floats in a depressurised corridor, tethered to a support beam. Her hands make constant micro-adjustments to the tether — precise, mechanical movements that don't match the casual way she's watching you.",

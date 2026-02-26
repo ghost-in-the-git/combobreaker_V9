@@ -108,7 +108,7 @@ const ENCOUNTERS_SCRAPYARD = [
     },
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman stands motionless between two wrecked mechs, cloak pulled tight against the scrapyard wind. Her hands move with a precision that isn't quite human — adjusting a device, checking a frequency, still again — all in the time it takes you to blink.",

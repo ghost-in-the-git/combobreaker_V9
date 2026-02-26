@@ -109,7 +109,7 @@ const ENCOUNTERS_WASTELAND = [
     },
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman in rad-shielding sits on the carcass of a Sand Stalker, marking kill patterns on a scored metal chart. Same fast hands, same eyes that catch light at the wrong angle. The Stalker's armour has been shredded by something much bigger than it.",

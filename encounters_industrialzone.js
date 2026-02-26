@@ -105,7 +105,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
     },
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman watches from a catwalk high above the factory floor. Same build, same restless hands, same eyes that catch light wrong. Below, the walls are cratered by decades of weapons fire. The rhythmic thud of heavy guns echoes from deeper in the complex.",

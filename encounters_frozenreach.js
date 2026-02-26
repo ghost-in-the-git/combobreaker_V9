@@ -105,7 +105,7 @@ const ENCOUNTERS_FROZENREACH = [
     },
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman huddles in an ice cave, warm air leaking from a thermal vent behind her. Same fast hands, wrapped around her own arms. Through the ice wall, something glows faintly — medical displays, still lit, pulsing in the glacier.",

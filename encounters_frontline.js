@@ -8,7 +8,7 @@
 const ENCOUNTERS_FRONTLINE = [
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman in battered combat armour crouches in a reinforced foxhole. Same build. Same hands — fast, precise, not quite human. She watches the ridge where the Sovereign stands with an expression you haven't seen on her before. Something like grief.",

@@ -99,7 +99,7 @@ const ENCOUNTERS_DEADZONE = [
     },
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman in sealed hazmat gear crouches inside a bunker, the door barely ajar. Same build, same too-precise movements, even through the suit. Her comms equipment is military-grade — the only gear that cuts through the interference.",

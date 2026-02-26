@@ -109,7 +109,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
     },
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman sits atop a burnt-out tank, scanning the horizon with bare eyes sharper than any scope. Same build, same restless hands — she saw you coming before you saw her.",

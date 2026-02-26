@@ -105,7 +105,7 @@ const ENCOUNTERS_NEONSTRIP = [
     },
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman sits in a back room where every light works. Not the flickering half-life of the strip — these are steady, repaired. Same fast hands, same eyes that catch light wrong. She watches the door like she already knew you were coming.",

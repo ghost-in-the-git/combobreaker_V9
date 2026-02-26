@@ -109,7 +109,7 @@ const ENCOUNTERS_DOWNTOWN = [
     },
     {
         name: "The Herald",
-        characterImage: "images/herald.gif",
+        characterImage: "images/THE_HERALD.gif",
         type: "shop",
         discoverable: true,
         description: "A slight woman leans against a fire escape, a jury-rigged antenna array humming on the landing above her. Same fast hands, same eyes that track too quick. She's watching the street like she already knows what's on it.",
