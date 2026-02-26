@@ -4736,6 +4736,7 @@
         function showInlineButtons() {
             btnEngage.disabled = false;
             if (currentMiningEvent) {
+                btnEngage.textContent = 'Mine';
                 btnRetreat.style.display = 'none';
             } else {
                 btnRetreat.style.display = '';
@@ -4749,6 +4750,7 @@
         // Hide action buttons from chat
         function hideInlineButtons() {
             btnEngage.disabled = true;
+            btnEngage.textContent = 'Engage';
             btnRetreat.disabled = true;
             btnRetreat.style.display = '';
             if (btnContainer.parentNode) {
