@@ -254,12 +254,23 @@
         }
 
         .message-avatar {
+            position: relative;
             width: 64px;
             height: 64px;
             min-width: 64px;
             border-radius: 4px;
             overflow: hidden;
             border: none;
+        }
+
+        .message-avatar .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
         }
 
         .message-avatar img {
@@ -2968,6 +2979,14 @@
             avatarImg.alt = '';
             avatar.appendChild(avatarImg);
 
+            if (options.overlay) {
+                const overlayImg = document.createElement('img');
+                overlayImg.src = options.overlay;
+                overlayImg.alt = '';
+                overlayImg.className = 'avatar-overlay';
+                avatar.appendChild(overlayImg);
+            }
+
             const content = document.createElement('div');
             content.className = 'message-content';
 
@@ -5091,7 +5110,7 @@
                             const killXp = et.xp + xpBonus;
                             wave.xpEarned = (wave.xpEarned || 0) + killXp;
                             const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                            await addMessage(`[KILL CONFIRMED] ${et.name} destroyed by Crushbreaker (+${killXp} Silicon${bonusText})`, 'enemy');
+                            await addMessage(`[KILL CONFIRMED] ${et.name} destroyed by Crushbreaker (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire.gif' });
                         }
                         wave.count = wave.currentTarget;
                     } else {
@@ -5106,7 +5125,7 @@
                     const killXp = et.xp + xpBonus;
                     wave.xpEarned = (wave.xpEarned || 0) + killXp;
                     const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                    await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed (+${killXp} Silicon${bonusText})`, 'enemy');
+                    await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire.gif' });
                     wave.currentTarget++;
                     wave.currentEnemy = null;
 
@@ -5151,7 +5170,7 @@
                             const killXp = et.xp + xpBonus;
                             wave.xpEarned = (wave.xpEarned || 0) + killXp;
                             const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                            await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed by parry (+${killXp} Silicon${bonusText})`, 'enemy');
+                            await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed by parry (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire.gif' });
                             wave.currentTarget++;
                             wave.currentEnemy = null;
                             if (wave.remaining <= 0) {
