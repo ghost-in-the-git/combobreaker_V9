@@ -4962,7 +4962,7 @@
             // Create countdown message
             let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
             const countdownMsg = document.createElement('div');
-            countdownMsg.className = 'message system';
+            countdownMsg.className = 'message enemy';
             countdownMsg.textContent = `Enemy location locked [${secondsLeft}] seconds until EMP signal jam.`;
             chatMessages.appendChild(countdownMsg);
             chatMessages.scrollTop = chatMessages.scrollHeight;
