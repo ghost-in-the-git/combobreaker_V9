@@ -302,6 +302,7 @@
 
         .message-text {
             line-height: 1.4;
+            white-space: pre-line;
         }
 
         @keyframes fadeIn {
@@ -4276,8 +4277,7 @@
                 maxStability: asteroid.stability
             };
 
-            addMessage(`[MINING EVENT] An asteroid with ${asteroid.mineral} deposits at ${asteroid.depth}ft has been detected.`, 'mining');
-            addMessage(`Asteroid stability: ${asteroid.stability} | Your mining power: ${game.player.mining}`, 'mining');
+            addMessage(`An asteroid with ${asteroid.mineral} deposits has been detected.\nDepth: ${asteroid.depth} | Stability: ${asteroid.stability} | Mech Mining: ${game.player.mining}`, 'mining');
 
             // Create countdown message
             let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
