@@ -2955,7 +2955,7 @@
 
         // Add message to chat with delay
         async function addMessage(text, type = 'system', options = {}) {
-            const img = options.image || (type === 'system' ? 'images/system.gif' : type === 'victory' ? 'images/PLUS.gif' : 'images/IMAGE.gif');
+            const img = options.image || (type === 'system' ? 'images/system.gif' : type === 'victory' ? 'images/PLUS.gif' : type === 'player' ? 'images/MECH_BUBBLE.gif' : 'images/IMAGE.gif');
             const label = options.label || MESSAGE_LABELS[type] || type.toUpperCase();
 
             const msg = document.createElement('div');
