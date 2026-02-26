@@ -2915,7 +2915,7 @@
 
             saveGame();
 
-            addMessage(`[NOW IN ${LOCATION_NAMES[locationKey]}]`, 'system');
+            addMessage(`LOCATION\nYOU HAVE ARRIVED AT ${LOCATION_NAMES[locationKey]}`, 'system', { image: 'images/marker.png' });
             startFuelRegen();
 
             // Restart wave cycle
