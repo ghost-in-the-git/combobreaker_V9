@@ -4402,11 +4402,30 @@
             stabilityBarMsg.appendChild(stabilityContent);
             chatMessages.appendChild(stabilityBarMsg);
 
+            // Create evade button below the bars
+            let miningEvaded = false;
+            const miningEvadeContainer = document.createElement('div');
+            miningEvadeContainer.className = 'action-btn-container';
+            const miningEvadeBtn = document.createElement('button');
+            miningEvadeBtn.className = 'action-btn retreat';
+            miningEvadeBtn.textContent = `Evade [${EVADE_FUEL_COST} fuel]`;
+            miningEvadeBtn.disabled = game.player.fuel < EVADE_FUEL_COST;
+            miningEvadeBtn.addEventListener('click', () => {
+                if (game.player.fuel < EVADE_FUEL_COST) {
+                    addMessage(`[NOT ENOUGH FUEL] Need ${EVADE_FUEL_COST} fuel to evade. You have ${game.player.fuel}.`, 'mining');
+                    return;
+                }
+                miningEvaded = true;
+                miningEvadeBtn.disabled = true;
+            });
+            miningEvadeContainer.appendChild(miningEvadeBtn);
+            chatMessages.appendChild(miningEvadeContainer);
+
             progressBarMsg.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
             // Mining loop
             let turn = 0;
-            while (mining.stability > 0 && mining.currentDepth < mining.depth) {
+            while (mining.stability > 0 && mining.currentDepth < mining.depth && !miningEvaded) {
                 turn++;
 
                 // Player mines deeper
@@ -4420,6 +4439,7 @@
                 // Check if deposit reached
                 if (mining.currentDepth >= mining.depth) {
                     await addMessage(`[EXTRACTION COMPLETE] ${mining.mineral} has been successfully extracted.`, 'victory');
+                    miningEvadeContainer.remove();
                     endMining(true);
                     return;
                 }
@@ -4478,8 +4498,21 @@
                     }
 
                     endMining(false);
+                    miningEvadeContainer.remove();
                     return;
                 }
+            }
+
+            // Remove evade button
+            miningEvadeContainer.remove();
+
+            // Player evaded mid-mining
+            if (miningEvaded) {
+                game.player.fuel -= EVADE_FUEL_COST;
+                updateStats();
+                await addMessage(`Mining operation evaded. Asteroid abandoned. [-${EVADE_FUEL_COST} fuel]`, 'mining');
+                endMining(false);
+                return;
             }
         }
 
