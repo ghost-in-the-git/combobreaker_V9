@@ -5110,7 +5110,7 @@
                             const killXp = et.xp + xpBonus;
                             wave.xpEarned = (wave.xpEarned || 0) + killXp;
                             const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                            await addMessage(`[KILL CONFIRMED] ${et.name} destroyed by Crushbreaker (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire.gif' });
+                            await addMessage(`[KILL CONFIRMED] ${et.name} destroyed by Crushbreaker (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif' });
                         }
                         wave.count = wave.currentTarget;
                     } else {
@@ -5125,7 +5125,7 @@
                     const killXp = et.xp + xpBonus;
                     wave.xpEarned = (wave.xpEarned || 0) + killXp;
                     const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                    await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire.gif' });
+                    await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif' });
                     wave.currentTarget++;
                     wave.currentEnemy = null;
 
@@ -5170,7 +5170,7 @@
                             const killXp = et.xp + xpBonus;
                             wave.xpEarned = (wave.xpEarned || 0) + killXp;
                             const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                            await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed by parry (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire.gif' });
+                            await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed by parry (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif' });
                             wave.currentTarget++;
                             wave.currentEnemy = null;
                             if (wave.remaining <= 0) {
