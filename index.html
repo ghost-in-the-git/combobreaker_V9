@@ -5209,7 +5209,7 @@
             }
 
             wave.turn++;
-            await addMessage(`- - - - - - - - - - - - - - - - - - - - -[${numberToWord(wave.turn)}]- - - - - - - - - - - - - - - - - - - - -`, 'turncounter');
+            await addMessage(`${numberToWord(wave.turn)}`, 'turncounter');
 
             // Determine breaker procs this turn (gated behind owning decrypted keys)
             let speedTriggered = hasBreaker("Wire's Speedbreaker Key") && Math.random() * 100 < getBreaker();
