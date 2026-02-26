@@ -4735,8 +4735,13 @@
         // Show action buttons inline in chat (below countdown)
         function showInlineButtons() {
             btnEngage.disabled = false;
-            btnRetreat.dataset.baseText = btnRetreat.textContent.replace(/\s*\[\d+ fuel\]$/, '');
-            updateEvadeButton();
+            if (currentMiningEvent) {
+                btnRetreat.style.display = 'none';
+            } else {
+                btnRetreat.style.display = '';
+                btnRetreat.dataset.baseText = btnRetreat.textContent.replace(/\s*\[\d+ fuel\]$/, '');
+                updateEvadeButton();
+            }
             chatMessages.appendChild(btnContainer);
             btnContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
@@ -4745,6 +4750,7 @@
         function hideInlineButtons() {
             btnEngage.disabled = true;
             btnRetreat.disabled = true;
+            btnRetreat.style.display = '';
             if (btnContainer.parentNode) {
                 btnContainer.remove();
             }
