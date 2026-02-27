@@ -5517,14 +5517,18 @@
                 }
 
                 game.player.xp += finalXp;
-                addMessage(`<b>${finalXp} SIL</b> earned.`, 'victory', { html: true, label: 'Item found:' });
+
+                // Collect all reward lines into a single message
+                const rewardLines = [];
+                rewardLines.push(`<b>${finalXp} SIL</b>`);
 
                 // Drop random item
                 if (enemyType) {
                     const droppedItem = getRandomItemDrop(enemyType);
                     if (droppedItem) {
                         addItemToInventory(droppedItem);
-                        addMessage(`${droppedItem.name} [${ITEM_TYPES[droppedItem.type]}]`, 'victory', { label: 'Item found:' });
+                        const slotTag = droppedItem.type.toUpperCase();
+                        rewardLines.push(`[${slotTag}] ${droppedItem.name}`);
                     }
                 }
 
@@ -5541,9 +5545,11 @@
                     }
 
                     game.scrap += scrapAmount;
-                    addMessage(`Salvaged <b>${scrapAmount} scrap</b> from the wreckage.`, 'victory', { html: true, label: 'Item found:' });
+                    rewardLines.push(`<b>${scrapAmount}</b> Scrap`);
                     updateStorageUI();
                 }
+
+                addMessage(rewardLines.join('<br>'), 'victory', { html: true, label: 'Rewards:' });
 
                 // Boss encounter drops: key + DNA tag
                 if (game.isBossEncounter && currentBossEncounter) {
