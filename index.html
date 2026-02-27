@@ -3120,11 +3120,13 @@
                         : pct;
                     barFill.style.width = `${fromPct}%`;
                     if (fromPct !== pct) {
-                        requestAnimationFrame(() => {
+                        setTimeout(() => {
                             requestAnimationFrame(() => {
-                                barFill.style.width = `${pct}%`;
+                                requestAnimationFrame(() => {
+                                    barFill.style.width = `${pct}%`;
+                                });
                             });
-                        });
+                        }, 500);
                     }
                     const barLabel = document.createElement('span');
                     barLabel.className = 'inline-bar-label';
