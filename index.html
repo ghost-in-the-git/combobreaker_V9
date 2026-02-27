@@ -5360,7 +5360,7 @@
                             const killXp = et.xp + xpBonus;
                             wave.xpEarned = (wave.xpEarned || 0) + killXp;
                             const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                            await addMessage(`[KILL CONFIRMED] ${et.name} destroyed by Crushbreaker (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif' });
+                            await addMessage(`${et.name} takes ${playerDamage} damage [KILL CONFIRMED] (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp } });
                         }
                         wave.count = wave.currentTarget;
                     } else {
@@ -5375,7 +5375,7 @@
                     const killXp = et.xp + xpBonus;
                     wave.xpEarned = (wave.xpEarned || 0) + killXp;
                     const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                    await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif' });
+                    await addMessage(`${et.name} #${wave.currentTarget} takes ${playerDamage} damage [KILL CONFIRMED] (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp } });
                     wave.currentTarget++;
                     wave.currentEnemy = null;
 
@@ -5423,7 +5423,7 @@
                             const killXp = et.xp + xpBonus;
                             wave.xpEarned = (wave.xpEarned || 0) + killXp;
                             const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                            await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed by parry (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif' });
+                            await addMessage(`${et.name} #${wave.currentTarget} takes ${et.attack} damage [KILL CONFIRMED] (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp } });
                             wave.currentTarget++;
                             wave.currentEnemy = null;
                             if (wave.remaining <= 0) {
