@@ -5462,10 +5462,10 @@
             }
 
             // End-of-round regen
+            let regenHealed = 0;
             if (p.regen > 0 && p.hp < p.maxHp) {
-                const healed = Math.min(p.regen, p.maxHp - p.hp);
-                p.hp += healed;
-                await addMessage(`Mech regenerates ${healed} HP.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
+                regenHealed = Math.min(p.regen, p.maxHp - p.hp);
+                p.hp += regenHealed;
                 updateStats();
             }
 
@@ -5480,7 +5480,11 @@
             // End-of-round defence restore
             remainingDefence = p.defence;
             wave.remainingDefence = remainingDefence;
-            await addMessage(`Defence restored to ${remainingDefence}.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence } });
+            if (regenHealed > 0) {
+                await addMessage(`Mech regenerates ${regenHealed} HP and restores DEF to ${remainingDefence}`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence } });
+            } else {
+                await addMessage(`Defence restored to ${remainingDefence}.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence } });
+            }
         }
 
         // End battle
