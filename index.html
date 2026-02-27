@@ -5445,7 +5445,7 @@
                     const prevHp = p.hp;
                     remainingDefence = 0;
                     p.hp = Math.max(0, p.hp - damageTaken);
-                    await addMessage(`Remaining defence absorbs ${absorbed} damage, but ${damageTaken} damage is still taken.`, 'player', { hpBar: { current: p.hp, max: p.maxHp, from: prevHp }, defBar: { current: remainingDefence, max: roundMaxDefence, from: absorbed } });
+                    await addMessage(`<b>MECH DEF</b> absorbs <b>${absorbed} DMG</b> - but <b>${damageTaken} DMG</b> is still taken.`, 'player', { html: true, hpBar: { current: p.hp, max: p.maxHp, from: prevHp }, defBar: { current: remainingDefence, max: roundMaxDefence, from: absorbed } });
                     updateStats();
                 } else {
                     // No defence left
