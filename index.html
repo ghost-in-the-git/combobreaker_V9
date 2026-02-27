@@ -5433,7 +5433,7 @@
                     // Fully blocked
                     const prevDef = remainingDefence;
                     remainingDefence -= et.attack;
-                    await addMessage(` [Damage blocked] (${remainingDefence} defence remaining)`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence, from: prevDef } });
+                    await addMessage(`Mech blocks ${et.attack} DMG`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence, from: prevDef } });
                 } else if (remainingDefence > 0) {
                     // Partially blocked
                     const absorbed = remainingDefence;
