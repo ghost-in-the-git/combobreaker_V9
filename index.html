@@ -3096,7 +3096,11 @@
 
             const textEl = document.createElement('div');
             textEl.className = 'message-text';
-            textEl.textContent = text;
+            if (options.html) {
+                textEl.innerHTML = text;
+            } else {
+                textEl.textContent = text;
+            }
 
             content.appendChild(labelEl);
             content.appendChild(textEl);
@@ -5341,7 +5345,7 @@
 
                 const prevEnemyHp = wave.currentEnemy;
                 wave.currentEnemy -= playerDamage;
-                await addMessage(`Mech attacks ${et.name} #${wave.currentTarget} for ${playerDamage} damage.`, 'player');
+                await addMessage(`<b>MECH</b> attacks <b>${et.name.toUpperCase()} #${wave.currentTarget}</b> for <b>${playerDamage} DMG</b>`, 'player', { html: true });
 
                 // Crushbreaker AoE: damage all other remaining enemies (first attack only)
                 if (crushTriggered && atk === 1 && wave.remaining > 1) {
