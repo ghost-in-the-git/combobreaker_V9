@@ -439,21 +439,32 @@
         .message.turncounter .message-label { color: #888; }
         .message.turncounter .message-avatar { display: none; }
 
-        .inline-hp-bar-container {
-            position: relative;
+        .inline-bars-row {
+            display: flex;
+            gap: 6px;
             margin-top: 6px;
+        }
+        .inline-bar-container {
+            position: relative;
+            flex: 1;
             background: #1a1a2e;
-            border: 1px solid #00ff88;
             border-radius: 4px;
             overflow: hidden;
             height: 18px;
         }
-        .inline-hp-bar-fill {
+        .inline-bar-container.hp { border: 1px solid #00ff88; }
+        .inline-bar-container.def { border: 1px solid #4488ff; }
+        .inline-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #00ff88, #00cc66);
             transition: width 0.3s ease;
         }
-        .inline-hp-bar-label {
+        .inline-bar-container.hp .inline-bar-fill {
+            background: linear-gradient(90deg, #00ff88, #00cc66);
+        }
+        .inline-bar-container.def .inline-bar-fill {
+            background: linear-gradient(90deg, #4488ff, #2266dd);
+        }
+        .inline-bar-label {
             position: absolute;
             top: 0;
             left: 0;
@@ -3086,19 +3097,41 @@
             content.appendChild(labelEl);
             content.appendChild(textEl);
 
-            if (options.hpBar) {
-                const barWrap = document.createElement('div');
-                barWrap.className = 'inline-hp-bar-container';
-                const barFill = document.createElement('div');
-                barFill.className = 'inline-hp-bar-fill';
-                const pct = Math.min(100, Math.max(0, (options.hpBar.current / options.hpBar.max) * 100));
-                barFill.style.width = `${pct}%`;
-                const barLabel = document.createElement('span');
-                barLabel.className = 'inline-hp-bar-label';
-                barLabel.textContent = `${options.hpBar.current}/${options.hpBar.max}`;
-                barWrap.appendChild(barFill);
-                barWrap.appendChild(barLabel);
-                content.appendChild(barWrap);
+            if (options.hpBar || options.defBar) {
+                const row = document.createElement('div');
+                row.className = 'inline-bars-row';
+
+                if (options.hpBar) {
+                    const barWrap = document.createElement('div');
+                    barWrap.className = 'inline-bar-container hp';
+                    const barFill = document.createElement('div');
+                    barFill.className = 'inline-bar-fill';
+                    const pct = Math.min(100, Math.max(0, (options.hpBar.current / options.hpBar.max) * 100));
+                    barFill.style.width = `${pct}%`;
+                    const barLabel = document.createElement('span');
+                    barLabel.className = 'inline-bar-label';
+                    barLabel.textContent = `HP ${options.hpBar.current}/${options.hpBar.max}`;
+                    barWrap.appendChild(barFill);
+                    barWrap.appendChild(barLabel);
+                    row.appendChild(barWrap);
+                }
+
+                if (options.defBar) {
+                    const barWrap = document.createElement('div');
+                    barWrap.className = 'inline-bar-container def';
+                    const barFill = document.createElement('div');
+                    barFill.className = 'inline-bar-fill';
+                    const pct = Math.min(100, Math.max(0, (options.defBar.current / options.defBar.max) * 100));
+                    barFill.style.width = `${pct}%`;
+                    const barLabel = document.createElement('span');
+                    barLabel.className = 'inline-bar-label';
+                    barLabel.textContent = `DEF ${options.defBar.current}/${options.defBar.max}`;
+                    barWrap.appendChild(barFill);
+                    barWrap.appendChild(barLabel);
+                    row.appendChild(barWrap);
+                }
+
+                content.appendChild(row);
             }
 
             if (type !== 'turncounter') {
@@ -5343,6 +5376,7 @@
                 remainingDefence *= 2;
                 await addMessage(`[SHIELDBREAKER TRIGGERED] Defence doubled to ${remainingDefence}!`, 'player');
             }
+            const roundMaxDefence = remainingDefence;
 
             // All remaining enemies attack in sequence
 
@@ -5409,7 +5443,7 @@
             if (p.regen > 0 && p.hp < p.maxHp) {
                 const healed = Math.min(p.regen, p.maxHp - p.hp);
                 p.hp += healed;
-                await addMessage(`Mech regenerates ${healed} HP.`, 'player', { hpBar: { current: p.hp, max: p.maxHp } });
+                await addMessage(`Mech regenerates ${healed} HP.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                 updateStats();
             }
 
@@ -5417,7 +5451,7 @@
             if (hasBreaker("Frost's Painbreaker Key") && p.regen > 0 && p.hp < p.maxHp && Math.random() * 100 < getBreaker()) {
                 const painHealed = Math.min(p.regen, p.maxHp - p.hp);
                 p.hp += painHealed;
-                await addMessage(`[PAINBREAKER TRIGGERED] Mech restores ${painHealed} HP!`, 'player', { hpBar: { current: p.hp, max: p.maxHp } });
+                await addMessage(`[PAINBREAKER TRIGGERED] Mech restores ${painHealed} HP!`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                 updateStats();
             }
         }
