@@ -5369,8 +5369,10 @@
                 }
             }
 
+            // Use persisted defence from previous round (restored at end of round)
+            let remainingDefence = wave.remainingDefence;
+
             // Shieldbreaker: chance to double defence at start of round
-            let remainingDefence = p.defence;
             const shieldTriggered = hasBreaker("Sarge's Shieldbreaker Key") && Math.random() * 100 < getBreaker();
             if (shieldTriggered) {
                 remainingDefence *= 2;
@@ -5455,6 +5457,11 @@
                 await addMessage(`[PAINBREAKER TRIGGERED] Mech restores ${painHealed} HP!`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                 updateStats();
             }
+
+            // End-of-round defence restore
+            remainingDefence = p.defence;
+            wave.remainingDefence = remainingDefence;
+            await addMessage(`Defence restored to ${remainingDefence}.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence } });
         }
 
         // End battle
@@ -5592,6 +5599,7 @@
             }
 
             const et = game.currentWave.enemyType;
+            game.currentWave.remainingDefence = game.player.defence;
             await addMessage(`Engagement confirmed for ${game.currentWave.count} ${et.name}s!`, 'player');
 
             // Battle loop
