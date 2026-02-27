@@ -248,7 +248,7 @@
             padding: 10px;
             border-radius: 8px;
             border: 1px solid transparent;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.5s ease;
             gap: 12px;
             box-sizing: border-box;
         }
@@ -3152,7 +3152,7 @@
 
             chatMessages.appendChild(msg);
             msg.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 1500));
         }
 
         // Update UI
