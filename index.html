@@ -5311,19 +5311,19 @@
             let attackCount = speedTriggered ? (warTriggered ? 4 : 2) : 1;
 
             if (speedTriggered) {
-                await addMessage(`[SPEEDBREAKER TRIGGERED]`, 'player');
+                await addMessage(`[<b>SPEEDBREAKER</b> TRIGGERED]`, 'player', { html: true });
             }
             if (strikeTriggered) {
-                await addMessage(`[STRIKEBREAKER TRIGGERED] Enemy defence ignored!`, 'player');
+                await addMessage(`[<b>STRIKEBREAKER</b> TRIGGERED] Enemy DEF ignored!`, 'player', { html: true });
             }
             if (breakerTriggered) {
-                await addMessage(`[COMBOBREAKER TRIGGERED]`, 'player');
+                await addMessage(`[<b>COMBOBREAKER</b> TRIGGERED]`, 'player', { html: true });
             }
             if (crushTriggered) {
-                await addMessage(`[CRUSHBREAKER TRIGGERED] Damage hits all enemies!`, 'player');
+                await addMessage(`[<b>CRUSHBREAKER</b> TRIGGERED] DMG hits all enemies!`, 'player', { html: true });
             }
             if (warTriggered) {
-                await addMessage(`[WARBREAKER TRIGGERED] Escalating to 4X!`, 'player');
+                await addMessage(`[<b>WARBREAKER</b> TRIGGERED] Escalating to <b>4X</b>!`, 'player', { html: true });
             }
 
             // Calculate damage (strikebreaker ignores enemy defence, combobreaker doubles/quadruples)
@@ -5360,7 +5360,7 @@
                         }
                         wave.count = wave.currentTarget;
                     } else {
-                        await addMessage(`Crushbreaker hits ${backgroundCount} other ${backgroundCount === 1 ? 'enemy' : 'enemies'} for ${playerDamage} damage each.`, 'player');
+                        await addMessage(`<b>CRUSHBREAKER</b> hits <b>${backgroundCount}</b> other ${backgroundCount === 1 ? 'enemy' : 'enemies'} for <b>${playerDamage} DMG</b> each.`, 'player', { html: true });
                     }
                 }
 
@@ -5379,7 +5379,7 @@
                         return;
                     }
                 } else {
-                    await addMessage(`${et.name} #${wave.currentTarget} takes ${playerDamage} damage`, 'enemy', { enemyHpBar: { current: wave.currentEnemy, max: et.hp, from: prevEnemyHp } });
+                    await addMessage(`<b>${et.name.toUpperCase()} #${wave.currentTarget}</b> takes <b>${playerDamage} DMG</b>`, 'enemy', { html: true, enemyHpBar: { current: wave.currentEnemy, max: et.hp, from: prevEnemyHp } });
                 }
             }
 
@@ -5390,26 +5390,26 @@
             const shieldTriggered = hasBreaker("Sarge's Shieldbreaker Key") && Math.random() * 100 < getBreaker();
             if (shieldTriggered) {
                 remainingDefence *= 2;
-                await addMessage(`[SHIELDBREAKER TRIGGERED] Defence doubled to ${remainingDefence}!`, 'player');
+                await addMessage(`[<b>SHIELDBREAKER</b> TRIGGERED] DEF doubled to <b>${remainingDefence}</b>!`, 'player', { html: true });
             }
             const roundMaxDefence = remainingDefence;
 
             // All remaining enemies attack in sequence
 
             for (let i = wave.currentTarget; i <= wave.count; i++) {
-                await addMessage(`${et.name} #${i} attacks Mech for ${et.attack} damage.`, 'enemy');
+                await addMessage(`<b>${et.name.toUpperCase()} #${i}</b> attacks <b>MECH</b> for <b>${et.attack} DMG</b>`, 'enemy', { html: true });
 
                 // Visionbreaker: chance to completely avoid this attack
                 const visionTriggered = hasBreaker("Ghost's Visionbreaker Key") && Math.random() * 100 < getBreaker();
                 if (visionTriggered) {
-                    await addMessage(`[VISIONBREAKER TRIGGERED] You disappeared — attack missed!`, 'player');
+                    await addMessage(`[<b>VISIONBREAKER</b> TRIGGERED] You disappeared — attack missed!`, 'player', { html: true });
                     continue;
                 }
 
                 // Soulbreaker: chance to parry attack and reflect damage back
                 const soulTriggered = hasBreaker("Null's Soulbreaker Key") && Math.random() * 100 < getBreaker();
                 if (soulTriggered) {
-                    await addMessage(`[SOULBREAKER TRIGGERED] Attack parried — ${et.attack} damage reflected!`, 'player');
+                    await addMessage(`[<b>SOULBREAKER</b> TRIGGERED] Attack parried — <b>${et.attack} DMG</b> reflected!`, 'player', { html: true });
                     if (i === wave.currentTarget && wave.currentEnemy !== null) {
                         const prevSoulHp = wave.currentEnemy;
                         wave.currentEnemy -= et.attack;
@@ -5434,7 +5434,7 @@
                     // Fully blocked
                     const prevDef = remainingDefence;
                     remainingDefence -= et.attack;
-                    await addMessage(`Mech blocks ${et.attack} DMG`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence, from: prevDef } });
+                    await addMessage(`<b>MECH DEF</b> blocks <b>${et.attack} DMG</b>`, 'player', { html: true, hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence, from: prevDef } });
                 } else if (remainingDefence > 0) {
                     // Partially blocked
                     const absorbed = remainingDefence;
@@ -5448,7 +5448,7 @@
                     // No defence left
                     const prevHp = p.hp;
                     p.hp = Math.max(0, p.hp - et.attack);
-                    await addMessage(`Mech takes ${et.attack} damage.`, 'player', { hpBar: { current: p.hp, max: p.maxHp, from: prevHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
+                    await addMessage(`<b>MECH</b> takes <b>${et.attack} DMG</b>`, 'player', { html: true, hpBar: { current: p.hp, max: p.maxHp, from: prevHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                     updateStats();
                 }
 
@@ -5473,7 +5473,7 @@
                 const prevHp = p.hp;
                 const painHealed = Math.min(p.regen, p.maxHp - p.hp);
                 p.hp += painHealed;
-                await addMessage(`[PAINBREAKER TRIGGERED] Mech restores ${painHealed} HP!`, 'player', { hpBar: { current: p.hp, max: p.maxHp, from: prevHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
+                await addMessage(`[<b>PAINBREAKER</b> TRIGGERED] MECH restores <b>${painHealed} HP</b>!`, 'player', { html: true, hpBar: { current: p.hp, max: p.maxHp, from: prevHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                 updateStats();
             }
 
@@ -5482,9 +5482,9 @@
             remainingDefence = p.defence;
             wave.remainingDefence = remainingDefence;
             if (regenHealed > 0) {
-                await addMessage(`Mech regenerates ${regenHealed} HP and restores DEF to ${remainingDefence}`, 'player', { hpBar: { current: p.hp, max: p.maxHp, from: hpBeforeRegen }, defBar: { current: remainingDefence, max: p.defence, from: defBeforeRestore } });
+                await addMessage(`<b>MECH</b> regenerates <b>${regenHealed} HP</b> and restores <b>DEF to ${remainingDefence}</b>`, 'player', { html: true, hpBar: { current: p.hp, max: p.maxHp, from: hpBeforeRegen }, defBar: { current: remainingDefence, max: p.defence, from: defBeforeRestore } });
             } else {
-                await addMessage(`Defence restored to ${remainingDefence}.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence, from: defBeforeRestore } });
+                await addMessage(`<b>DEF</b> restored to <b>${remainingDefence}</b>.`, 'player', { html: true, hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence, from: defBeforeRestore } });
             }
         }
 
@@ -5511,11 +5511,11 @@
                 let finalXp = xpEarned;
                 if (powerTriggered) {
                     finalXp *= 2;
-                    addMessage(`[POWERBREAKER TRIGGERED] Double Silicon earned!`, 'player');
+                    addMessage(`[<b>POWERBREAKER</b> TRIGGERED] Double SIL earned!`, 'player', { html: true });
                 }
 
                 game.player.xp += finalXp;
-                addMessage(`${finalXp} Silicon.`, 'victory', { label: 'Item found:' });
+                addMessage(`<b>${finalXp} SIL</b> earned.`, 'victory', { html: true, label: 'Item found:' });
 
                 // Drop random item
                 if (enemyType) {
@@ -5535,11 +5535,11 @@
                     const steelTriggered = hasBreaker("Chunk's Steelbreaker Key") && Math.random() * 100 < getBreaker();
                     if (steelTriggered) {
                         scrapAmount *= 2;
-                        addMessage(`[STEELBREAKER TRIGGERED] Double scrap salvaged!`, 'player');
+                        addMessage(`[<b>STEELBREAKER</b> TRIGGERED] Double scrap salvaged!`, 'player', { html: true });
                     }
 
                     game.scrap += scrapAmount;
-                    addMessage(`Salvaged ${scrapAmount} scrap from the wreckage.`, 'victory', { label: 'Item found:' });
+                    addMessage(`Salvaged <b>${scrapAmount} scrap</b> from the wreckage.`, 'victory', { html: true, label: 'Item found:' });
                     updateStorageUI();
                 }
 
