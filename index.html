@@ -454,6 +454,10 @@
         }
         .inline-bar-container.hp { border: 1px solid #00ff88; }
         .inline-bar-container.def { border: 1px solid #4488ff; }
+        .inline-bar-container.enemy-hp { border: 1px solid #ff4444; }
+        .inline-bar-container.enemy-hp .inline-bar-fill {
+            background: linear-gradient(90deg, #ff4444, #cc2222);
+        }
         .inline-bar-fill {
             height: 100%;
             transition: width 0.3s ease;
@@ -3097,7 +3101,7 @@
             content.appendChild(labelEl);
             content.appendChild(textEl);
 
-            if (options.hpBar || options.defBar) {
+            if (options.hpBar || options.defBar || options.enemyHpBar) {
                 const row = document.createElement('div');
                 row.className = 'inline-bars-row';
 
@@ -3126,6 +3130,21 @@
                     const barLabel = document.createElement('span');
                     barLabel.className = 'inline-bar-label';
                     barLabel.textContent = `DEF ${options.defBar.current}/${options.defBar.max}`;
+                    barWrap.appendChild(barFill);
+                    barWrap.appendChild(barLabel);
+                    row.appendChild(barWrap);
+                }
+
+                if (options.enemyHpBar) {
+                    const barWrap = document.createElement('div');
+                    barWrap.className = 'inline-bar-container enemy-hp';
+                    const barFill = document.createElement('div');
+                    barFill.className = 'inline-bar-fill';
+                    const pct = Math.min(100, Math.max(0, (options.enemyHpBar.current / options.enemyHpBar.max) * 100));
+                    barFill.style.width = `${pct}%`;
+                    const barLabel = document.createElement('span');
+                    barLabel.className = 'inline-bar-label';
+                    barLabel.textContent = `HP ${options.enemyHpBar.current}/${options.enemyHpBar.max}`;
                     barWrap.appendChild(barFill);
                     barWrap.appendChild(barLabel);
                     row.appendChild(barWrap);
@@ -5365,7 +5384,7 @@
                         return;
                     }
                 } else {
-                    await addMessage(`${et.name} #${wave.currentTarget} reduced to ${wave.currentEnemy} of ${et.hp} HP`, 'enemy');
+                    await addMessage(`${et.name} #${wave.currentTarget} reduced to ${wave.currentEnemy} of ${et.hp} HP`, 'enemy', { enemyHpBar: { current: wave.currentEnemy, max: et.hp } });
                 }
             }
 
