@@ -5417,18 +5417,19 @@
                 if (remainingDefence >= et.attack) {
                     // Fully blocked
                     remainingDefence -= et.attack;
-                    await addMessage(` [Damage blocked] (${remainingDefence} defence remaining)`, 'player');
+                    await addMessage(` [Damage blocked] (${remainingDefence} defence remaining)`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                 } else if (remainingDefence > 0) {
                     // Partially blocked
+                    const absorbed = remainingDefence;
                     const damageTaken = et.attack - remainingDefence;
-                    await addMessage(`Remaining defence absorbs ${remainingDefence} damage, but ${damageTaken} damage is still taken.`, 'player');
                     remainingDefence = 0;
                     p.hp = Math.max(0, p.hp - damageTaken);
+                    await addMessage(`Remaining defence absorbs ${absorbed} damage, but ${damageTaken} damage is still taken.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                     updateStats();
                 } else {
                     // No defence left
                     p.hp = Math.max(0, p.hp - et.attack);
-                    await addMessage(`Mech takes ${et.attack} damage.`, 'player');
+                    await addMessage(`Mech takes ${et.attack} damage.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                     updateStats();
                 }
 
