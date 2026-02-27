@@ -5377,7 +5377,7 @@
                         return;
                     }
                 } else {
-                    await addMessage(`${et.name} #${wave.currentTarget} reduced to ${wave.currentEnemy} of ${et.hp} HP`, 'enemy', { enemyHpBar: { current: wave.currentEnemy, max: et.hp, from: prevEnemyHp } });
+                    await addMessage(`${et.name} #${wave.currentTarget} takes ${playerDamage} damage`, 'enemy', { enemyHpBar: { current: wave.currentEnemy, max: et.hp, from: prevEnemyHp } });
                 }
             }
 
