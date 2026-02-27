@@ -3105,49 +3105,41 @@
                 const row = document.createElement('div');
                 row.className = 'inline-bars-row';
 
-                if (options.hpBar) {
+                function createBar(className, label, data) {
                     const barWrap = document.createElement('div');
-                    barWrap.className = 'inline-bar-container hp';
+                    barWrap.className = `inline-bar-container ${className}`;
                     const barFill = document.createElement('div');
                     barFill.className = 'inline-bar-fill';
-                    const pct = Math.min(100, Math.max(0, (options.hpBar.current / options.hpBar.max) * 100));
-                    barFill.style.width = `${pct}%`;
+                    const pct = Math.min(100, Math.max(0, (data.current / data.max) * 100));
+                    const fromPct = data.from !== undefined
+                        ? Math.min(100, Math.max(0, (data.from / data.max) * 100))
+                        : pct;
+                    barFill.style.width = `${fromPct}%`;
+                    if (fromPct !== pct) {
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                barFill.style.width = `${pct}%`;
+                            });
+                        });
+                    }
                     const barLabel = document.createElement('span');
                     barLabel.className = 'inline-bar-label';
-                    barLabel.textContent = `HP ${options.hpBar.current}/${options.hpBar.max}`;
+                    barLabel.textContent = `${label} ${data.current}/${data.max}`;
                     barWrap.appendChild(barFill);
                     barWrap.appendChild(barLabel);
-                    row.appendChild(barWrap);
+                    return barWrap;
+                }
+
+                if (options.hpBar) {
+                    row.appendChild(createBar('hp', 'HP', options.hpBar));
                 }
 
                 if (options.defBar) {
-                    const barWrap = document.createElement('div');
-                    barWrap.className = 'inline-bar-container def';
-                    const barFill = document.createElement('div');
-                    barFill.className = 'inline-bar-fill';
-                    const pct = Math.min(100, Math.max(0, (options.defBar.current / options.defBar.max) * 100));
-                    barFill.style.width = `${pct}%`;
-                    const barLabel = document.createElement('span');
-                    barLabel.className = 'inline-bar-label';
-                    barLabel.textContent = `DEF ${options.defBar.current}/${options.defBar.max}`;
-                    barWrap.appendChild(barFill);
-                    barWrap.appendChild(barLabel);
-                    row.appendChild(barWrap);
+                    row.appendChild(createBar('def', 'DEF', options.defBar));
                 }
 
                 if (options.enemyHpBar) {
-                    const barWrap = document.createElement('div');
-                    barWrap.className = 'inline-bar-container enemy-hp';
-                    const barFill = document.createElement('div');
-                    barFill.className = 'inline-bar-fill';
-                    const pct = Math.min(100, Math.max(0, (options.enemyHpBar.current / options.enemyHpBar.max) * 100));
-                    barFill.style.width = `${pct}%`;
-                    const barLabel = document.createElement('span');
-                    barLabel.className = 'inline-bar-label';
-                    barLabel.textContent = `HP ${options.enemyHpBar.current}/${options.enemyHpBar.max}`;
-                    barWrap.appendChild(barFill);
-                    barWrap.appendChild(barLabel);
-                    row.appendChild(barWrap);
+                    row.appendChild(createBar('enemy-hp', 'HP', options.enemyHpBar));
                 }
 
                 content.appendChild(row);
@@ -5347,6 +5339,7 @@
                     wave.currentEnemy = et.hp;
                 }
 
+                const prevEnemyHp = wave.currentEnemy;
                 wave.currentEnemy -= playerDamage;
                 await addMessage(`Mech attacks ${et.name} #${wave.currentTarget} for ${playerDamage} damage.`, 'player');
 
@@ -5360,7 +5353,7 @@
                             const killXp = et.xp + xpBonus;
                             wave.xpEarned = (wave.xpEarned || 0) + killXp;
                             const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                            await addMessage(`${et.name} takes ${playerDamage} damage [KILL CONFIRMED] (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp } });
+                            await addMessage(`${et.name} takes ${playerDamage} damage [KILL CONFIRMED] (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp, from: et.hp } });
                         }
                         wave.count = wave.currentTarget;
                     } else {
@@ -5375,7 +5368,7 @@
                     const killXp = et.xp + xpBonus;
                     wave.xpEarned = (wave.xpEarned || 0) + killXp;
                     const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                    await addMessage(`${et.name} #${wave.currentTarget} takes ${playerDamage} damage [KILL CONFIRMED] (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp } });
+                    await addMessage(`${et.name} #${wave.currentTarget} takes ${playerDamage} damage [KILL CONFIRMED] (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp, from: prevEnemyHp } });
                     wave.currentTarget++;
                     wave.currentEnemy = null;
 
@@ -5384,7 +5377,7 @@
                         return;
                     }
                 } else {
-                    await addMessage(`${et.name} #${wave.currentTarget} reduced to ${wave.currentEnemy} of ${et.hp} HP`, 'enemy', { enemyHpBar: { current: wave.currentEnemy, max: et.hp } });
+                    await addMessage(`${et.name} #${wave.currentTarget} reduced to ${wave.currentEnemy} of ${et.hp} HP`, 'enemy', { enemyHpBar: { current: wave.currentEnemy, max: et.hp, from: prevEnemyHp } });
                 }
             }
 
@@ -5416,6 +5409,7 @@
                 if (soulTriggered) {
                     await addMessage(`[SOULBREAKER TRIGGERED] Attack parried — ${et.attack} damage reflected!`, 'player');
                     if (i === wave.currentTarget && wave.currentEnemy !== null) {
+                        const prevSoulHp = wave.currentEnemy;
                         wave.currentEnemy -= et.attack;
                         if (wave.currentEnemy <= 0) {
                             wave.remaining--;
@@ -5423,7 +5417,7 @@
                             const killXp = et.xp + xpBonus;
                             wave.xpEarned = (wave.xpEarned || 0) + killXp;
                             const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
-                            await addMessage(`${et.name} #${wave.currentTarget} takes ${et.attack} damage [KILL CONFIRMED] (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp } });
+                            await addMessage(`${et.name} #${wave.currentTarget} takes ${et.attack} damage [KILL CONFIRMED] (+${killXp} Silicon${bonusText})`, 'enemy', { overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp, from: prevSoulHp } });
                             wave.currentTarget++;
                             wave.currentEnemy = null;
                             if (wave.remaining <= 0) {
@@ -5437,20 +5431,23 @@
 
                 if (remainingDefence >= et.attack) {
                     // Fully blocked
+                    const prevDef = remainingDefence;
                     remainingDefence -= et.attack;
-                    await addMessage(` [Damage blocked] (${remainingDefence} defence remaining)`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
+                    await addMessage(` [Damage blocked] (${remainingDefence} defence remaining)`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence, from: prevDef } });
                 } else if (remainingDefence > 0) {
                     // Partially blocked
                     const absorbed = remainingDefence;
                     const damageTaken = et.attack - remainingDefence;
+                    const prevHp = p.hp;
                     remainingDefence = 0;
                     p.hp = Math.max(0, p.hp - damageTaken);
-                    await addMessage(`Remaining defence absorbs ${absorbed} damage, but ${damageTaken} damage is still taken.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
+                    await addMessage(`Remaining defence absorbs ${absorbed} damage, but ${damageTaken} damage is still taken.`, 'player', { hpBar: { current: p.hp, max: p.maxHp, from: prevHp }, defBar: { current: remainingDefence, max: roundMaxDefence, from: absorbed } });
                     updateStats();
                 } else {
                     // No defence left
+                    const prevHp = p.hp;
                     p.hp = Math.max(0, p.hp - et.attack);
-                    await addMessage(`Mech takes ${et.attack} damage.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
+                    await addMessage(`Mech takes ${et.attack} damage.`, 'player', { hpBar: { current: p.hp, max: p.maxHp, from: prevHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                     updateStats();
                 }
 
@@ -5463,6 +5460,7 @@
 
             // End-of-round regen
             let regenHealed = 0;
+            const hpBeforeRegen = p.hp;
             if (p.regen > 0 && p.hp < p.maxHp) {
                 regenHealed = Math.min(p.regen, p.maxHp - p.hp);
                 p.hp += regenHealed;
@@ -5471,19 +5469,21 @@
 
             // Painbreaker: chance to regain HP equal to regen stat
             if (hasBreaker("Frost's Painbreaker Key") && p.regen > 0 && p.hp < p.maxHp && Math.random() * 100 < getBreaker()) {
+                const prevHp = p.hp;
                 const painHealed = Math.min(p.regen, p.maxHp - p.hp);
                 p.hp += painHealed;
-                await addMessage(`[PAINBREAKER TRIGGERED] Mech restores ${painHealed} HP!`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
+                await addMessage(`[PAINBREAKER TRIGGERED] Mech restores ${painHealed} HP!`, 'player', { hpBar: { current: p.hp, max: p.maxHp, from: prevHp }, defBar: { current: remainingDefence, max: roundMaxDefence } });
                 updateStats();
             }
 
             // End-of-round defence restore
+            const defBeforeRestore = remainingDefence;
             remainingDefence = p.defence;
             wave.remainingDefence = remainingDefence;
             if (regenHealed > 0) {
-                await addMessage(`Mech regenerates ${regenHealed} HP and restores DEF to ${remainingDefence}`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence } });
+                await addMessage(`Mech regenerates ${regenHealed} HP and restores DEF to ${remainingDefence}`, 'player', { hpBar: { current: p.hp, max: p.maxHp, from: hpBeforeRegen }, defBar: { current: remainingDefence, max: p.defence, from: defBeforeRestore } });
             } else {
-                await addMessage(`Defence restored to ${remainingDefence}.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence } });
+                await addMessage(`Defence restored to ${remainingDefence}.`, 'player', { hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence, from: defBeforeRestore } });
             }
         }
 
