@@ -2052,7 +2052,8 @@
             minerals: {}, // Collected minerals by category
             storyItems: ['Mysterious Note', 'Unknown Sealed Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'], // Collected story items
             isAmbush: false, // Whether current wave is an ambush
-            isBossEncounter: false // Whether current wave is a boss encounter
+            isBossEncounter: false, // Whether current wave is a boss encounter
+            justDied: false // Set after death, cleared after next encounter engage
         };
 
         // Current encounter state
@@ -4505,6 +4506,12 @@
                 }
             }
 
+            // Post-death — override with death engage text
+            if (game.justDied && currentEncounter.deathEngageText) {
+                engageText = currentEncounter.deathEngageText;
+                game.justDied = false;
+            }
+
             await addMessage(engageText, 'system', { label: currentEncounter.name, image: currentEncounter.characterImage, characterDialogue: !!currentEncounter.characterImage });
 
             // The Professor gives the Ratpile map for free if the player doesn't have it
@@ -4918,6 +4925,7 @@
                         document.getElementById('location-image').src = LOCATIONS['home'].image;
                         document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS['home'].image}" alt="Location"><span>${LOCATIONS['home'].desc}</span></div>`;
                         updateDestinationDropdown();
+                        game.justDied = true;
                         await addMessage(`[RELOCATED TO HOME]`, 'system');
                     }
 
@@ -5905,6 +5913,7 @@
                 document.getElementById('location-image').src = LOCATIONS['home'].image;
                 document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS['home'].image}" alt="Location"><span>${LOCATIONS['home'].desc}</span></div>`;
                 updateDestinationDropdown();
+                game.justDied = true;
                 addMessage(`[RELOCATED TO HOME]`, 'system');
             }
 

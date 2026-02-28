@@ -15,6 +15,7 @@ const ENCOUNTERS_HOME = [
         engageText: "The old man stumbles backward when your optics flare on. He knocks a tray of bolts off his bench and stands there, breathing hard, staring at you. 'That's — that's not possible.' He doesn't move for a long time. Then, very slowly, he picks up the tray. 'You don't have a pilot. There's nobody inside you. I checked. Twice.' He swallows. 'I'm the Professor. I dragged you in here three days ago for parts. You were dead.' He sets the tray down with shaking hands. 'You're not dead anymore. And I don't know why.'",
         discoveredDescription: "The Professor's workshop is warm and familiar. He's at his bench, tinkering with something that sparks.",
         discoveredEngageText: "The Professor glances up. 'You're back. Good — means you're still running.' He pushes his goggles up. 'Need something?'",
+        deathEngageText: "The Professor is already moving when you come in — tools out, diagnostic scanner humming. He doesn't say anything at first. Just hooks up the cables and starts checking your systems one by one. When he finally speaks, his voice is quiet. 'I felt the uplink drop. Flatline across the board. For about four seconds, you were gone.' He pulls a scorched panel free and sets it aside. 'Four seconds doesn't sound like much. But for a machine that shouldn't be running at all...' He doesn't finish. 'You're patched. Half capacity. Don't do that again.'",
         appearanceRate: 100,
         minLevel: 1,
         itemSlot1: ["Professor's Lesson [+10 Silicon]"],
