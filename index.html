@@ -6163,7 +6163,18 @@
                                 game._missionEngaged = false;
                                 addMessage(`[MISSION COMPLETE] ${missionEnc.completionText}`, 'victory');
                             } else {
-                                addMessage(`[MISSION] ${progress.kills}/${missionEnc.killsRequired} squads destroyed`, 'system');
+                                const remaining = missionEnc.killsRequired - progress.kills;
+                                const lines = [
+                                    `That's ${progress.kills} down. Let's keep pushing.`,
+                                    `${progress.kills} down, ${remaining} to go.`,
+                                    `Another one scrapped. ${remaining} left.`,
+                                    `${progress.kills} squads cleared. Not done yet.`,
+                                    `Scratch another one. ${remaining} still standing.`,
+                                    `${progress.kills} down. Keep moving.`,
+                                    `That's ${progress.kills}. Almost there.`,
+                                    `${remaining} more and this place is done.`
+                                ];
+                                addMessage(lines[Math.floor(Math.random() * lines.length)], 'player');
                             }
                         }
                     }
