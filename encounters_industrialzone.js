@@ -19,7 +19,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot1: ["EVO1 Breaker Chassis [+70 HP]"],
         itemSlot2: ["Phase Shift Legs [+7 SPD]"],
         itemSlot3: ["Bulwark Arms [+7 DEF]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Union Supply Depot",
@@ -34,7 +34,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot1: ["Railgun [+7 ATK]"],
         itemSlot2: ["Neural Sequencer [+7 BREAKER]"],
         itemSlot3: ["Quantum Learning Core [+7 Silicon]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Automated Vending Rig",
@@ -49,7 +49,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot1: ["Tectonic Shatterer [+7 MINING]"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Shift Supervisor's Stash",
@@ -64,7 +64,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot1: ["War Mind [+7 ALL]"],
         itemSlot2: ["Adaptive Hull Implant [+7 REGEN]"],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Mapmaker",
@@ -101,7 +101,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot1: ["Refined Starvitrine"],
         itemSlot2: ["Refined Thorncrystal"],
         itemSlot3: ["Refined Umbracite"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Herald",
@@ -117,7 +117,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot1: ["Beacon: Industrial Zone"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null,
+        itemSlot4: [],
         dialogue: [
             {
                 question: "What does the beacon do?",

@@ -20,7 +20,7 @@ const ENCOUNTERS_FRONTLINE = [
         itemSlot1: ["Beacon: Frontline"],
         itemSlot2: ["Map: Morningstar's Destruction"],
         itemSlot3: [],
-        itemSlot4: null,
+        itemSlot4: [],
         dialogue: [
             {
                 question: "What does the beacon do?",

@@ -19,7 +19,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot1: ["EVO3 Breaker Chassis [+90 HP]"],
         itemSlot2: ["Temporal Drives [+9 SPD]"],
         itemSlot3: ["Bastion Arms [+9 DEF]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Casino Prize Counter",
@@ -34,7 +34,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot1: ["Annihilator Cannon [+9 ATK]"],
         itemSlot2: ["Predator Protocol [+9 BREAKER]"],
         itemSlot3: ["Precognition Engine [+9 Silicon]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Syndicate Fence",
@@ -49,7 +49,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot1: ["Void Ripper [+9 MINING]"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] High-Roller Lounge",
@@ -64,7 +64,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot1: ["Apex Predator [+9 ALL]"],
         itemSlot2: ["Lazarus Engine [+9 REGEN]"],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Mapmaker",
@@ -101,7 +101,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot1: ["Refined Yonderite"],
         itemSlot2: ["Refined Zephyrsalt"],
         itemSlot3: ["Refined Isotope Lace"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Herald",
@@ -117,7 +117,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot1: ["Beacon: Neon Strip"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null,
+        itemSlot4: [],
         dialogue: [
             {
                 question: "What does the beacon do?",

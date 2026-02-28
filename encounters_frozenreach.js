@@ -19,7 +19,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot1: ["EVO2 Breaker Chassis [+80 HP]"],
         itemSlot2: ["Quantum Thrusters [+8 SPD]"],
         itemSlot3: ["Aegis Bracers [+8 DEF]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Ice Road Hauler",
@@ -34,7 +34,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot1: ["Breaker Blade [+8 ATK]"],
         itemSlot2: ["Overdrive Sequencer [+8 BREAKER]"],
         itemSlot3: ["Deep War Simulator [+8 Silicon]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Research Station Surplus",
@@ -49,7 +49,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot1: ["Graviton Extractor [+8 MINING]"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Glacier Prospector",
@@ -64,7 +64,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot1: ["Revenant Pilot [+8 ALL]"],
         itemSlot2: ["Phoenix Core Module [+8 REGEN]"],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Mapmaker",
@@ -101,7 +101,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot1: ["Refined Vortexium"],
         itemSlot2: ["Refined Wyrmstone"],
         itemSlot3: ["Refined Xanthryx"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Herald",
@@ -117,7 +117,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot1: ["Beacon: Frozen Reach"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null,
+        itemSlot4: [],
         dialogue: [
             {
                 question: "What does the beacon do?",

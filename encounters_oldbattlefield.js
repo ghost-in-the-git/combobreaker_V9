@@ -19,7 +19,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot1: ["Standard Chassis [+20 HP]"],
         itemSlot2: ["Enhanced Servos [+2 SPD]"],
         itemSlot3: ["Shield Bracers [+2 DEF]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Corporate Supply Cache",
@@ -34,7 +34,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot1: ["Energy Blade [+2 ATK]"],
         itemSlot2: ["Combo Link Chip [+2 BREAKER]"],
         itemSlot3: ["Enhanced Data Processor [+2 Silicon]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Pilgrim Parts Caravan",
@@ -49,7 +49,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot1: ["Pneumatic Drill [+2 MINING]"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Experimental R&D Vendor",
@@ -64,7 +64,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot1: ["Trained Pilot [+2 ALL]"],
         itemSlot2: ["Basic Nano Injector [+2 REGEN]"],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Mapmaker",
@@ -105,7 +105,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot1: ["Refined Duskquartz"],
         itemSlot2: ["Refined Emberlith"],
         itemSlot3: ["Refined Frostveil"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Herald",
@@ -121,7 +121,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot1: ["Beacon: Old Battlefield"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null,
+        itemSlot4: [],
         dialogue: [
             {
                 question: "What does the beacon do?",

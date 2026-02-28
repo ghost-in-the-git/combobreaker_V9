@@ -19,7 +19,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot1: ["Military Chassis [+40 HP]"],
         itemSlot2: ["Hydraulic Boosters [+4 SPD]"],
         itemSlot3: ["Barrier Arms [+4 DEF]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Zero-G Peddler",
@@ -34,7 +34,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot1: ["Shock Cannon [+4 ATK]"],
         itemSlot2: ["Chain Protocol [+4 BREAKER]"],
         itemSlot3: ["Tactical Neural Net [+4 Silicon]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Docking Ring Vendor",
@@ -49,7 +49,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot1: ["Diamond-Tip Auger [+4 MINING]"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Void Smuggler",
@@ -64,7 +64,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot1: ["Elite Pilot [+4 ALL]"],
         itemSlot2: ["Regenerative Mesh [+4 REGEN]"],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Mapmaker",
@@ -105,7 +105,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot1: ["Refined Jetspinel"],
         itemSlot2: ["Refined Kryptoglass"],
         itemSlot3: ["Refined Lumenore"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Herald",
@@ -121,7 +121,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot1: ["Beacon: Orbital Station"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null,
+        itemSlot4: [],
         dialogue: [
             {
                 question: "What does the beacon do?",

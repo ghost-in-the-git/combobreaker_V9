@@ -19,7 +19,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot1: ["Old Breaker Chassis [+50 HP]"],
         itemSlot2: ["Reflex Actuators [+5 SPD]"],
         itemSlot3: ["Armored Claws [+5 DEF]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Rad-Shielded Caravan",
@@ -34,7 +34,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot1: ["Plasma Rifle [+5 ATK]"],
         itemSlot2: ["Strike Sequencer [+5 BREAKER]"],
         itemSlot3: ["Battlefield Recorder [+5 Silicon]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Scavenger Camp",
@@ -49,7 +49,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot1: ["Sonic Fracture Drill [+5 MINING]"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Buried Supply Cache",
@@ -64,7 +64,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot1: ["Ace Pilot [+5 ALL]"],
         itemSlot2: ["Bio-Repair Matrix [+5 REGEN]"],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Mapmaker",
@@ -105,7 +105,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot1: ["Refined Moonshardite"],
         itemSlot2: ["Refined Nightpyre"],
         itemSlot3: ["Refined Obsidryl"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Herald",
@@ -121,7 +121,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot1: ["Beacon: Wasteland"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null,
+        itemSlot4: [],
         dialogue: [
             {
                 question: "What does the beacon do?",

@@ -19,7 +19,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot1: ["Advanced Chassis [+30 HP]"],
         itemSlot2: ["Quick Striders [+3 SPD]"],
         itemSlot3: ["Power Gauntlets [+3 DEF]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Smuggler's Docking Bay",
@@ -34,7 +34,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot1: ["Chain Blade [+3 ATK]"],
         itemSlot2: ["Chain Booster [+3 BREAKER]"],
         itemSlot3: ["Combat Analyzer [+3 Silicon]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Scrap Dealer",
@@ -49,7 +49,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot1: ["Rotary Cutter [+3 MINING]"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Neon Bazaar Kiosk",
@@ -64,7 +64,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot1: ["Veteran Pilot [+3 ALL]"],
         itemSlot2: ["Tissue Welder Implant [+3 REGEN]"],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Mapmaker",
@@ -105,7 +105,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot1: ["Refined Gloomstone"],
         itemSlot2: ["Refined Hexsilica"],
         itemSlot3: ["Refined Iridionite"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Herald",
@@ -121,7 +121,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot1: ["Beacon: Downtown"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null,
+        itemSlot4: [],
         dialogue: [
             {
                 question: "What does the beacon do?",

@@ -18,7 +18,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot1: ["Low-Grade Chassis [+10 HP]"],
         itemSlot2: ["Standard Servos [+1 SPD]"],
         itemSlot3: ["Standard Manipulators [+1 DEF]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Scrap Dealer",
@@ -33,7 +33,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot1: ["Pulse Pistol [+1 ATK]"],
         itemSlot2: ["Targeting Firmware [+1 BREAKER]"],
         itemSlot3: ["Basic Data Processor [+1 Silicon]"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Field Mechanic",
@@ -48,7 +48,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot1: ["Salvage Pick [+1 MINING]"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "[COMMON] Derelict Vending Array",
@@ -63,7 +63,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot1: ["Rookie Pilot [+1 ALL]"],
         itemSlot2: ["Salvaged Repair Node [+1 REGEN]"],
         itemSlot3: [],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Mapmaker",
@@ -104,7 +104,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot1: ["Refined Aetherite"],
         itemSlot2: ["Refined Bronzewisp"],
         itemSlot3: ["Refined Cindergem"],
-        itemSlot4: null
+        itemSlot4: []
     },
     {
         name: "The Herald",
@@ -120,7 +120,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot1: ["Beacon: Scrap Fields"],
         itemSlot2: [],
         itemSlot3: [],
-        itemSlot4: null,
+        itemSlot4: [],
         dialogue: [
             {
                 question: "What does the beacon do?",
