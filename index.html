@@ -1733,6 +1733,10 @@
     <script src="enemies_neonstrip.js"></script>
     <script src="enemies_deadzone.js"></script>
     <script src="enemies_frontline.js"></script>
+    <script src="enemies_trenchworks.js"></script>
+    <script src="enemies_firebaseharrow.js"></script>
+    <script src="enemies_ironveil.js"></script>
+    <script src="enemies_signalpoint.js"></script>
     <script src="enemies_ratpile.js"></script>
     <script src="ambush_ratpile.js"></script>
     <script src="ambush_scrapyard.js"></script>
@@ -1746,6 +1750,10 @@
     <script src="ambush_neonstrip.js"></script>
     <script src="ambush_deadzone.js"></script>
     <script src="ambush_frontline.js"></script>
+    <script src="ambush_trenchworks.js"></script>
+    <script src="ambush_firebaseharrow.js"></script>
+    <script src="ambush_ironveil.js"></script>
+    <script src="ambush_signalpoint.js"></script>
     <script src="boss_encounters.js"></script>
     <script src="items.js"></script>
     <script src="pilots.js"></script>
@@ -2474,6 +2482,42 @@
                 desc: "Active military staging ground. Squadrons of piloted combobreakers hold the line. They killed you once.",
                 image: "images/IMAGE.gif"
             },
+            trenchworks: {
+                enemies: ENEMIES_TRENCHWORKS,
+                encounters: null,
+                mining: null,
+                ambush: AMBUSH_TRENCHWORKS,
+                fuelCost: 60,
+                desc: "A network of reinforced trenches dug into the kill corridor floor. Decades of autonomous fortification — layered armour, turret nests, overlapping fields of fire. Morningstar's maps say this sector was cleared eighty years ago. The Reaper's targeting overlay says otherwise.",
+                image: "images/IMAGE.gif"
+            },
+            firebaseharrow: {
+                enemies: ENEMIES_FIREBASEHARROW,
+                encounters: null,
+                mining: null,
+                ambush: AMBUSH_FIREBASEHARROW,
+                fuelCost: 65,
+                desc: "A firebase built into the husk of a downed capital ship. Artillery platforms cycle through firing solutions, shelling positions that Morningstar's maps mark as friendly. Three patrols walked into the barrage before the Reaper stopped sending them.",
+                image: "images/IMAGE.gif"
+            },
+            ironveil: {
+                enemies: ENEMIES_IRONVEIL,
+                encounters: null,
+                mining: null,
+                ambush: AMBUSH_IRONVEIL,
+                fuelCost: 70,
+                desc: "A wall of wreckage three storeys high — mechs, vehicles, scaffolding — welded into a barricade that stretches across the corridor. Behind it, a staging ground where enemies mass and regroup. Morningstar said go around. The Reaper says go through.",
+                image: "images/IMAGE.gif"
+            },
+            signalpoint: {
+                enemies: ENEMIES_SIGNALPOINT,
+                encounters: null,
+                mining: null,
+                ambush: AMBUSH_SIGNALPOINT,
+                fuelCost: 75,
+                desc: "A relay tower at the far end of the kill corridor. Every hostile formation, target priority, and reinforcement schedule on the frontline flows through this single point. Morningstar's standing order: monitor, do not engage. The Reaper's contract says destroy it.",
+                image: "images/IMAGE.gif"
+            },
             morningstar: {
                 enemies: null,
                 encounters: null,
@@ -2572,6 +2616,10 @@
             deadzone: 'DEAD ZONE',
             asteroidbelt: 'ASTEROID BELT',
             frontline: 'THE FRONTLINE',
+            trenchworks: 'THE TRENCHWORKS',
+            firebaseharrow: 'FIREBASE HARROW',
+            ironveil: 'THE IRON VEIL',
+            signalpoint: 'SIGNAL POINT',
             morningstar: "MORNINGSTAR'S DESTRUCTION",
             forge: 'THE FORGE',
             guild: 'THE GUILD',
@@ -2596,6 +2644,10 @@
             deadzone: 'Map: Dead Zone',
             asteroidbelt: 'Map: Asteroid Belt',
             frontline: 'Map: Frontline',
+            trenchworks: "Reaper's Contract: The Trenchworks",
+            firebaseharrow: "Reaper's Contract: Firebase Harrow",
+            ironveil: "Reaper's Contract: The Iron Veil",
+            signalpoint: "Reaper's Contract: Signal Point",
             morningstar: 'Map: Morningstar\'s Destruction',
             forge: 'Map: The Forge',
             salvageyard: 'Map: Mech Graveyard',
@@ -2816,6 +2868,26 @@
                     { encounterName: "The Reaper", mapItem: "Frontline: The Reaper" }
                 ]
             },
+            trenchworks: {
+                openWorldName: "The Trenchworks",
+                openWorldDesc: "Reinforced trench network. Turret nests and overlapping fields of fire. Morningstar said it was cleared.",
+                destinations: []
+            },
+            firebaseharrow: {
+                openWorldName: "Firebase Harrow",
+                openWorldDesc: "A downed capital ship converted to an artillery platform. Still shelling positions marked friendly.",
+                destinations: []
+            },
+            ironveil: {
+                openWorldName: "The Iron Veil",
+                openWorldDesc: "A three-storey barricade of welded wreckage. Behind it, a staging ground. Morningstar said go around.",
+                destinations: []
+            },
+            signalpoint: {
+                openWorldName: "Signal Point",
+                openWorldDesc: "Relay tower coordinating every hostile on the frontline. Morningstar said do not engage.",
+                destinations: []
+            },
             morningstar: {
                 openWorldName: "Morningstar's Position",
                 openWorldDesc: "The end of the line. A monolithic war machine stands on scorched earth, facing you for the first time in eighty years.",
@@ -2862,7 +2934,8 @@
                 const fuelCost = LOCATIONS[key].fuelCost || 0;
                 const fuelTag = fuelCost > 0 ? ` (${fuelCost} fuel)` : '';
                 const friendZones = ['home', 'forge', 'guild', 'salvageyard'];
-                const tag = friendZones.includes(key) ? '[FRIEND]' : '[ZONE]';
+                const contractZones = ['trenchworks', 'firebaseharrow', 'ironveil', 'signalpoint'];
+                const tag = friendZones.includes(key) ? '[FRIEND]' : contractZones.includes(key) ? '[CONTRACT]' : '[ZONE]';
                 opt.textContent = `${tag} ${LOCATION_NAMES[key] || key}${fuelTag}`;
                 if (key === current) opt.selected = true;
                 select.appendChild(opt);
