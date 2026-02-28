@@ -7,7 +7,7 @@
 
 const ENCOUNTERS_UNDERCITY = [
     {
-        name: "[COMMON] Tunnel Fixer",
+        name: "Tunnel Fixer",
         type: "shop",
         discoverable: true,
         description: "A fixer's workshop is carved into the tunnel wall. Neon signs flicker in the damp air.",
@@ -22,7 +22,7 @@ const ENCOUNTERS_UNDERCITY = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Pipe Market Stall",
+        name: "Pipe Market Stall",
         type: "shop",
         discoverable: true,
         description: "A cluster of makeshift stalls fills a junction in the pipe network. Traders haggle in the echo.",
@@ -37,7 +37,7 @@ const ENCOUNTERS_UNDERCITY = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Rogue Maintenance Drone",
+        name: "Rogue Maintenance Drone",
         type: "shop",
         discoverable: true,
         description: "A reprogrammed city maintenance drone hovers nearby, cargo bay loaded with mismatched parts.",
@@ -52,7 +52,7 @@ const ENCOUNTERS_UNDERCITY = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Shadow Broker",
+        name: "Shadow Broker",
         type: "shop",
         discoverable: true,
         description: "A hidden door slides open in the tunnel wall. Inside, a broker deals in parts no one asks about.",

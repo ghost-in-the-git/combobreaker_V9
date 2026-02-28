@@ -7,7 +7,7 @@
 
 const ENCOUNTERS_NEONSTRIP = [
     {
-        name: "[COMMON] Back-Alley Dealer",
+        name: "Back-Alley Dealer",
         type: "shop",
         discoverable: true,
         description: "A dealer leans against a flickering holographic ad, a briefcase of components at their feet.",
@@ -22,7 +22,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Casino Prize Counter",
+        name: "Casino Prize Counter",
         type: "shop",
         discoverable: true,
         description: "A casino's prize redemption counter has mech parts on display between the stuffed animals.",
@@ -37,7 +37,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Syndicate Fence",
+        name: "Syndicate Fence",
         type: "shop",
         discoverable: true,
         description: "A syndicate contact pings your secure channel. They have goods that need to move fast.",
@@ -52,7 +52,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] High-Roller Lounge",
+        name: "High-Roller Lounge",
         type: "shop",
         discoverable: true,
         description: "A VIP lounge door opens as your mech approaches. Inside, premium parts are displayed on velvet.",

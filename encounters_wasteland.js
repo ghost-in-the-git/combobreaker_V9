@@ -7,7 +7,7 @@
 
 const ENCOUNTERS_WASTELAND = [
     {
-        name: "[COMMON] Nomad Trader",
+        name: "Nomad Trader",
         type: "shop",
         discoverable: true,
         description: "A dust-caked nomad convoy rolls into sensor range. They flash trade beacons from atop their rigs.",
@@ -22,7 +22,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Rad-Shielded Caravan",
+        name: "Rad-Shielded Caravan",
         type: "shop",
         discoverable: true,
         description: "A lead-lined hauler convoy creeps across the dunes. Their geiger counters click rhythmically.",
@@ -37,7 +37,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Scavenger Camp",
+        name: "Scavenger Camp",
         type: "shop",
         discoverable: true,
         description: "A makeshift camp sits in the shadow of a wrecked dropship. Salvaged goods are laid out on tarps.",
@@ -52,7 +52,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Buried Supply Cache",
+        name: "Buried Supply Cache",
         type: "shop",
         discoverable: true,
         description: "Your sensors detect a pre-war supply cache buried beneath the sand. The seal is still intact.",

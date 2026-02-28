@@ -7,7 +7,7 @@
 
 const ENCOUNTERS_OLDBATTLEFIELD = [
     {
-        name: "[COMMON] Salvage Auction Pod",
+        name: "Salvage Auction Pod",
         type: "shop",
         discoverable: true,
         description: "A drifting auction pod broadcasts rotating lots of recovered mech gear—first come, first served.",
@@ -22,7 +22,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Corporate Supply Cache",
+        name: "Corporate Supply Cache",
         type: "shop",
         discoverable: true,
         description: "A corporate resupply buoy is active in this sector. Access requires credits and a clean transaction.",
@@ -37,7 +37,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Pilgrim Parts Caravan",
+        name: "Pilgrim Parts Caravan",
         type: "shop",
         discoverable: true,
         description: "A convoy of civilian haulers moves in formation, offering parts in exchange for fuel, ammo, or coin.",
@@ -52,7 +52,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Experimental R&D Vendor",
+        name: "Experimental R&D Vendor",
         type: "shop",
         discoverable: true,
         description: "A research craft requests a brief rendezvous. Prototype components available for combat testing.",

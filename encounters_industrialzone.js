@@ -7,7 +7,7 @@
 
 const ENCOUNTERS_INDUSTRIALZONE = [
     {
-        name: "[COMMON] Factory Surplus Outlet",
+        name: "Factory Surplus Outlet",
         type: "shop",
         discoverable: true,
         description: "A factory loading dock is open. Surplus components from the latest production run are stacked high.",
@@ -22,7 +22,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Union Supply Depot",
+        name: "Union Supply Depot",
         type: "shop",
         discoverable: true,
         description: "A workers' union depot sits between the smokestacks. Mechanics share tools and trade parts.",
@@ -37,7 +37,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Automated Vending Rig",
+        name: "Automated Vending Rig",
         type: "shop",
         discoverable: true,
         description: "A mobile vending rig trundles along the factory floor, dispensing parts from its rotating shelves.",
@@ -52,7 +52,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Shift Supervisor's Stash",
+        name: "Shift Supervisor's Stash",
         type: "shop",
         discoverable: true,
         description: "A shift supervisor flags you down near a locked storage unit. They glance around nervously.",

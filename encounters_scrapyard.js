@@ -6,7 +6,7 @@
 
 const ENCOUNTERS_SCRAPYARD = [
     {
-        name: "[COMMON] Mech Junker",
+        name: "Mech Junker",
         type: "shop",
         discoverable: true,
         description: "A wandering Junker's vessel has appeared on radar. They're broadcasting a trade signal.",
@@ -21,7 +21,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Scrap Dealer",
+        name: "Scrap Dealer",
         type: "shop",
         discoverable: true,
         description: "A Scrap Dealer's cargo ship is passing through. Their comms crackle with offers of rare components.",
@@ -36,7 +36,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Field Mechanic",
+        name: "Field Mechanic",
         type: "shop",
         discoverable: true,
         description: "A lone field mechanic truck sits next to a decommissioned mech. A field mechanic is offering tune-ups and spare parts.",
@@ -51,7 +51,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Derelict Vending Array",
+        name: "Derelict Vending Array",
         type: "shop",
         discoverable: true,
         description: "A derelict station's vending array still has power. The interface flickers—prices fluctuate wildly.",

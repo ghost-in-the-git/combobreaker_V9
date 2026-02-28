@@ -7,7 +7,7 @@
 
 const ENCOUNTERS_DEADZONE = [
     {
-        name: "[COMMON] Hazmat Trader",
+        name: "Hazmat Trader",
         type: "shop",
         discoverable: true,
         description: "A sealed hazmat vehicle idles at the contamination perimeter. A trader in full gear waves you down.",
@@ -22,7 +22,7 @@ const ENCOUNTERS_DEADZONE = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Decontamination Drone",
+        name: "Decontamination Drone",
         type: "shop",
         discoverable: true,
         description: "A roving decontamination drone has surplus supplies in its cargo bay. It beeps an offer.",
@@ -37,7 +37,7 @@ const ENCOUNTERS_DEADZONE = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Desperate Scavenger",
+        name: "Desperate Scavenger",
         type: "shop",
         discoverable: true,
         description: "A lone scavenger in a patched radiation suit flags you from behind a crumbling wall.",
@@ -52,7 +52,7 @@ const ENCOUNTERS_DEADZONE = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Sealed Bunker Terminal",
+        name: "Sealed Bunker Terminal",
         type: "shop",
         discoverable: true,
         description: "A bunker hatch sits ajar. Inside, an emergency supply terminal still has power and stock.",

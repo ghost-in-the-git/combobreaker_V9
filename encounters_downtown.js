@@ -7,7 +7,7 @@
 
 const ENCOUNTERS_DOWNTOWN = [
     {
-        name: "[COMMON] Black Market Trader",
+        name: "Black Market Trader",
         type: "shop",
         discoverable: true,
         description: "An unmarked vessel with no IFF signature is broadcasting on an encrypted channel. Black market goods available.",
@@ -22,7 +22,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Smuggler's Docking Bay",
+        name: "Smuggler's Docking Bay",
         type: "shop",
         discoverable: true,
         description: "A hidden dock ring pings your nav—smugglers offering 'off-ledger' upgrades with questionable warranties.",
@@ -37,7 +37,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Scrap Dealer",
+        name: "Scrap Dealer",
         type: "shop",
         discoverable: true,
         description: "A Scrap Dealer's cargo ship is passing through. Their comms crackle with offers of rare components.",
@@ -52,7 +52,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Neon Bazaar Kiosk",
+        name: "Neon Bazaar Kiosk",
         type: "shop",
         discoverable: true,
         description: "A street-level kiosk flickers to life as your mech approaches. Holographic menus display available upgrades.",

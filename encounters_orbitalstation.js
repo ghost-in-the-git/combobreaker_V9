@@ -7,7 +7,7 @@
 
 const ENCOUNTERS_ORBITALSTATION = [
     {
-        name: "[COMMON] Station Quartermaster",
+        name: "Station Quartermaster",
         type: "shop",
         discoverable: true,
         description: "A logistics officer flags your mech from the station's supply bay. Surplus military stock available.",
@@ -22,7 +22,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Zero-G Peddler",
+        name: "Zero-G Peddler",
         type: "shop",
         discoverable: true,
         description: "A small craft is magnetically clamped to the station hull. A trader waves from the airlock.",
@@ -37,7 +37,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Docking Ring Vendor",
+        name: "Docking Ring Vendor",
         type: "shop",
         discoverable: true,
         description: "An automated kiosk at the docking ring displays rotating inventory on a holographic shelf.",
@@ -52,7 +52,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Void Smuggler",
+        name: "Void Smuggler",
         type: "shop",
         discoverable: true,
         description: "A blacked-out shuttle with scrambled transponders drifts alongside. A hailing frequency opens.",

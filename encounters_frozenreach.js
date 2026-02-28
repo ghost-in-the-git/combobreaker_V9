@@ -7,7 +7,7 @@
 
 const ENCOUNTERS_FROZENREACH = [
     {
-        name: "[COMMON] Outpost Trader",
+        name: "Outpost Trader",
         type: "shop",
         discoverable: true,
         description: "A heated outpost glows against the snowfield. A trader stamps their boots and waves you over.",
@@ -22,7 +22,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Ice Road Hauler",
+        name: "Ice Road Hauler",
         type: "shop",
         discoverable: true,
         description: "A massive tracked hauler grinds to a stop. The driver opens the cargo hold to passing mechs.",
@@ -37,7 +37,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Research Station Surplus",
+        name: "Research Station Surplus",
         type: "shop",
         discoverable: true,
         description: "An abandoned research station still has its supply terminal online. Power flickers but holds.",
@@ -52,7 +52,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot4: []
     },
     {
-        name: "[COMMON] Glacier Prospector",
+        name: "Glacier Prospector",
         type: "shop",
         discoverable: true,
         description: "A prospector's drill rig sits atop a glacier. They've uncovered pre-war components in the ice.",
