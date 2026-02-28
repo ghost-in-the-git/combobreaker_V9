@@ -133,6 +133,7 @@ const ENCOUNTERS_DEADZONE = [
         engageText: "The Phantom's jamming field washes over you and keeps going. You're inside the denial zone but you're not transmitting on any frequency it's targeting. It doesn't know you're here. It doesn't know anything is here.",
         discoveredDescription: "Your sensors die the moment you enter the zone. The EW-0 Phantom is still at the center, broadcasting its blanket of electronic denial across every frequency.",
         discoveredEngageText: "The Phantom's camouflage flickers. Same patterns. Same denial. You're invisible inside its invisibility — hidden by the thing that's hiding from everything.",
+        defeatedEngageText: "Your sensors work here now. Radar returns clean. Comms are clear. The EW-0 Phantom's jamming field died with it — the Dead Zone is quiet for the first time in eighty years.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,

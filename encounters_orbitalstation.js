@@ -143,6 +143,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         engageText: "The Prospector's ore detection array sweeps past you and keeps going. You're not rock. You're not ore. You don't register on any scan it cares about.",
         discoveredDescription: "The DR-7 Prospector is still at the bottom of the shaft, drills grinding the same grooves into the same bare stone. The low mechanical drone hasn't changed.",
         discoveredEngageText: "The Prospector doesn't look up. The drills keep grinding. Down here, you're just more empty space between the walls.",
+        defeatedEngageText: "The drill arms are still. The ore detection array has gone dark. At the bottom of the shaft, the DR-7 Prospector sits in silence for the first time in decades. The stone has stopped humming.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,

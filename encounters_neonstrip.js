@@ -139,6 +139,7 @@ const ENCOUNTERS_NEONSTRIP = [
         engageText: "The Tinker's manipulator arms don't pause. Diagnostic sensors sweep the cabinet — connection restored, power nominal. It files the repair and moves to the next broken thing. You're not broken enough to be interesting.",
         discoveredDescription: "The EN-9 Tinker has moved to a new project — a busted traffic light, this time. The tarnished gold chassis crouches over the wiring with machinist precision.",
         discoveredEngageText: "The Tinker doesn't look up. You're functional. You're not on the work queue. It has things to fix.",
+        defeatedEngageText: "The neon signs are still lit — repairs that will outlast their maker. The EN-9 Tinker lies among its tools, manipulator arms still, the work queue finally empty.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,

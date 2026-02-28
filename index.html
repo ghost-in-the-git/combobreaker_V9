@@ -4207,7 +4207,17 @@
             clearCountdown();
 
             const useDiscoveredEngage = currentDestination && currentDestination !== 'openworld' && currentEncounter.discoveredEngageText;
-            await addMessage(useDiscoveredEngage ? currentEncounter.discoveredEngageText : currentEncounter.engageText, 'system', { label: currentEncounter.name, image: currentEncounter.characterImage, characterDialogue: !!currentEncounter.characterImage });
+            let engageText = useDiscoveredEngage ? currentEncounter.discoveredEngageText : currentEncounter.engageText;
+
+            // Defeated boss area — override with defeated text
+            if (currentEncounter.isBossArea && currentEncounter.defeatedEngageText) {
+                const boss = getBossEncounter();
+                if (boss && (game.storyItems || []).includes(boss.dnaDrop)) {
+                    engageText = currentEncounter.defeatedEngageText;
+                }
+            }
+
+            await addMessage(engageText, 'system', { label: currentEncounter.name, image: currentEncounter.characterImage, characterDialogue: !!currentEncounter.characterImage });
 
             // The Professor gives the Ratpile map for free if the player doesn't have it
             if (currentEncounter.name === 'The Professor' && !(game.storyItems || []).includes('Map: The Ratpile')) {
@@ -4239,7 +4249,7 @@
             if (currentEncounter.isBossArea) {
                 const boss = getBossEncounter();
                 const hasBeacon = boss && boss.beacon && (game.storyItems || []).includes(boss.beacon);
-                const bossDefeated = boss && (game.storyItems || []).includes(boss.keyDrop) && (game.storyItems || []).includes(boss.dnaDrop);
+                const bossDefeated = boss && (game.storyItems || []).includes(boss.dnaDrop);
 
                 // Has beacon, boss alive, encounters enabled — boss aggros
                 if (hasBeacon && !bossDefeated && bossEncountersEnabled) {
@@ -4250,8 +4260,8 @@
                     return;
                 }
 
-                // Boss ignores you — show dialogue + Leave button
-                if (currentEncounter.dialogue && currentEncounter.dialogue.length > 0) {
+                // Boss not yet defeated — show dialogue + Leave button
+                if (!bossDefeated && currentEncounter.dialogue && currentEncounter.dialogue.length > 0) {
                     showDialogueButtons(currentEncounter);
                 }
                 game.shopLeaveBtn = document.createElement('div');
@@ -5055,10 +5065,9 @@
             const boss = getBossEncounter();
             if (!boss) return false;
 
-            // Check if both drops have already been collected — boss already beaten
-            const hasKey = (game.storyItems || []).includes(boss.keyDrop);
+            // Check if boss already beaten — DNA tag is permanent (key may be consumed by decrypter)
             const hasDna = (game.storyItems || []).includes(boss.dnaDrop);
-            if (hasKey && hasDna) return false;
+            if (hasDna) return false;
 
             // Boss only appears after player activates the zone's beacon
             if (boss.beacon && !(game.storyItems || []).includes(boss.beacon)) return false;

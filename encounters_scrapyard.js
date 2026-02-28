@@ -142,6 +142,7 @@ const ENCOUNTERS_SCRAPYARD = [
         engageText: "The Grinder's optics sweep past you without stopping. You're not scrap. You're not worth processing. It turns back to the pile and keeps grinding.",
         discoveredDescription: "The KV-8 Grinder is where you left it, still grinding the same pile of scrap in the same slow loop. The claws open and close on nothing.",
         discoveredEngageText: "The Grinder doesn't acknowledge you. Same routine. Same loop. It has no reason to fight you.",
+        defeatedEngageText: "The KV-8 Grinder lies where it fell, claws frozen mid-reach. The compactor bay is silent. For the first time in eighty years, nothing is grinding.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,

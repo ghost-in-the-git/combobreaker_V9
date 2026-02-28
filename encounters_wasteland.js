@@ -143,6 +143,7 @@ const ENCOUNTERS_WASTELAND = [
         engageText: "The Ravager finishes with the Stalker's wreck and stands still. Sensors sweep — nothing moving, nothing warm, nothing to fight. It doesn't register you as a target. You're not close enough. You're not hostile enough. It wanders back into the dunes.",
         discoveredDescription: "The AX-3 Ravager is stalking the dunes again, hunting for anything that moves. The engine scream carries for miles across the flat wasteland.",
         discoveredEngageText: "The Ravager's sensors sweep past you. No engagement. You're not triggering its targeting firmware — not yet.",
+        defeatedEngageText: "The engine is quiet. The AX-3 Ravager lies half-buried in sand, claws still extended, reaching for nothing. The dunes are already reclaiming it.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,

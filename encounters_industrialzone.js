@@ -139,6 +139,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         engageText: "The Devastator's targeting array sweeps past you and keeps traversing. You're not in the firing arc. You're not in the blast zone. It has walls to shoot and nothing else matters.",
         discoveredDescription: "The rhythmic thud of weapons fire echoes through the factory corridors. The HG-6 Devastator is still in its blast zone, putting rounds into the same cratered walls.",
         discoveredEngageText: "The Devastator doesn't pause. Same walls. Same arcs. Same rounds. You're still not in the firing solution.",
+        defeatedEngageText: "The factory is quiet. No rhythmic thud, no weapons cycling. The HG-6 Devastator stands in its blast zone, weapon mounts locked at rest, barrels cold. The walls will never take another round.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,

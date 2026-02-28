@@ -143,6 +143,7 @@ const ENCOUNTERS_UNDERCITY = [
         engageText: "The Flicker blurs through the junction without slowing. You catch a glimpse of corroded plating — then it's gone, already three tunnels away. It's running recon on a network it's mapped a million times. You're not worth stopping for.",
         discoveredDescription: "The high-pitched whine is back. The SC-1 Flicker is still running its endless circuit through the tunnels, a blur of corroded metal that never stops moving.",
         discoveredEngageText: "The Flicker screams past you again. Same speed. Same route. Same corroded blur. It has nowhere to stop and no one to report to.",
+        defeatedEngageText: "The tunnels are quiet. No whine, no blur, no corroded streak screaming through the junctions. The SC-1 Flicker sits against a wall, mid-stride frozen into stillness. The recon loop is over.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,

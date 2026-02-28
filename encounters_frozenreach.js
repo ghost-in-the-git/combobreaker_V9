@@ -139,6 +139,7 @@ const ENCOUNTERS_FROZENREACH = [
         engageText: "The Lifeline's triage sensors sweep you briefly. Living pilot — vital signs normal. Not critical. Not a priority. It turns back to the empty cockpit and resumes treatment on a patient that died eighty years ago.",
         discoveredDescription: "The MD-5 Lifeline stands in its crater of refrozen ice, medical displays still cycling. Vitals flatlined. Treatment ongoing. The same loop as before.",
         discoveredEngageText: "The Lifeline's sensors sweep you and dismiss you. Healthy patient. No triage priority. It has a critical case to attend to — the same one it's been attending to for eighty years.",
+        defeatedEngageText: "The medical displays are dark. The MD-5 Lifeline stands in its crater of refrozen ice, heating elements cold, biomonitors silent. The patient is no longer critical. The treatment is over.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,

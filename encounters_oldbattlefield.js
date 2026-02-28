@@ -143,6 +143,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         engageText: "The Bulwark's turret traverses slowly across the empty field. It tracks movement, but you're not crossing its line. It has no orders to engage. It just holds the position.",
         discoveredDescription: "The MK-IV Bulwark is still dug in behind the bunker. Same position. Same perimeter. The turret tracks the empty field in a slow, endless arc.",
         discoveredEngageText: "The Bulwark registers you and dismisses you. You're not a threat to the position. It goes back to guarding nothing.",
+        defeatedEngageText: "The MK-IV Bulwark is still. The turret has stopped traversing. The perimeter it guarded for decades goes unwatched — and nothing comes through it.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,

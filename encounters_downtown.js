@@ -143,6 +143,7 @@ const ENCOUNTERS_DOWNTOWN = [
         engageText: "The Wraith's outline shimmers and fades. It doesn't register you as a target. Just another shape in the rain, not worth decloaking for.",
         discoveredDescription: "The rain still falls around the shape that isn't there. The S-12 Wraith drifts between the towers, flickering through the same stealth patterns.",
         discoveredEngageText: "The Wraith passes through the intersection without slowing. You're background noise. Not a threat. Not anything.",
+        defeatedEngageText: "The rain falls straight now. No shape in the downpour, no shimmer between the towers. The S-12 Wraith lies folded against a building's base, stealth systems dark, finally visible.",
         appearanceRate: 8,
         minLevel: 1,
         itemSlot1: null,
