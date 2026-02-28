@@ -19,10 +19,10 @@ const ENCOUNTERS_FRONTLINE = [
         discoveredEngageText: "'You came back. Good.' The overlay refreshes — new positions, deeper contacts. 'More of them every day. Morningstar never cared about what was actually out here. I do. You ready to work?'",
         appearanceRate: 12,
         minLevel: 1,
-        itemSlot1: ["Reaper's Contract"],
-        itemSlot2: [],
-        itemSlot3: [],
-        itemSlot4: [],
+        itemSlot1: ["Reaper's Contract: The Trenchworks"],
+        itemSlot2: ["Reaper's Contract: Firebase Harrow"],
+        itemSlot3: ["Reaper's Contract: The Iron Veil"],
+        itemSlot4: ["Reaper's Contract: Signal Point"],
         dialogue: [
             {
                 question: "Who is Morningstar to you?",

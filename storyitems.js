@@ -983,11 +983,32 @@ const STORY_ITEMS = [
         cost: 700
     },
     {
-        name: "Reaper's Contract",
-        desc: "A forward combat contract issued by the Reaper — a frontline operator who broke from Morningstar's chain of command. No scorched earth. No burning empty sectors. The contract marks real enemy positions deeper in the kill corridor and authorises you to engage. The work Morningstar should have ordered eighty years ago.",
+        name: "Reaper's Contract: The Trenchworks",
+        desc: "A forward combat contract marking a network of reinforced trenches dug into the kill corridor floor. Something has been fortifying them for decades — layered armour plating, automated turret nests, overlapping fields of fire. Morningstar's targeting data marked this sector as 'cleared' eighty years ago. The Reaper's overlay shows sixty-plus active hostiles dug in and waiting. 'Clear the Trenchworks,' he says. 'Then we can move.'",
+        category: "key",
+        image: "images/IMAGE.gif",
+        cost: 400
+    },
+    {
+        name: "Reaper's Contract: Firebase Harrow",
+        desc: "Coordinates to a firebase built into the husk of a downed capital ship halfway up the corridor. Long-range artillery platforms still cycle through firing solutions, shelling positions that Morningstar's maps say are friendly. They're not. The Reaper watched three patrols walk into the barrage before he stopped sending them. 'Knock out Firebase Harrow and the corridor opens up. Morningstar never even looked at it.'",
         category: "key",
         image: "images/IMAGE.gif",
         cost: 500
+    },
+    {
+        name: "Reaper's Contract: The Iron Veil",
+        desc: "A wall of wreckage stretching across the corridor — mechs, vehicles, scaffolding — welded together into a barricade three storeys high. Behind it, a staging ground. Enemies mass, regroup, and push forward every few days. Morningstar's orders were to go around it. The Reaper's orders are simpler: go through it. 'Break the Iron Veil and they lose their staging ground. Everything behind it falls apart.'",
+        category: "key",
+        image: "images/IMAGE.gif",
+        cost: 600
+    },
+    {
+        name: "Reaper's Contract: Signal Point",
+        desc: "A relay tower at the far end of the kill corridor, broadcasting on a frequency that coordinates every hostile unit on the frontline. Formation data, target priorities, reinforcement schedules — all of it flows through Signal Point. Morningstar knew about the tower. His objective list said 'monitor, do not engage.' The Reaper's contract says otherwise. 'Destroy Signal Point and they go deaf. No coordination. No reinforcements. That's when we finish the war.'",
+        category: "key",
+        image: "images/IMAGE.gif",
+        cost: 700
     },
 
     // Herald location maps (encounter discoveries)
