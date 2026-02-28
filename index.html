@@ -1329,6 +1329,209 @@
         .chat-messages::-webkit-scrollbar-thumb:hover {
             background: transparent;
         }
+
+        /* ── Custom Select Dropdown ── */
+        .custom-select-native {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+            padding: 0 !important;
+            margin: -1px !important;
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select-trigger {
+            width: 100%;
+            padding: 8px 24px 8px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #1a1a2e;
+            color: #00ff88;
+            border: 1px solid #00ff8855;
+            border-radius: 4px;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2300ff88'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            box-sizing: border-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .custom-select-trigger.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .custom-select-wrapper.open .custom-select-trigger {
+            border-color: #00ff88;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .custom-select-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #1a1a2e;
+            border: 1px solid #00ff8855;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            z-index: 1000;
+        }
+
+        .custom-select-wrapper.open .custom-select-options {
+            display: block;
+        }
+
+        .custom-select-wrapper.open .custom-select-options:empty {
+            display: none;
+        }
+
+        .custom-select-option {
+            padding: 6px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #00ff88;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .custom-select-option:hover {
+            background: #00ff8833;
+        }
+
+        .custom-select-option.selected {
+            background: #00ff8822;
+        }
+
+        .custom-select-option.opt-disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .custom-select-optgroup-label {
+            padding: 6px 6px 2px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #00ff8888;
+            font-weight: bold;
+            cursor: default;
+        }
+
+        .custom-select-options::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-select-options::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        .custom-select-options::-webkit-scrollbar-thumb {
+            background: #00ff8844;
+            border-radius: 3px;
+        }
+
+        /* Orange theme (Forge) */
+        .custom-select-wrapper[data-theme="orange"] .custom-select-trigger {
+            color: #ff8800;
+            border-color: #ff880055;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23ff8800'/%3E%3C/svg%3E");
+        }
+        .custom-select-wrapper[data-theme="orange"].open .custom-select-trigger {
+            border-color: #ff8800;
+        }
+        .custom-select-wrapper[data-theme="orange"] .custom-select-options {
+            border-color: #ff880055;
+        }
+        .custom-select-wrapper[data-theme="orange"] .custom-select-option {
+            color: #ff8800;
+        }
+        .custom-select-wrapper[data-theme="orange"] .custom-select-option:hover {
+            background: #ff880033;
+        }
+        .custom-select-wrapper[data-theme="orange"] .custom-select-option.selected {
+            background: #ff880022;
+        }
+        .custom-select-wrapper[data-theme="orange"] .custom-select-optgroup-label {
+            color: #ff880088;
+        }
+        .custom-select-wrapper[data-theme="orange"] .custom-select-options::-webkit-scrollbar-thumb {
+            background: #ff880044;
+        }
+
+        /* Yellow theme (Salvage) */
+        .custom-select-wrapper[data-theme="yellow"] .custom-select-trigger {
+            color: #ffcc00;
+            border-color: #ffcc0055;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23ffcc00'/%3E%3C/svg%3E");
+        }
+        .custom-select-wrapper[data-theme="yellow"].open .custom-select-trigger {
+            border-color: #ffcc00;
+        }
+        .custom-select-wrapper[data-theme="yellow"] .custom-select-options {
+            border-color: #ffcc0055;
+        }
+        .custom-select-wrapper[data-theme="yellow"] .custom-select-option {
+            color: #ffcc00;
+        }
+        .custom-select-wrapper[data-theme="yellow"] .custom-select-option:hover {
+            background: #ffcc0033;
+        }
+        .custom-select-wrapper[data-theme="yellow"] .custom-select-option.selected {
+            background: #ffcc0022;
+        }
+        .custom-select-wrapper[data-theme="yellow"] .custom-select-optgroup-label {
+            color: #ffcc0088;
+        }
+        .custom-select-wrapper[data-theme="yellow"] .custom-select-options::-webkit-scrollbar-thumb {
+            background: #ffcc0044;
+        }
+
+        /* Cyan theme (Decrypter) */
+        .custom-select-wrapper[data-theme="cyan"] .custom-select-trigger {
+            color: #00ccff;
+            border-color: #00ccff55;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2300ccff'/%3E%3C/svg%3E");
+        }
+        .custom-select-wrapper[data-theme="cyan"].open .custom-select-trigger {
+            border-color: #00ccff;
+        }
+        .custom-select-wrapper[data-theme="cyan"] .custom-select-options {
+            border-color: #00ccff55;
+        }
+        .custom-select-wrapper[data-theme="cyan"] .custom-select-option {
+            color: #00ccff;
+        }
+        .custom-select-wrapper[data-theme="cyan"] .custom-select-option:hover {
+            background: #00ccff33;
+        }
+        .custom-select-wrapper[data-theme="cyan"] .custom-select-option.selected {
+            background: #00ccff22;
+        }
+        .custom-select-wrapper[data-theme="cyan"] .custom-select-optgroup-label {
+            color: #00ccff88;
+        }
+        .custom-select-wrapper[data-theme="cyan"] .custom-select-options::-webkit-scrollbar-thumb {
+            background: #00ccff44;
+        }
+
+        /* Beacon row flex fix */
+        .beacon-row .custom-select-wrapper {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
@@ -5896,6 +6099,164 @@
             window.location.href = 'landing.html';
         }
 
+        // ── Custom Select Dropdown System ──
+        class CustomSelect {
+            constructor(selectEl) {
+                this.select = selectEl;
+                this.rebuilding = false;
+
+                // Create wrapper
+                this.wrapper = document.createElement('div');
+                this.wrapper.className = 'custom-select-wrapper';
+
+                // Determine colour theme from parent context
+                if (selectEl.closest('.forge-selector')) {
+                    this.wrapper.dataset.theme = 'orange';
+                } else if (selectEl.closest('.salvage-selector')) {
+                    this.wrapper.dataset.theme = 'yellow';
+                } else if (selectEl.closest('.decrypter-selector')) {
+                    this.wrapper.dataset.theme = 'cyan';
+                } else {
+                    this.wrapper.dataset.theme = 'green';
+                }
+
+                // Create trigger (the visible closed-state element)
+                this.trigger = document.createElement('div');
+                this.trigger.className = 'custom-select-trigger';
+
+                // Create options container (the dropdown)
+                this.optionsContainer = document.createElement('div');
+                this.optionsContainer.className = 'custom-select-options';
+
+                // Insert wrapper before the native select
+                selectEl.parentNode.insertBefore(this.wrapper, selectEl);
+                this.wrapper.appendChild(this.trigger);
+                this.wrapper.appendChild(this.optionsContainer);
+
+                // Hide the native select (sr-only pattern)
+                selectEl.classList.add('custom-select-native');
+
+                // Build initial state
+                this.rebuild();
+
+                // Toggle dropdown on trigger click
+                this.trigger.addEventListener('click', () => {
+                    if (this.select.disabled) return;
+                    this.wrapper.classList.toggle('open');
+                    if (this.wrapper.classList.contains('open')) {
+                        // Scroll selected option into view
+                        const sel = this.optionsContainer.querySelector('.selected');
+                        if (sel) sel.scrollIntoView({ block: 'nearest' });
+                    }
+                });
+
+                // Close on click outside
+                document.addEventListener('click', (e) => {
+                    if (!this.wrapper.contains(e.target)) {
+                        this.wrapper.classList.remove('open');
+                    }
+                });
+
+                // Watch the native select for any DOM changes
+                this.observer = new MutationObserver(() => this.rebuild());
+                this.observer.observe(selectEl, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    characterData: true
+                });
+
+                // Override select.value to intercept programmatic changes
+                const proto = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value');
+                const self = this;
+                Object.defineProperty(selectEl, 'value', {
+                    get() { return proto.get.call(selectEl); },
+                    set(val) {
+                        proto.set.call(selectEl, val);
+                        if (!self.rebuilding) {
+                            self.syncTrigger();
+                            self.syncSelected();
+                        }
+                    }
+                });
+            }
+
+            rebuild() {
+                this.rebuilding = true;
+                this.optionsContainer.innerHTML = '';
+
+                for (const child of this.select.children) {
+                    if (child.tagName === 'OPTGROUP') {
+                        const label = document.createElement('div');
+                        label.className = 'custom-select-optgroup-label';
+                        label.textContent = child.label;
+                        this.optionsContainer.appendChild(label);
+                        for (const opt of child.children) {
+                            this.buildOption(opt);
+                        }
+                    } else if (child.tagName === 'OPTION') {
+                        this.buildOption(child);
+                    }
+                }
+
+                this.syncTrigger();
+                this.syncDisabled();
+                this.syncVisibility();
+                this.rebuilding = false;
+            }
+
+            buildOption(optionEl) {
+                const div = document.createElement('div');
+                div.className = 'custom-select-option';
+                div.textContent = optionEl.textContent;
+                div.dataset.value = optionEl.value;
+                if (optionEl.disabled) div.classList.add('opt-disabled');
+                if (optionEl.selected && optionEl.value === this.select.value) {
+                    div.classList.add('selected');
+                }
+
+                div.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (optionEl.disabled) return;
+                    this.select.value = optionEl.value;
+                    this.select.dispatchEvent(new Event('change', { bubbles: true }));
+                    this.wrapper.classList.remove('open');
+                });
+
+                this.optionsContainer.appendChild(div);
+            }
+
+            syncTrigger() {
+                const idx = this.select.selectedIndex;
+                const opt = idx >= 0 ? this.select.options[idx] : null;
+                this.trigger.textContent = opt ? opt.textContent : '';
+            }
+
+            syncSelected() {
+                const val = this.select.value;
+                this.optionsContainer.querySelectorAll('.custom-select-option').forEach(el => {
+                    el.classList.toggle('selected', el.dataset.value === val);
+                });
+            }
+
+            syncDisabled() {
+                this.trigger.classList.toggle('disabled', this.select.disabled);
+            }
+
+            syncVisibility() {
+                // Mirror select.style.display to wrapper (used by destination-select)
+                this.wrapper.style.display = this.select.style.display;
+            }
+        }
+
+        // Initialize custom selects for all <select> elements
+        function initCustomSelects() {
+            document.querySelectorAll('select').forEach(sel => {
+                new CustomSelect(sel);
+            });
+        }
+
+        initCustomSelects();
         init();
     </script>
 </body>
