@@ -2011,6 +2011,7 @@
     <script src="encounters_neonstrip.js"></script>
     <script src="encounters_deadzone.js"></script>
     <script src="encounters_frontline.js"></script>
+    <script src="encounters_mission.js"></script>
     <script src="mining_scrapyard.js"></script>
     <script src="mining_oldbattlefield.js"></script>
     <script src="mining_downtown.js"></script>
@@ -2085,7 +2086,8 @@
             storyItems: ['Mysterious Note', 'Unknown Sealed Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'], // Collected story items
             isAmbush: false, // Whether current wave is an ambush
             isBossEncounter: false, // Whether current wave is a boss encounter
-            justDied: false // Set after death, cleared after next encounter engage
+            justDied: false, // Set after death, cleared after next encounter engage
+            missions: {} // Broker mission progress: { missionKey: { kills: N, completed: bool } }
         };
 
         // Current encounter state
@@ -2127,6 +2129,7 @@
                 destination: currentDestination || 'openworld',
                 minerals: game.minerals || {},
                 storyItems: game.storyItems || [],
+                missions: game.missions || {},
                 forgedItems: [...FORGER_ITEMS]
             };
         }
@@ -2466,6 +2469,7 @@
                 game.activeSlot = data.activeSlot || null;
                 game.minerals = data.minerals || {};
                 game.storyItems = data.storyItems && data.storyItems.length > 0 ? data.storyItems : ['Mysterious Note', 'Unknown Sealed Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
+                game.missions = data.missions || {};
 
                 // Restore location
                 if (data.location && LOCATIONS[data.location]) {
@@ -2923,7 +2927,8 @@
                     { encounterName: "Bronzewisp Asteroid", mapItem: "Scrap Fields: Bronzewisp Asteroid" },
                     { encounterName: "Cindergem Asteroid", mapItem: "Scrap Fields: Cindergem Asteroid" },
                     { encounterName: "The Herald", mapItem: "Scrap Fields: The Herald" },
-                    { encounterName: "Rusted KV-8 Grinder", mapItem: "Scrap Fields: Rusted KV-8 Grinder" }
+                    { encounterName: "Rusted KV-8 Grinder", mapItem: "Scrap Fields: Rusted KV-8 Grinder" },
+                    { encounterName: "Scout Factory", mapItem: "Scrap Fields: Scout Factory", destinationType: "mission" }
                 ]
             },
             oldbattlefield: {
@@ -2940,7 +2945,8 @@
                     { encounterName: "Emberlith Asteroid", mapItem: "Old Battlefield: Emberlith Asteroid" },
                     { encounterName: "Frostveil Asteroid", mapItem: "Old Battlefield: Frostveil Asteroid" },
                     { encounterName: "The Herald", mapItem: "Old Battlefield: The Herald" },
-                    { encounterName: "Shelled MK-IV Bulwark", mapItem: "Old Battlefield: Shelled MK-IV Bulwark" }
+                    { encounterName: "Shelled MK-IV Bulwark", mapItem: "Old Battlefield: Shelled MK-IV Bulwark" },
+                    { encounterName: "Munitions Bunker", mapItem: "Old Battlefield: Munitions Bunker", destinationType: "mission" }
                 ]
             },
             downtown: {
@@ -2957,7 +2963,8 @@
                     { encounterName: "Hexsilica Asteroid", mapItem: "Downtown: Hexsilica Asteroid" },
                     { encounterName: "Iridionite Asteroid", mapItem: "Downtown: Iridionite Asteroid" },
                     { encounterName: "The Herald", mapItem: "Downtown: The Herald" },
-                    { encounterName: "Shadowed S-12 Wraith", mapItem: "Downtown: Shadowed S-12 Wraith" }
+                    { encounterName: "Shadowed S-12 Wraith", mapItem: "Downtown: Shadowed S-12 Wraith" },
+                    { encounterName: "Signal Tower", mapItem: "Downtown: Signal Tower", destinationType: "mission" }
                 ]
             },
             orbitalstation: {
@@ -2974,7 +2981,8 @@
                     { encounterName: "Kryptoglass Asteroid", mapItem: "Orbital Station: Kryptoglass Asteroid" },
                     { encounterName: "Lumenore Asteroid", mapItem: "Orbital Station: Lumenore Asteroid" },
                     { encounterName: "The Herald", mapItem: "Orbital Station: The Herald" },
-                    { encounterName: "Depressurized DR-7 Prospector", mapItem: "Orbital Station: Depressurized DR-7 Prospector" }
+                    { encounterName: "Depressurized DR-7 Prospector", mapItem: "Orbital Station: Depressurized DR-7 Prospector" },
+                    { encounterName: "Drone Foundry", mapItem: "Orbital Station: Drone Foundry", destinationType: "mission" }
                 ]
             },
             wasteland: {
@@ -2991,7 +2999,8 @@
                     { encounterName: "Nightpyre Asteroid", mapItem: "Wasteland: Nightpyre Asteroid" },
                     { encounterName: "Obsidryl Asteroid", mapItem: "Wasteland: Obsidryl Asteroid" },
                     { encounterName: "The Herald", mapItem: "Wasteland: The Herald" },
-                    { encounterName: "Irradiated AX-3 Ravager", mapItem: "Wasteland: Irradiated AX-3 Ravager" }
+                    { encounterName: "Irradiated AX-3 Ravager", mapItem: "Wasteland: Irradiated AX-3 Ravager" },
+                    { encounterName: "Fuel Depot", mapItem: "Wasteland: Fuel Depot", destinationType: "mission" }
                 ]
             },
             undercity: {
@@ -3008,7 +3017,8 @@
                     { encounterName: "Quellium Asteroid", mapItem: "Undercity: Quellium Asteroid" },
                     { encounterName: "Riftmarble Asteroid", mapItem: "Undercity: Riftmarble Asteroid" },
                     { encounterName: "The Herald", mapItem: "Undercity: The Herald" },
-                    { encounterName: "Corroded SC-1 Flicker", mapItem: "Undercity: Corroded SC-1 Flicker" }
+                    { encounterName: "Corroded SC-1 Flicker", mapItem: "Undercity: Corroded SC-1 Flicker" },
+                    { encounterName: "Nerve Centre", mapItem: "Undercity: Nerve Centre", destinationType: "mission" }
                 ]
             },
             industrialzone: {
@@ -3025,7 +3035,8 @@
                     { encounterName: "Thorncrystal Asteroid", mapItem: "Industrial Zone: Thorncrystal Asteroid" },
                     { encounterName: "Umbracite Asteroid", mapItem: "Industrial Zone: Umbracite Asteroid" },
                     { encounterName: "The Herald", mapItem: "Industrial Zone: The Herald" },
-                    { encounterName: "Slag-Coated HG-6 Devastator", mapItem: "Industrial Zone: Slag-Coated HG-6 Devastator" }
+                    { encounterName: "Slag-Coated HG-6 Devastator", mapItem: "Industrial Zone: Slag-Coated HG-6 Devastator" },
+                    { encounterName: "Weapons Lab", mapItem: "Industrial Zone: Weapons Lab", destinationType: "mission" }
                 ]
             },
             frozenreach: {
@@ -3042,7 +3053,8 @@
                     { encounterName: "Wyrmstone Asteroid", mapItem: "Frozen Reach: Wyrmstone Asteroid" },
                     { encounterName: "Xanthryx Asteroid", mapItem: "Frozen Reach: Xanthryx Asteroid" },
                     { encounterName: "The Herald", mapItem: "Frozen Reach: The Herald" },
-                    { encounterName: "Frozen MD-5 Lifeline", mapItem: "Frozen Reach: Frozen MD-5 Lifeline" }
+                    { encounterName: "Frozen MD-5 Lifeline", mapItem: "Frozen Reach: Frozen MD-5 Lifeline" },
+                    { encounterName: "Cryo Vault", mapItem: "Frozen Reach: Cryo Vault", destinationType: "mission" }
                 ]
             },
             neonstrip: {
@@ -3059,7 +3071,8 @@
                     { encounterName: "Zephyrsalt Asteroid", mapItem: "Neon Strip: Zephyrsalt Asteroid" },
                     { encounterName: "Isotope Lace Asteroid", mapItem: "Neon Strip: Isotope Lace Asteroid" },
                     { encounterName: "The Herald", mapItem: "Neon Strip: The Herald" },
-                    { encounterName: "Gilded EN-9 Tinker", mapItem: "Neon Strip: Gilded EN-9 Tinker" }
+                    { encounterName: "Gilded EN-9 Tinker", mapItem: "Neon Strip: Gilded EN-9 Tinker" },
+                    { encounterName: "Syndicate Arena", mapItem: "Neon Strip: Syndicate Arena", destinationType: "mission" }
                 ]
             },
             deadzone: {
@@ -3076,7 +3089,8 @@
                     { encounterName: "Strata-Null Asteroid", mapItem: "Dead Zone: Strata-Null Asteroid" },
                     { encounterName: "Compound 33 Asteroid", mapItem: "Dead Zone: Compound 33 Asteroid" },
                     { encounterName: "The Herald", mapItem: "Dead Zone: The Herald" },
-                    { encounterName: "Blighted EW-0 Phantom", mapItem: "Dead Zone: Blighted EW-0 Phantom" }
+                    { encounterName: "Blighted EW-0 Phantom", mapItem: "Dead Zone: Blighted EW-0 Phantom" },
+                    { encounterName: "Reactor Core", mapItem: "Dead Zone: Reactor Core", destinationType: "mission" }
                 ]
             },
             asteroidbelt: {
@@ -3209,10 +3223,11 @@
                         opt.value = dest.encounterName;
                         const isMine = zoneConfig.destinationType === 'mine' || dest.encounterName.endsWith(' Asteroid');
                         const isRefiner = dest.destinationType === 'refiner';
+                        const isMission = dest.destinationType === 'mission';
                         const isHerald = dest.encounterName === 'The Herald';
                         const isMapmaker = dest.encounterName === 'The Mapmaker';
                         const isBoss = BOSS_ENCOUNTERS.some(b => b.enemy.name === dest.encounterName);
-                        const prefix = isMine ? '[MINE]' : isRefiner ? '[REFINER]' : isHerald ? '[BEACON]' : isMapmaker ? '[MAPS]' : isBoss ? '[BOSS]' : '[VENDOR]';
+                        const prefix = isMission ? '[MISSION]' : isMine ? '[MINE]' : isRefiner ? '[REFINER]' : isHerald ? '[BEACON]' : isMapmaker ? '[MAPS]' : isBoss ? '[BOSS]' : '[VENDOR]';
                         opt.textContent = `${prefix} ${dest.encounterName.replace(/^\[COMMON\] /, '')}`;
                         select.appendChild(opt);
                     }
@@ -3237,6 +3252,7 @@
 
         function changeDestination(destValue) {
             currentDestination = destValue;
+            game._missionEngaged = false;
 
             // Update description based on destination
             const zoneConfig = ZONE_DESTINATIONS[currentLocation];
@@ -3311,6 +3327,7 @@
             }
             currentLocation = locationKey;
             currentDestination = 'openworld';
+            game._missionEngaged = false;
 
             // Update location image
             document.getElementById('location-image').src = LOCATIONS[locationKey].image;
@@ -3846,6 +3863,8 @@
                         tag = 'MINERAL';
                     } else if (item.type) {
                         tag = SLOT_LABELS[item.type] || item.type.toUpperCase();
+                    } else if (item.isMissionMap) {
+                        tag = 'MISSION';
                     } else if (item.category) {
                         tag = item.category.toUpperCase();
                     } else {
@@ -3992,11 +4011,28 @@
             // Get the 3 pilots for this tier
             const tierPilots = ALL_PILOTS.filter(p => p.tier === tierValue);
 
+            // Get the mission map for this tier (4th item)
+            const mission = BROKER_MISSIONS.find(m => m.tier === tierValue);
+            let missionItem = null;
+            if (mission) {
+                const alreadyOwned = (game.storyItems || []).includes(mission.mapItem);
+                if (!alreadyOwned) {
+                    missionItem = {
+                        name: mission.mapItem,
+                        desc: mission.desc,
+                        category: "locationmap",
+                        image: "images/IMAGE.gif",
+                        cost: mission.cost,
+                        isMissionMap: true
+                    };
+                }
+            }
+
             shopItems = [
                 tierPilots[0] ? findShopItem(tierPilots[0].name) : null,
                 tierPilots[1] ? findShopItem(tierPilots[1].name) : null,
                 tierPilots[2] ? findShopItem(tierPilots[2].name) : null,
-                null
+                missionItem
             ];
 
             updateShopUI();
@@ -4484,6 +4520,7 @@
                 // Broker: remove purchased slot, keep dropdown visible
                 shopItems[index] = null;
                 updateShopUI();
+                updateDestinationDropdown();
             } else if (item.xpReward || item.refinedMineral) {
                 // Repeatable: services and mineral refining stay in slot
                 updateShopUI();
@@ -4692,6 +4729,55 @@
                 game.shopLeaveBtn.appendChild(leaveBtn);
                 chatMessages.appendChild(game.shopLeaveBtn);
                 game.shopLeaveBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+
+            // Mission encounter: show progress and start combat waves
+            if (currentEncounter.isMission) {
+                const mKey = currentEncounter.missionKey;
+                if (!game.missions[mKey]) {
+                    game.missions[mKey] = { kills: 0, completed: false };
+                }
+                const progress = game.missions[mKey];
+
+                if (progress.completed) {
+                    await addMessage(`[MISSION COMPLETE] ${currentEncounter.completionText}`, 'system');
+                    currentEncounter = null;
+                    startWaveTimer();
+                    return;
+                }
+
+                await addMessage(`[MISSION] ${currentEncounter.name} — ${progress.kills}/${currentEncounter.killsRequired} squads destroyed`, 'system');
+
+                // "Begin / Continue Mission" button
+                const container = document.createElement('div');
+                container.className = 'action-btn-container';
+                const missionBtn = document.createElement('button');
+                missionBtn.className = 'action-btn engage';
+                missionBtn.textContent = progress.kills > 0 ? 'Continue Mission' : 'Begin Mission';
+                missionBtn.addEventListener('click', () => {
+                    container.remove();
+                    currentEncounter = null;
+                    game._missionEngaged = true;
+                    saveGame();
+                    startWaveTimer();
+                });
+                container.appendChild(missionBtn);
+
+                const leaveBtn = document.createElement('button');
+                leaveBtn.className = 'action-btn engage';
+                leaveBtn.textContent = 'Leave';
+                leaveBtn.addEventListener('click', () => {
+                    container.remove();
+                    currentEncounter = null;
+                    game._missionEngaged = false;
+                    addMessage(`You leave the area.`, 'system');
+                    startWaveTimer();
+                });
+                container.appendChild(leaveBtn);
+
+                chatMessages.appendChild(container);
+                container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                return;
             }
 
             showShopPanel();
@@ -5589,6 +5675,13 @@
             if (existing) existing.remove();
         }
 
+        // Look up mission encounter for the current destination name
+        function getMissionEncounterForDestination(destName) {
+            const allEncounters = LOCATIONS[currentLocation] && LOCATIONS[currentLocation].encounters;
+            if (!allEncounters) return null;
+            return allEncounters.find(e => e.name === destName && e.isMission) || null;
+        }
+
         function spawnWave() {
             if (game.inBattle || game.currentWave || currentEncounter || currentMiningEvent) return;
 
@@ -5603,6 +5696,50 @@
                         addMessage(`[NO DRILL EQUIPPED] Mining drill required to operate in this zone.`, 'mining');
                     }
                 } else {
+                    // Check if this is an active mission destination — spawn enemies instead of re-showing encounter
+                    const missionEnc = getMissionEncounterForDestination(currentDestination);
+                    if (missionEnc && game._missionEngaged) {
+                        const progress = game.missions[missionEnc.missionKey] || { kills: 0, completed: false };
+                        if (progress.completed) {
+                            addMessage(`[MISSION COMPLETE] This area has been cleared.`, 'system');
+                            return;
+                        }
+                        // Spawn a regular zone enemy wave at the mission destination
+                        game.currentWave = generateWave();
+                        if (game.currentWave) {
+                            const et = game.currentWave.enemyType;
+                            addMessage(`[MISSION] ${missionEnc.name} — ${progress.kills}/${missionEnc.killsRequired} squads destroyed`, 'system');
+                            addMessage(`[TARGET ACQUIRED]> ${game.currentWave.count} ${et.name}s are within engagement range [ATK:${et.attack} DEF:${et.defence} HP:${et.hp}]`, 'enemy');
+
+                            let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
+                            const countdownMsg = document.createElement('div');
+                            countdownMsg.className = 'message enemy';
+                            countdownMsg.textContent = `Enemy location locked [${secondsLeft}] seconds until EMP signal jam.`;
+                            chatMessages.appendChild(countdownMsg);
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                            game.countdownMsg = countdownMsg;
+                            game.countdownInterval = setInterval(() => {
+                                secondsLeft--;
+                                if (secondsLeft > 0) {
+                                    countdownMsg.textContent = `Enemy signal locked. [${secondsLeft}] seconds until signal loss.`;
+                                    updateEvadeButton();
+                                } else {
+                                    clearCountdown();
+                                }
+                            }, 1000);
+                            showInlineButtons();
+                            if (game.waveExpireTimer) clearTimeout(game.waveExpireTimer);
+                            game.waveExpireTimer = setTimeout(() => {
+                                clearCountdown();
+                                if (game.currentWave && !game.inBattle) {
+                                    addMessage(`Signal lock expired. Auto-engaging hostiles.`, 'system', { image: 'images/Comp 1.gif' });
+                                    hideInlineButtons();
+                                    engageBattle();
+                                }
+                            }, game.WAVE_EXPIRE);
+                        }
+                        return;
+                    }
                     spawnEncounter();
                 }
                 return;
@@ -5999,9 +6136,30 @@
                     addStoryItem(currentBossEncounter.dnaDrop);
                 }
 
+                // Mission kill tracking
+                if (game._missionEngaged && currentDestination && currentDestination !== 'openworld') {
+                    const missionEnc = getMissionEncounterForDestination(currentDestination);
+                    if (missionEnc) {
+                        const mKey = missionEnc.missionKey;
+                        if (!game.missions[mKey]) game.missions[mKey] = { kills: 0, completed: false };
+                        const progress = game.missions[mKey];
+                        if (!progress.completed) {
+                            progress.kills++;
+                            if (progress.kills >= missionEnc.killsRequired) {
+                                progress.completed = true;
+                                game._missionEngaged = false;
+                                addMessage(`[MISSION COMPLETE] ${missionEnc.completionText}`, 'victory');
+                            } else {
+                                addMessage(`[MISSION] ${progress.kills}/${missionEnc.killsRequired} squads destroyed`, 'system');
+                            }
+                        }
+                    }
+                }
+
                 checkLevelUp();
             } else {
                 game.deaths++;
+                game._missionEngaged = false;
                 addMessage(`Your mech has been confirmed destroyed.`, 'system');
                 addMessage(`Systems resetting.`, 'system');
                 // Respawn with half HP

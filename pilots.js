@@ -4,6 +4,10 @@
  * Guild mercenary pilots — 30 total, 3 per tier.
  * T1 (+1 ALL) through T10 (+10 ALL).
  * Merged into ITEMS at load time.
+ *
+ * BROKER_MISSIONS — mission maps sold as the 4th item per tier.
+ * Each unlocks a destination in the corresponding zone.
+ * The player must destroy 10 squads at the destination to clear the mission.
  */
 
 const BROKER_TIERS = [
@@ -17,6 +21,149 @@ const BROKER_TIERS = [
     { tier: 8, label: "T8 Pilots", stat: 8 },
     { tier: 9, label: "T9 Pilots", stat: 9 },
     { tier: 10, label: "T10 Pilots", stat: 10 }
+];
+
+const BROKER_MISSIONS = [
+    {
+        tier: 1,
+        zone: "scrapyard",
+        zoneName: "Scrap Fields",
+        encounterName: "Scout Factory",
+        mapItem: "Scrap Fields: Scout Factory",
+        missionTitle: "Destroy the Scout Factory",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "Coordinates to a hidden scout factory buried under the Scrap Fields. Automated assembly lines churn out light recon units around the clock. The Broker wants the production line shut down — permanently.",
+        arrivalText: "Your mech touches down outside a rusted hangar. Through the gash in the wall, you can see rows of half-assembled scout frames on conveyor belts. Sensors are already pinging incoming hostiles.",
+        completionText: "The last scout frame crumples. The assembly line grinds to a halt, sparks raining from severed power conduits. Mission complete.",
+        cost: 500
+    },
+    {
+        tier: 2,
+        zone: "oldbattlefield",
+        zoneName: "Old Battlefield",
+        encounterName: "Munitions Bunker",
+        mapItem: "Old Battlefield: Munitions Bunker",
+        missionTitle: "Destroy the Munitions Bunker",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "Intel on a buried munitions bunker deep in the Old Battlefield. Automated defense protocols are still active, and scavenger crews have been arming themselves from the stockpile. Time to shut it down.",
+        arrivalText: "The bunker entrance is half-collapsed, blast doors wedged open by decades of debris. Your HUD lights up with movement signatures below. They know you're here.",
+        completionText: "The bunker falls silent. Ammo racks lie shattered across the floor. Nothing left worth fighting over. Mission complete.",
+        cost: 750
+    },
+    {
+        tier: 3,
+        zone: "downtown",
+        zoneName: "Downtown",
+        encounterName: "Signal Tower",
+        mapItem: "Downtown: Signal Tower",
+        missionTitle: "Destroy the Signal Tower",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "A rogue signal tower in Downtown is broadcasting encrypted rally commands to hostile units across the district. The Broker wants the tower offline and its guardians scraped.",
+        arrivalText: "The tower looms above the skyline, its antenna array pulsing with crimson light. Armed patrols circle the perimeter. Your comms crackle with intercepted chatter — they're calling in reinforcements.",
+        completionText: "The signal tower's antenna array sparks and goes dark. The broadcast dies mid-transmission. The streets are quiet again. Mission complete.",
+        cost: 1000
+    },
+    {
+        tier: 4,
+        zone: "orbitalstation",
+        zoneName: "Orbital Station",
+        encounterName: "Drone Foundry",
+        mapItem: "Orbital Station: Drone Foundry",
+        missionTitle: "Destroy the Drone Foundry",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "A decommissioned module on the Orbital Station has been repurposed as a drone foundry. Swarms of attack drones are being assembled and deployed from the bay. The Broker wants the foundry gutted.",
+        arrivalText: "The airlock cycles open into a cavernous hangar. Drone chassis hang from ceiling rails like metal cocoons. The foundry hums with power — and the first wave of defenders is already airborne.",
+        completionText: "The foundry's fabrication arms hang limp, drone chassis scattered across the bay floor. Production has ceased. Mission complete.",
+        cost: 1400
+    },
+    {
+        tier: 5,
+        zone: "wasteland",
+        zoneName: "Wasteland",
+        encounterName: "Fuel Depot",
+        mapItem: "Wasteland: Fuel Depot",
+        missionTitle: "Destroy the Fuel Depot",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "An irradiated fuel depot in the Wasteland is supplying hostile convoys across the region. Cut off the supply and the patrols thin out. The Broker says it's worth the radiation exposure.",
+        arrivalText: "Massive fuel tanks rise from the cracked earth like metal blisters. Geiger counters spike as you approach. Guard patrols emerge from behind the storage silos, weapons hot.",
+        completionText: "The fuel depot burns. Black smoke rises into the irradiated sky as the last defenders fall. Supply lines severed. Mission complete.",
+        cost: 1800
+    },
+    {
+        tier: 6,
+        zone: "undercity",
+        zoneName: "Undercity",
+        encounterName: "Nerve Centre",
+        mapItem: "Undercity: Nerve Centre",
+        missionTitle: "Destroy the Nerve Centre",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "A tunnel command hub in the Undercity is coordinating hostile activity across the pipe network. The Broker wants the nerve centre collapsed and its operators buried.",
+        arrivalText: "The tunnel opens into a vaulted chamber lined with flickering screens and tangled cables. A central console pulses with data. The guards stationed here don't look surprised to see you.",
+        completionText: "The screens go black one by one. The command hub is silent, its operators scattered. The pipe network is blind. Mission complete.",
+        cost: 2200
+    },
+    {
+        tier: 7,
+        zone: "industrialzone",
+        zoneName: "Industrial Zone",
+        encounterName: "Weapons Lab",
+        mapItem: "Industrial Zone: Weapons Lab",
+        missionTitle: "Destroy the Weapons Lab",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "An R&D weapons lab hidden in the Industrial Zone is developing prototype weapon systems. The Broker doesn't care who's funding it — she wants it levelled before the prototypes go live.",
+        arrivalText: "The lab is disguised as a defunct refinery. Inside, weapon prototypes line reinforced racks. Test-fire scorch marks cover every wall. Security teams are already moving to intercept.",
+        completionText: "The weapons lab is gutted. Prototype schematics burn in the wreckage. Whatever they were building, it dies here. Mission complete.",
+        cost: 2700
+    },
+    {
+        tier: 8,
+        zone: "frozenreach",
+        zoneName: "Frozen Reach",
+        encounterName: "Cryo Vault",
+        mapItem: "Frozen Reach: Cryo Vault",
+        missionTitle: "Destroy the Cryo Vault",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "A cryo vault buried in the Frozen Reach is storing high-value military assets in deep freeze. Someone's been thawing them out and putting them back into service. The Broker wants the vault cracked open and emptied.",
+        arrivalText: "Ice crunches under your mech's weight as the vault doors grind open. Rows of frozen chassis line the walls, frost crystallising on their armour. The defrosting cycle has already begun on the nearest row.",
+        completionText: "The cryo vault's cooling systems fail. Meltwater pools across the floor as the last defenders fall. Nothing left to thaw. Mission complete.",
+        cost: 3200
+    },
+    {
+        tier: 9,
+        zone: "neonstrip",
+        zoneName: "Neon Strip",
+        encounterName: "Syndicate Arena",
+        mapItem: "Neon Strip: Syndicate Arena",
+        missionTitle: "Destroy the Syndicate Arena",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "A syndicate-run gladiator arena on the Neon Strip is pitting captured mechs against each other for profit. The Broker has a personal stake in shutting this one down. She didn't elaborate.",
+        arrivalText: "The arena's neon sign flickers overhead: 'IRON & BLOOD'. Inside, the pit is stained with hydraulic fluid and scorched metal. The house champions are already warming up.",
+        completionText: "The arena lights go out. The last champion drops. The crowd — what's left of it — scatters into the neon-lit streets. The show is over. Mission complete.",
+        cost: 3700
+    },
+    {
+        tier: 10,
+        zone: "deadzone",
+        zoneName: "Dead Zone",
+        encounterName: "Reactor Core",
+        mapItem: "Dead Zone: Reactor Core",
+        missionTitle: "Destroy the Reactor Core",
+        missionObjective: "Clear 10 squads",
+        killsRequired: 10,
+        desc: "A corrupted reactor core in the Dead Zone is powering an entire network of hostile units. The radiation is lethal, the defenses are brutal, and the Broker says this is the hardest job on her books. She's not wrong.",
+        arrivalText: "The reactor hums with a sickly green glow. Warning klaxons blare across the facility. Every system in your mech screams proximity alert as the heaviest resistance you've ever faced closes in.",
+        completionText: "The reactor core destabilises and goes dark. The hum that powered a thousand war machines fades to silence. The Dead Zone just got a little quieter. Mission complete.",
+        cost: 4500
+    }
 ];
 
 const ALL_PILOTS = [

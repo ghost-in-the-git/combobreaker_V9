@@ -1363,5 +1363,67 @@ const STORY_ITEMS = [
         desc: "Logged coordinates to a Compound 33 asteroid in the Dead Zone. Unstable isotopes pulse beneath the surface.",
         category: "location",
         image: "images/IMAGE.gif"
+    },
+
+    // Broker Mission Maps — purchased from The Broker, unlock mission destinations
+    {
+        name: "Scrap Fields: Scout Factory",
+        desc: "Coordinates to a hidden scout factory buried under the Scrap Fields. Automated assembly lines churn out light recon units. The Broker wants them shut down.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Old Battlefield: Munitions Bunker",
+        desc: "Intel on a buried munitions bunker deep in the Old Battlefield. Automated defense protocols are still active. Time to shut it down.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Downtown: Signal Tower",
+        desc: "A rogue signal tower in Downtown is broadcasting encrypted rally commands to hostile units. The Broker wants the tower offline.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Orbital Station: Drone Foundry",
+        desc: "A decommissioned module repurposed as a drone foundry. Swarms of attack drones are being assembled and deployed. The Broker wants it gutted.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Wasteland: Fuel Depot",
+        desc: "An irradiated fuel depot supplying hostile convoys across the Wasteland. Cut off the supply and the patrols thin out.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Undercity: Nerve Centre",
+        desc: "A tunnel command hub coordinating hostile activity across the Undercity pipe network. The Broker wants it collapsed.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Industrial Zone: Weapons Lab",
+        desc: "An R&D weapons lab hidden in the Industrial Zone developing prototype weapon systems. The Broker wants it levelled.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Frozen Reach: Cryo Vault",
+        desc: "A cryo vault storing high-value military assets in deep freeze. Someone's been thawing them out. The Broker wants the vault cracked.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Neon Strip: Syndicate Arena",
+        desc: "A syndicate-run gladiator arena pitting captured mechs against each other. The Broker has a personal stake in shutting this one down.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Dead Zone: Reactor Core",
+        desc: "A corrupted reactor core powering an entire network of hostile units. The radiation is lethal and the defenses are brutal. The Broker's hardest job.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
     }
 ];
