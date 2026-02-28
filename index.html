@@ -1808,8 +1808,8 @@
         <div class="panel-page" id="page-storage">
             <div class="storage-panel">
                 <div class="equip-slot">
-                    <select id="storage-log"><option value="">[LOGS] -- Empty --</option></select>
-                    <div class="storage-desc" id="storage-desc-log"></div>
+                    <select id="storage-mission"><option value="">[MISSIONS] -- Empty --</option></select>
+                    <div class="storage-desc" id="storage-desc-mission"></div>
                 </div>
                 <div class="equip-slot">
                     <select id="storage-key"><option value="">[KEYS] -- Empty --</option></select>
@@ -1834,14 +1834,6 @@
                 <div class="equip-slot">
                     <select id="storage-map"><option value="">[MAPS] -- Empty --</option></select>
                     <div class="storage-desc" id="storage-desc-map"></div>
-                </div>
-                <div class="equip-slot">
-                    <select id="storage-locationmap"><option value="">[LOCATIONS] -- Empty --</option></select>
-                    <div class="storage-desc" id="storage-desc-locationmap"></div>
-                </div>
-                <div class="equip-slot">
-                    <select id="storage-mission_clearance"><option value="">[CLEARANCES] -- Empty --</option></select>
-                    <div class="storage-desc" id="storage-desc-mission_clearance"></div>
                 </div>
             </div>
         </div>
@@ -5326,9 +5318,9 @@
 
         // Update storage UI dropdowns with collected story items
         function updateStorageUI() {
-            const STORAGE_LABELS = { log: 'LOGS', key: 'KEYS', beacon: 'BEACONS', dna: 'DNA', debris: 'DEBRIS', powerup: 'BREAKERS', scrap: 'SCRAP', map: 'MAPS', locationmap: 'LOCATIONS', mission_clearance: 'CLEARANCES' };
+            const STORAGE_LABELS = { key: 'KEYS', beacon: 'BEACONS', dna: 'DNA', debris: 'DEBRIS', powerup: 'BREAKERS', scrap: 'SCRAP', map: 'MAPS' };
             const items = game.storyItems || [];
-            const cats = ['log', 'key', 'beacon', 'dna', 'debris', 'powerup', 'map', 'locationmap', 'mission_clearance'];
+            const cats = ['key', 'beacon', 'dna', 'debris', 'powerup', 'map'];
             cats.forEach(cat => {
                 const select = document.getElementById(`storage-${cat}`);
                 const desc = document.getElementById(`storage-desc-${cat}`);
@@ -5360,10 +5352,43 @@
                 scrapSelect.innerHTML = `<option value="">[SCRAP] ${count}</option>`;
                 scrapSelect.disabled = true;
             }
+
+            // Missions dropdown — shows current and completed missions
+            const missionSelect = document.getElementById('storage-mission');
+            const missionDesc = document.getElementById('storage-desc-mission');
+            if (missionSelect && missionDesc) {
+                const missionEntries = [];
+                if (typeof BROKER_MISSIONS !== 'undefined') {
+                    BROKER_MISSIONS.forEach(m => {
+                        const hasMap = items.includes(m.mapItem);
+                        const hasClearance = items.includes(m.clearanceItem);
+                        const progress = (game.missions && game.missions[m.missionKey]) || null;
+                        if (hasClearance) {
+                            missionEntries.push({ mission: m, status: 'complete', kills: m.killsRequired });
+                        } else if (hasMap || (progress && !progress.completed)) {
+                            const kills = progress ? progress.kills : 0;
+                            missionEntries.push({ mission: m, status: 'active', kills });
+                        }
+                    });
+                }
+                missionSelect.innerHTML = `<option value="">[MISSIONS] ${missionEntries.length} items</option>`;
+                missionEntries.forEach(entry => {
+                    const opt = document.createElement('option');
+                    opt.value = entry.mission.missionKey;
+                    if (entry.status === 'complete') {
+                        opt.textContent = `[COMPLETE] ${entry.mission.encounterName}`;
+                    } else {
+                        opt.textContent = `[ACTIVE] ${entry.mission.encounterName} — ${entry.kills}/${entry.mission.killsRequired}`;
+                    }
+                    missionSelect.appendChild(opt);
+                });
+                missionSelect.disabled = missionEntries.length === 0;
+                missionDesc.textContent = '';
+            }
         }
 
         // Storage dropdown change listeners
-        ['log', 'key', 'beacon', 'dna', 'debris', 'powerup', 'scrap', 'map', 'locationmap', 'mission_clearance'].forEach(cat => {
+        ['key', 'beacon', 'dna', 'debris', 'powerup', 'scrap', 'map'].forEach(cat => {
             document.getElementById(`storage-${cat}`).addEventListener('change', (e) => {
                 const desc = document.getElementById(`storage-desc-${cat}`);
                 const item = STORY_ITEMS.find(i => i.name === e.target.value);
@@ -5373,6 +5398,23 @@
                     desc.innerHTML = '';
                 }
             });
+        });
+
+        // Mission dropdown change listener
+        document.getElementById('storage-mission').addEventListener('change', (e) => {
+            const desc = document.getElementById('storage-desc-mission');
+            if (!e.target.value) { desc.innerHTML = ''; return; }
+            const m = (typeof BROKER_MISSIONS !== 'undefined') && BROKER_MISSIONS.find(bm => bm.missionKey === e.target.value);
+            if (m) {
+                const items = game.storyItems || [];
+                const hasClearance = items.includes(m.clearanceItem);
+                const progress = (game.missions && game.missions[m.missionKey]) || null;
+                const kills = hasClearance ? m.killsRequired : (progress ? progress.kills : 0);
+                const statusTag = hasClearance ? 'COMPLETE' : `${kills}/${m.killsRequired} SQUADS`;
+                desc.innerHTML = `<div class="storage-desc-content"><span><strong>${m.missionTitle}</strong><br>${m.zoneName} — ${statusTag}<br><br>${m.desc}</span></div>`;
+            } else {
+                desc.innerHTML = '';
+            }
         });
 
         const EVADE_FUEL_COST = 50;
