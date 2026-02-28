@@ -5847,7 +5847,7 @@
             const enemyType = wave ? wave.enemyType.name : null;
 
             if (victory) {
-                addMessage(`[ All hostiles confirmed destroyed ]`, 'system');
+                addMessage(`Too easy, all targets destroyed.`, 'mech');
 
                 // Powerbreaker: chance to double silicon gain
                 const powerTriggered = hasBreaker("Ace's Powerbreaker Key") && Math.random() * 100 < getBreaker();
