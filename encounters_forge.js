@@ -11,7 +11,7 @@
 const ENCOUNTERS_FORGE = [
     {
         name: "The Forger",
-        characterImage: "images/forger.gif",
+        characterImage: "images/FORGER.gif",
         type: "shop",
         isForge: true,
         autoEngage: true,
