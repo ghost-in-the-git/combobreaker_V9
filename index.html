@@ -4238,18 +4238,42 @@
             // Boss area encounter: check for beacon and trigger fight
             if (currentEncounter.isBossArea) {
                 const boss = getBossEncounter();
-                if (boss && boss.beacon && (game.storyItems || []).includes(boss.beacon)) {
-                    // Has beacon — boss aggros
+                const hasBeacon = boss && boss.beacon && (game.storyItems || []).includes(boss.beacon);
+                const bossDefeated = boss && (game.storyItems || []).includes(boss.keyDrop) && (game.storyItems || []).includes(boss.dnaDrop);
+
+                // Has beacon, boss alive, encounters enabled — boss aggros
+                if (hasBeacon && !bossDefeated && bossEncountersEnabled) {
                     currentEncounter = null;
                     shopItems = [];
                     await addMessage(`The beacon pulses. The signal cuts through — and the ${boss.enemy.name} turns toward you.`, 'system');
                     spawnBossEncounter();
                     return;
                 }
-                // No beacon — boss ignores you, show dialogue only
+
+                // Boss ignores you — show dialogue + Leave button
                 if (currentEncounter.dialogue && currentEncounter.dialogue.length > 0) {
                     showDialogueButtons(currentEncounter);
                 }
+                game.shopLeaveBtn = document.createElement('div');
+                game.shopLeaveBtn.className = 'action-btn-container';
+                const leaveBtn = document.createElement('button');
+                leaveBtn.className = 'action-btn engage';
+                leaveBtn.textContent = 'Leave';
+                leaveBtn.addEventListener('click', () => {
+                    const dialogueContainer = document.querySelector('.dialogue-btn-container');
+                    if (dialogueContainer) dialogueContainer.remove();
+                    if (game.shopLeaveBtn && game.shopLeaveBtn.parentNode) {
+                        game.shopLeaveBtn.remove();
+                        game.shopLeaveBtn = null;
+                    }
+                    currentEncounter = null;
+                    shopItems = [];
+                    addMessage(`You leave the area.`, 'system');
+                    startWaveTimer();
+                });
+                game.shopLeaveBtn.appendChild(leaveBtn);
+                chatMessages.appendChild(game.shopLeaveBtn);
+                game.shopLeaveBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
                 return;
             }
 
