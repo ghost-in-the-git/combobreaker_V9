@@ -1839,6 +1839,10 @@
                     <select id="storage-locationmap"><option value="">[LOCATIONS] -- Empty --</option></select>
                     <div class="storage-desc" id="storage-desc-locationmap"></div>
                 </div>
+                <div class="equip-slot">
+                    <select id="storage-mission_clearance"><option value="">[CLEARANCES] -- Empty --</option></select>
+                    <div class="storage-desc" id="storage-desc-mission_clearance"></div>
+                </div>
             </div>
         </div>
 
@@ -5224,7 +5228,7 @@
                 game.storyItems.push(itemName);
                 const item = STORY_ITEMS.find(i => i.name === itemName);
                 if (item) {
-                    const label = item.category === 'locationmap' ? 'VENDOR FOUND' : 'ITEM FOUND';
+                    const label = item.category === 'locationmap' ? 'VENDOR FOUND' : item.category === 'mission_clearance' ? 'MISSION CLEARANCE' : 'ITEM FOUND';
                     addMessage(`[${label}] ${item.name}`, 'victory');
                 }
                 updateStorageUI();
@@ -5294,9 +5298,9 @@
 
         // Update storage UI dropdowns with collected story items
         function updateStorageUI() {
-            const STORAGE_LABELS = { log: 'LOGS', key: 'KEYS', beacon: 'BEACONS', dna: 'DNA', debris: 'DEBRIS', powerup: 'BREAKERS', scrap: 'SCRAP', map: 'MAPS', locationmap: 'LOCATIONS' };
+            const STORAGE_LABELS = { log: 'LOGS', key: 'KEYS', beacon: 'BEACONS', dna: 'DNA', debris: 'DEBRIS', powerup: 'BREAKERS', scrap: 'SCRAP', map: 'MAPS', locationmap: 'LOCATIONS', mission_clearance: 'CLEARANCES' };
             const items = game.storyItems || [];
-            const cats = ['log', 'key', 'beacon', 'dna', 'debris', 'powerup', 'map', 'locationmap'];
+            const cats = ['log', 'key', 'beacon', 'dna', 'debris', 'powerup', 'map', 'locationmap', 'mission_clearance'];
             cats.forEach(cat => {
                 const select = document.getElementById(`storage-${cat}`);
                 const desc = document.getElementById(`storage-desc-${cat}`);
@@ -5331,7 +5335,7 @@
         }
 
         // Storage dropdown change listeners
-        ['log', 'key', 'beacon', 'dna', 'debris', 'powerup', 'scrap', 'map', 'locationmap'].forEach(cat => {
+        ['log', 'key', 'beacon', 'dna', 'debris', 'powerup', 'scrap', 'map', 'locationmap', 'mission_clearance'].forEach(cat => {
             document.getElementById(`storage-${cat}`).addEventListener('change', (e) => {
                 const desc = document.getElementById(`storage-desc-${cat}`);
                 const item = STORY_ITEMS.find(i => i.name === e.target.value);
@@ -6179,6 +6183,20 @@
                                 progress.completed = true;
                                 game._missionEngaged = false;
                                 addMessage(`[MISSION COMPLETE] ${missionEnc.completionText}`, 'victory');
+
+                                // Remove the mission map from inventory
+                                const mapIndex = (game.storyItems || []).indexOf(missionEnc.missionKey);
+                                if (mapIndex !== -1) {
+                                    game.storyItems.splice(mapIndex, 1);
+                                }
+
+                                // Grant the mission clearance item
+                                if (missionEnc.completionItem) {
+                                    addStoryItem(missionEnc.completionItem);
+                                }
+
+                                updateDestinationDropdown();
+                                saveGame();
 
                                 // Stop waves and show leave button
                                 if (game.waveTimer) { clearInterval(game.waveTimer); game.waveTimer = null; }

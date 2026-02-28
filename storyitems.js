@@ -1425,5 +1425,67 @@ const STORY_ITEMS = [
         desc: "A corrupted reactor core powering an entire network of hostile units. The radiation is lethal and the defenses are brutal. The Broker's hardest job.",
         category: "locationmap",
         image: "images/IMAGE.gif"
+    },
+
+    // Broker Mission Clearances — awarded on mission completion, proof for The Broker
+    {
+        name: "Scout Factory Clearance",
+        desc: "Confirmed kill report from the Scrap Fields scout factory. Assembly lines destroyed, production halted. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Munitions Bunker Clearance",
+        desc: "Demolition confirmation from the Old Battlefield munitions bunker. Ammo racks shattered, defenses neutralised. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Signal Tower Clearance",
+        desc: "Signal kill confirmation from the Downtown tower. Antenna array destroyed, broadcast silenced. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Drone Foundry Clearance",
+        desc: "Scrap report from the Orbital Station drone foundry. Fabrication arms disabled, drone production ceased. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Fuel Depot Clearance",
+        desc: "Burn confirmation from the Wasteland fuel depot. Supply lines severed, tanks destroyed. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Nerve Centre Clearance",
+        desc: "Shutdown report from the Undercity nerve centre. Command hub offline, pipe network blind. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Weapons Lab Clearance",
+        desc: "Destruction confirmation from the Industrial Zone weapons lab. Prototypes burned, research lost. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Cryo Vault Clearance",
+        desc: "Thaw report from the Frozen Reach cryo vault. Cooling systems failed, assets neutralised. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Syndicate Arena Clearance",
+        desc: "Victory confirmation from the Neon Strip syndicate arena. Champions defeated, arena shut down. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Reactor Core Clearance",
+        desc: "Meltdown report from the Dead Zone reactor core. Power grid collapsed, hostile network dark. The Broker will want to see this.",
+        category: "mission_clearance",
+        image: "images/IMAGE.gif"
     }
 ];
