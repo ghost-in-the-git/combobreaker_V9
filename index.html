@@ -3886,6 +3886,10 @@
                         nameEl.classList.add('cant-afford');
                         buyBtn.textContent = `[No Blueprint]`;
                         buyBtn.disabled = true;
+                    } else if (item.missionLocked) {
+                        nameEl.classList.add('cant-afford');
+                        buyBtn.textContent = `Complete [MISSION] ${item.missionLockLabel}`;
+                        buyBtn.disabled = true;
                     } else if (item.mineralCost) {
                         const { mineral, category, count } = item.mineralCost;
                         const has = getMineralCount(mineral, category);
@@ -4020,7 +4024,8 @@
             let missionItem = null;
             if (mission) {
                 const alreadyOwned = (game.storyItems || []).includes(mission.mapItem);
-                if (!alreadyOwned) {
+                const alreadyCleared = (game.storyItems || []).includes(mission.clearanceItem);
+                if (!alreadyOwned && !alreadyCleared) {
                     missionItem = {
                         name: mission.mapItem,
                         desc: mission.desc,
@@ -4032,12 +4037,27 @@
                 }
             }
 
+            // Check if pilots are locked behind mission clearance
+            const hasClearance = mission ? (game.storyItems || []).includes(mission.clearanceItem) : true;
+
             shopItems = [
                 tierPilots[0] ? findShopItem(tierPilots[0].name) : null,
                 tierPilots[1] ? findShopItem(tierPilots[1].name) : null,
                 tierPilots[2] ? findShopItem(tierPilots[2].name) : null,
                 missionItem
             ];
+
+            // Flag pilot items as locked if clearance not obtained
+            if (!hasClearance && mission) {
+                for (let i = 0; i < 3; i++) {
+                    if (shopItems[i]) {
+                        shopItems[i] = Object.assign({}, shopItems[i], {
+                            missionLocked: true,
+                            missionLockLabel: mission.mapItem
+                        });
+                    }
+                }
+            }
 
             updateShopUI();
         }
@@ -4440,7 +4460,7 @@
         // Handle shop purchase
         function purchaseItem(index) {
             const item = shopItems[index];
-            if (!item || item.forgerPlaceholder) return;
+            if (!item || item.forgerPlaceholder || item.missionLocked) return;
 
             if (item.isDecrypterItem) {
                 // Decrypter: consume the key, grant the powerup
