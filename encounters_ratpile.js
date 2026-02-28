@@ -17,7 +17,7 @@ const ENCOUNTERS_RATPILE = [
         appearanceRate: 15,
         minLevel: 1,
         itemSlot1: ["Map: Scrap Fields"],
-        itemSlot2: null,
+        itemSlot2: ["Map: The Guild"],
         itemSlot3: null,
         itemSlot4: null,
         dialogue: [
