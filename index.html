@@ -3247,7 +3247,7 @@
         function getXpBonus() {
             const processorName = game.equipment.processor;
             if (!processorName) return 0;
-            const item = ITEMS.find(i => i.name === processorName);
+            const item = ITEMS.find(i => i.name === processorName) || FORGER_ITEMS.find(i => i.name === processorName);
             if (item && item.stats && item.stats.xpBonus) return item.stats.xpBonus;
             return 0;
         }
