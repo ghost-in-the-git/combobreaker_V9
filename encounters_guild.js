@@ -11,7 +11,7 @@
 const ENCOUNTERS_GUILD = [
     {
         name: "The Broker",
-        characterImage: "images/broker.gif",
+        characterImage: "images/GUILD.gif",
         type: "shop",
         autoEngage: true,
         description: "A reinforced door marked with a faded crosshair insignia. Behind it, a smoke-filled room lined with pilot dossiers pinned to every wall. A woman sits behind a steel desk, datapad in hand.",
