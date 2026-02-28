@@ -4911,6 +4911,14 @@
                         await addMessage(`Your mech has been confirmed destroyed.`, 'system');
                         await addMessage(`Systems resetting.`, 'system');
                         p.hp = Math.floor(p.maxHp / 2);
+                        // Relocate to home
+                        currentLocation = 'home';
+                        currentDestination = 'openworld';
+                        document.getElementById('location-select').value = currentLocation;
+                        document.getElementById('location-image').src = LOCATIONS['home'].image;
+                        document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS['home'].image}" alt="Location"><span>${LOCATIONS['home'].desc}</span></div>`;
+                        updateDestinationDropdown();
+                        await addMessage(`[RELOCATED TO HOME]`, 'system');
                     }
 
                     endMining(false);
@@ -5890,6 +5898,14 @@
                 addMessage(`Systems resetting.`, 'system');
                 // Respawn with half HP
                 game.player.hp = Math.floor(game.player.maxHp / 2);
+                // Relocate to home
+                currentLocation = 'home';
+                currentDestination = 'openworld';
+                document.getElementById('location-select').value = currentLocation;
+                document.getElementById('location-image').src = LOCATIONS['home'].image;
+                document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS['home'].image}" alt="Location"><span>${LOCATIONS['home'].desc}</span></div>`;
+                updateDestinationDropdown();
+                addMessage(`[RELOCATED TO HOME]`, 'system');
             }
 
             game.currentWave = null;
