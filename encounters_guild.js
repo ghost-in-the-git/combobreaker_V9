@@ -1,9 +1,9 @@
 /**
  * THE GUILD - ENCOUNTER CONFIGURATION
  *
- * A mercenary pilot guild operating from the deep Undercity tunnels.
- * Pilots sell their services to whoever pays — no loyalty, no questions.
- * You're hiring them to sync with your systems.
+ * A beat-up bar in the deep Undercity tunnels, run by a woman
+ * who pours drinks and quietly brokers pilot contracts on the side.
+ * The regulars are ex-military — broken, drinking, and for hire.
  *
  * Uses a tier-based dropdown (like the Forger) to browse pilots by tier.
  */
@@ -14,29 +14,21 @@ const ENCOUNTERS_GUILD = [
         characterImage: "images/GUILD.gif",
         type: "shop",
         autoEngage: true,
-        description: "A reinforced door marked with a faded crosshair insignia. Behind it, a smoke-filled room lined with pilot dossiers pinned to every wall. A woman sits behind a steel desk, datapad in hand.",
-        engageText: "She looks up. Eyes sharp, expression flat. 'You're not a pilot.' She studies your frame — the empty cockpit, the autonomous systems. 'But you're looking for one.' She slides a stack of dossiers across the desk. 'Everyone in here is for hire. No loyalty oaths, no long-term contracts. You pay, they sync, they fight. Simple.' She taps the desk. 'Who do you want?'",
-        discoveredDescription: "The Guild's door is open. Smoke curls from inside. The Broker is at her desk, sorting new contracts.",
-        discoveredEngageText: "She nods when you enter. 'Back for more muscle? Let's see who's available.'",
+        description: "A narrow stairwell leads down to a dented steel door. Behind it, the low hum of conversation and the clink of glasses. A hand-painted sign above the frame reads 'THE LAST ROUND'.",
+        engageText: "The bar is dim and crowded. Pilots line the counter — some nursing drinks, some staring at nothing. A woman behind the bar wipes a glass with a rag that's seen better days. She clocks you immediately. 'Autonomous rig. No pilot.' She sets the glass down. 'You're not here for a drink.' She reaches under the counter and pulls out a battered logbook. 'Everyone in here flew something, once. Most of them would rather forget. But they'll sync with your frame if the money's right.' She flips the book open. 'Pick your poison.'",
+        discoveredDescription: "The stairwell to The Last Round. You can hear muffled voices and someone arguing about thruster calibration.",
+        discoveredEngageText: "She sees you come in and reaches for the logbook before you're halfway across the room. 'Same deal as last time. Let's see who's sober enough.'",
         isBroker: true,
         appearanceRate: 100,
         minLevel: 1,
         dialogue: [
             {
-                question: "How does this work?",
-                response: "'Mercenary pilots. Licensed, unlicensed — I don't check and you don't ask.' She fans out a handful of dossiers. 'They jack into your neural sync rig and run your systems like they were born in the cockpit. Better pilot, better sync, better everything.' She slides them back into a neat stack. 'You're paying for their nervous system, not their personality.'"
+                question: "How do I hire a pilot?",
+                response: "'See that lot?' She nods toward the room. Pilots hunched over drinks, a few playing cards in the back, one asleep with his head on the bar. 'Every one of them has logged combat hours. Some of them more than they can live with.' She taps the logbook. 'I keep tabs on who's fit to fly and who's just here for the bottle. You tell me what tier you need, I tell you who's available.' She slides the book toward you. 'They jack into your neural sync rig, your frame gets the benefit of a real pilot's reflexes. Better sync, better stats across the board.' She takes the book back. 'You're not buying loyalty. You're renting a nervous system.'"
             },
             {
-                question: "Why would a pilot sync with a mech that has no pilot?",
-                response: "She pauses. Sets down her datapad. 'Most won't. That's why you're here and not at a military recruitment office.' She leans back. 'The ones on my books? They've synced with wrecks, stolen frames, black-market chassis held together with welding slag. They don't care what's driving the mech.' A beat. 'They care what's paying them.'"
-            },
-            {
-                question: "Who's the best you've got?",
-                response: "'Depends what you mean by best.' She pulls a dossier from the bottom of the stack — thicker than the others, edges worn. 'Best kill count? Best sync rate? Best at staying alive?' She doesn't open it. 'The expensive ones aren't expensive because they're good. They're expensive because they're still here. In this line of work, survival is the only credential that matters.'"
-            },
-            {
-                question: "You run this whole operation alone?",
-                response: "'I run the desk. The Guild runs itself.' She gestures at the dossiers covering the walls. 'Pilots register, I match them with jobs, I take a cut. No commanders, no hierarchy, no politics.' She taps a scar on her collarbone. 'I used to fly. Took a round through the cockpit and lost the use of my left hand.' She flexes it — the fingers move, but stiffly. 'Can't sync at combat speed anymore. So I do this.' A thin smile. 'Turns out I'm better at picking pilots than being one.'"
+                question: "What is this place?",
+                response: "She looks around the bar like she's seeing it for the first time. 'A place where people who used to matter come to stop thinking about it.' She pours a drink for a pilot at the end of the counter without being asked. He doesn't look up. 'Half of them flew in the Ashfall campaigns. The other half won't tell you what they flew in, which usually means it was worse.' She sets the bottle down. 'I keep the lights on, I keep the tabs open, and when someone needs a pilot who won't ask questions, I make introductions.' A pause. 'The military doesn't want them back. The corporations pretend they don't exist. But they can still fly.' She picks up another glass. 'So I put them to work.'"
             }
         ]
     }
