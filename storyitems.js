@@ -982,6 +982,13 @@ const STORY_ITEMS = [
         image: "images/IMAGE.gif",
         cost: 700
     },
+    {
+        name: "Reaper's Contract",
+        desc: "A forward combat contract issued by the Reaper — a frontline operator who broke from Morningstar's chain of command. No scorched earth. No burning empty sectors. The contract marks real enemy positions deeper in the kill corridor and authorises you to engage. The work Morningstar should have ordered eighty years ago.",
+        category: "key",
+        image: "images/IMAGE.gif",
+        cost: 500
+    },
 
     // Herald location maps (encounter discoveries)
     {
@@ -1047,6 +1054,12 @@ const STORY_ITEMS = [
     {
         name: "Frontline: The Herald",
         desc: "Foxhole coordinates on the Frontline where the Herald crouches behind reinforced steel. She has what you need.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Frontline: The Reaper",
+        desc: "Crater coordinates at the edge of the kill corridor where the Reaper holds a forward position. A targeting overlay and a standing contract.",
         category: "locationmap",
         image: "images/IMAGE.gif"
     },

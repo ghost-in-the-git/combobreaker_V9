@@ -3,9 +3,37 @@
  *
  * Active military staging ground. The Herald operates from a
  * fortified foxhole, offering a beacon to draw out the Scorched CM-1 Sovereign.
+ * The Reaper holds a forward position deeper in the corridor, offering
+ * contracts to push past the line and fight what's actually out there.
  */
 
 const ENCOUNTERS_FRONTLINE = [
+    {
+        name: "The Reaper",
+        characterImage: "images/THE_REAPER.gif",
+        type: "shop",
+        discoverable: true,
+        description: "A heavy combat mech stands in a shallow crater at the edge of the kill corridor, hull scarred black from years of continuous contact. No squad markings. No IFF. Just a single word stencilled across the shoulder plate in faded white paint: REAPER. It turns its head toward you — slow, deliberate — and opens a channel.",
+        engageText: "'Morningstar had us burning empty ground. Levelling positions nobody held. Destroying things that didn't matter so the war looked like it was moving.' The voice is calm, tired, human. 'I stopped taking those orders a long time ago.' A targeting overlay appears on your HUD — enemy positions, real ones, deeper in the corridor. 'I'm offering you a contract. Not Morningstar's kind. No scorched earth. No meaningless destruction. There are enemies out here — actual threats holding actual ground. Help me push them back and I'll make it worth your time.'",
+        discoveredDescription: "The Reaper holds position in the same crater, hull dark against the scorched earth. The targeting overlay is already queued on your HUD before you open the channel.",
+        discoveredEngageText: "'You came back. Good.' The overlay refreshes — new positions, deeper contacts. 'More of them every day. Morningstar never cared about what was actually out here. I do. You ready to work?'",
+        appearanceRate: 12,
+        minLevel: 1,
+        itemSlot1: ["Reaper's Contract"],
+        itemSlot2: [],
+        itemSlot3: [],
+        itemSlot4: [],
+        dialogue: [
+            {
+                question: "Who is Morningstar to you?",
+                response: "'My CO. Once.' A long silence. 'Morningstar gave the orders and we followed them. Burn this sector. Level that outpost. Destroy everything in grid seven. None of it mattered. No enemy there. No strategic value. Just destruction for its own sake so command could mark ground as taken.' The Reaper's targeting array sweeps the horizon. 'I stopped following those orders. Started fighting what was actually in front of me.'"
+            },
+            {
+                question: "What's the contract?",
+                response: "'Simple. There are hostiles in the corridor that Morningstar never bothered to engage because they weren't on the objective list. Real enemies. Dug in, armed, and holding ground that matters.' The overlay pulses with red contacts. 'I can't clear them alone. You help me push the line forward — actually forward, not Morningstar's version of it — and I'll pay you in gear and intel. No scorched earth. No burning empty fields. Just the fight that should have been fought eighty years ago.'"
+            }
+        ]
+    },
     {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
