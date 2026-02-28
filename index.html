@@ -3444,6 +3444,14 @@
             textEl.className = 'message-text';
             if (options.html) {
                 textEl.innerHTML = text;
+            } else if (text.includes('\n\n')) {
+                text.split('\n\n').forEach((para, i) => {
+                    if (i > 0) {
+                        textEl.appendChild(document.createElement('br'));
+                        textEl.appendChild(document.createElement('br'));
+                    }
+                    textEl.appendChild(document.createTextNode(para));
+                });
             } else {
                 textEl.textContent = text;
             }
