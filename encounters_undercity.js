@@ -105,7 +105,7 @@ const ENCOUNTERS_UNDERCITY = [
         itemSlot1: ["Refined Prismalune"],
         itemSlot2: ["Refined Quellium"],
         itemSlot3: ["Refined Riftmarble"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",

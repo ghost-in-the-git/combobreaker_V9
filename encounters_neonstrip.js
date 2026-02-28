@@ -101,7 +101,7 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot1: ["Refined Yonderite"],
         itemSlot2: ["Refined Zephyrsalt"],
         itemSlot3: ["Refined Isotope Lace"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",

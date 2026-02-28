@@ -105,7 +105,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot1: ["Refined Duskquartz"],
         itemSlot2: ["Refined Emberlith"],
         itemSlot3: ["Refined Frostveil"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",

@@ -95,7 +95,7 @@ const ENCOUNTERS_DEADZONE = [
         itemSlot1: ["Refined Archive Shard"],
         itemSlot2: ["Refined Strata-Null"],
         itemSlot3: ["Refined Compound 33"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",

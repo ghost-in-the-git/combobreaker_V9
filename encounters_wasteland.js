@@ -105,7 +105,7 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot1: ["Refined Moonshardite"],
         itemSlot2: ["Refined Nightpyre"],
         itemSlot3: ["Refined Obsidryl"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",

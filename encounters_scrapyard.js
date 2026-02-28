@@ -104,7 +104,7 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot1: ["Refined Aetherite"],
         itemSlot2: ["Refined Bronzewisp"],
         itemSlot3: ["Refined Cindergem"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",

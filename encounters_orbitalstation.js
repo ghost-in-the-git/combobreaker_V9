@@ -105,7 +105,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot1: ["Refined Jetspinel"],
         itemSlot2: ["Refined Kryptoglass"],
         itemSlot3: ["Refined Lumenore"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",

@@ -101,7 +101,7 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot1: ["Refined Starvitrine"],
         itemSlot2: ["Refined Thorncrystal"],
         itemSlot3: ["Refined Umbracite"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",

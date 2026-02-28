@@ -105,7 +105,7 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot1: ["Refined Gloomstone"],
         itemSlot2: ["Refined Hexsilica"],
         itemSlot3: ["Refined Iridionite"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",

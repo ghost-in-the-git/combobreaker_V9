@@ -101,7 +101,7 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot1: ["Refined Vortexium"],
         itemSlot2: ["Refined Wyrmstone"],
         itemSlot3: ["Refined Xanthryx"],
-        itemSlot4: []
+        itemSlot4: null
     },
     {
         name: "The Herald",
