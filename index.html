@@ -5859,7 +5859,7 @@
                     "Hostiles down. Systems nominal.",
                     "Another win for the pile."
                 ];
-                addMessage(combatOutros[Math.floor(Math.random() * combatOutros.length)], 'mech');
+                addMessage(combatOutros[Math.floor(Math.random() * combatOutros.length)], 'player');
 
                 // Powerbreaker: chance to double silicon gain
                 const powerTriggered = hasBreaker("Ace's Powerbreaker Key") && Math.random() * 100 < getBreaker();
@@ -6006,7 +6006,7 @@
                 "Spinning up. Stay clear.",
                 "Light em up."
             ];
-            await addMessage(combatIntros[Math.floor(Math.random() * combatIntros.length)], 'mech');
+            await addMessage(combatIntros[Math.floor(Math.random() * combatIntros.length)], 'player');
 
             // Battle loop
             async function runBattle() {
