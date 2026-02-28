@@ -2798,6 +2798,9 @@
             if (!zoneConfig) return allEncounters;
 
             return allEncounters.filter(enc => {
+                // Hide encounters that require a story item the player doesn't have yet
+                if (enc.requires && !(game.storyItems || []).includes(enc.requires)) return false;
+
                 const dest = zoneConfig.destinations.find(d => d.encounterName === enc.name);
                 if (!dest) return true; // not discoverable, keep it
                 // If discovered (player has location map), filter it OUT of open world
@@ -3163,8 +3166,12 @@
 
             // Add discovered destinations
             if (zoneConfig) {
+                const allEncounters = LOCATIONS[currentLocation].encounters || [];
                 for (const dest of zoneConfig.destinations) {
                     if ((game.storyItems || []).includes(dest.mapItem)) {
+                        // Skip encounters that require a story item the player doesn't have
+                        const enc = allEncounters.find(e => e.name === dest.encounterName);
+                        if (enc && enc.requires && !(game.storyItems || []).includes(enc.requires)) continue;
                         const opt = document.createElement('option');
                         opt.value = dest.encounterName;
                         const isMine = zoneConfig.destinationType === 'mine' || dest.encounterName.endsWith(' Asteroid');

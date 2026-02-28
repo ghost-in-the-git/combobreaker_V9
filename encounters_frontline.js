@@ -13,6 +13,7 @@ const ENCOUNTERS_FRONTLINE = [
         characterImage: "images/THE_REAPER.gif",
         type: "shop",
         discoverable: true,
+        requires: "DNA Tag: Commander Morningstar",
         description: "A heavy combat mech stands in a shallow crater at the edge of the kill corridor, hull scarred black from years of continuous contact. No squad markings. No IFF. Just a single word stencilled across the shoulder plate in faded white paint: REAPER. It turns its head toward you — slow, deliberate — and opens a channel.",
         engageText: "'Morningstar had us burning empty ground. Levelling positions nobody held. Destroying things that didn't matter so the war looked like it was moving.' The voice is calm, tired, human. 'I stopped taking those orders a long time ago.' A targeting overlay appears on your HUD — enemy positions, real ones, deeper in the corridor. 'I'm offering you a contract. Not Morningstar's kind. No scorched earth. No meaningless destruction. There are enemies out here — actual threats holding actual ground. Help me push them back and I'll make it worth your time.'",
         discoveredDescription: "The Reaper holds position in the same crater, hull dark against the scorched earth. The targeting overlay is already queued on your HUD before you open the channel.",
