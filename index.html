@@ -5847,7 +5847,19 @@
             const enemyType = wave ? wave.enemyType.name : null;
 
             if (victory) {
-                addMessage(`Too easy, all targets destroyed.`, 'mech');
+                const combatOutros = [
+                    "Too easy, all targets destroyed.",
+                    "That's all of em down.",
+                    "Don't make em like they used to.",
+                    "Scrap metal. Every last one.",
+                    "Area clear. Nothing left standing.",
+                    "Barely broke a sweat.",
+                    "And that's how it's done.",
+                    "All quiet. Moving on.",
+                    "Hostiles down. Systems nominal.",
+                    "Another win for the pile."
+                ];
+                addMessage(combatOutros[Math.floor(Math.random() * combatOutros.length)], 'mech');
 
                 // Powerbreaker: chance to double silicon gain
                 const powerTriggered = hasBreaker("Ace's Powerbreaker Key") && Math.random() * 100 < getBreaker();
@@ -5982,7 +5994,19 @@
 
             const et = game.currentWave.enemyType;
             game.currentWave.remainingDefence = game.player.defence;
-            await addMessage(`Okay let's get em.`, 'mech');
+            const combatIntros = [
+                "Okay let's get em.",
+                "Time to break some steel.",
+                "Weapons hot. Moving in.",
+                "Another day, another scrap pile.",
+                "Lock and load.",
+                "They picked the wrong mech.",
+                "Targets acquired. Let's dance.",
+                "This won't take long.",
+                "Spinning up. Stay clear.",
+                "Light em up."
+            ];
+            await addMessage(combatIntros[Math.floor(Math.random() * combatIntros.length)], 'mech');
 
             // Battle loop
             async function runBattle() {
