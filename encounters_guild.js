@@ -20,10 +20,10 @@ const ENCOUNTERS_GUILD = [
         discoveredEngageText: "She nods when you enter. 'Back for more muscle? Let's see who's available.'",
         appearanceRate: 100,
         minLevel: 1,
-        itemSlot1: [],
-        itemSlot2: [],
-        itemSlot3: [],
-        itemSlot4: [],
+        itemSlot1: ["Washout [+1 ALL]", "Scab Jockey [+2 ALL]", "Hired Gun [+3 ALL]", "Contract Runner [+4 ALL]", "Licensed Mercenary [+5 ALL]", "Bonded Operative [+6 ALL]", "Syndicate Ace [+7 ALL]", "Black List Pilot [+8 ALL]", "Razor [+9 ALL]", "Deadbolt [+10 ALL]", "Voidrunner [+11 ALL]", "Ironclad [+12 ALL]", "Phantom Circuit [+13 ALL]", "Warghost [+14 ALL]", "Null Frequency [+15 ALL]", "Terminus [+16 ALL]", "Archon [+17 ALL]", "Omega Frame [+18 ALL]", "The Unwritten [+19 ALL]", "0x00 [+20 ALL]"],
+        itemSlot2: ["Washout [+1 ALL]", "Scab Jockey [+2 ALL]", "Hired Gun [+3 ALL]", "Contract Runner [+4 ALL]", "Licensed Mercenary [+5 ALL]", "Bonded Operative [+6 ALL]", "Syndicate Ace [+7 ALL]", "Black List Pilot [+8 ALL]", "Razor [+9 ALL]", "Deadbolt [+10 ALL]", "Voidrunner [+11 ALL]", "Ironclad [+12 ALL]", "Phantom Circuit [+13 ALL]", "Warghost [+14 ALL]", "Null Frequency [+15 ALL]", "Terminus [+16 ALL]", "Archon [+17 ALL]", "Omega Frame [+18 ALL]", "The Unwritten [+19 ALL]", "0x00 [+20 ALL]"],
+        itemSlot3: ["Washout [+1 ALL]", "Scab Jockey [+2 ALL]", "Hired Gun [+3 ALL]", "Contract Runner [+4 ALL]", "Licensed Mercenary [+5 ALL]", "Bonded Operative [+6 ALL]", "Syndicate Ace [+7 ALL]", "Black List Pilot [+8 ALL]", "Razor [+9 ALL]", "Deadbolt [+10 ALL]", "Voidrunner [+11 ALL]", "Ironclad [+12 ALL]", "Phantom Circuit [+13 ALL]", "Warghost [+14 ALL]", "Null Frequency [+15 ALL]", "Terminus [+16 ALL]", "Archon [+17 ALL]", "Omega Frame [+18 ALL]", "The Unwritten [+19 ALL]", "0x00 [+20 ALL]"],
+        itemSlot4: ["Washout [+1 ALL]", "Scab Jockey [+2 ALL]", "Hired Gun [+3 ALL]", "Contract Runner [+4 ALL]", "Licensed Mercenary [+5 ALL]", "Bonded Operative [+6 ALL]", "Syndicate Ace [+7 ALL]", "Black List Pilot [+8 ALL]", "Razor [+9 ALL]", "Deadbolt [+10 ALL]", "Voidrunner [+11 ALL]", "Ironclad [+12 ALL]", "Phantom Circuit [+13 ALL]", "Warghost [+14 ALL]", "Null Frequency [+15 ALL]", "Terminus [+16 ALL]", "Archon [+17 ALL]", "Omega Frame [+18 ALL]", "The Unwritten [+19 ALL]", "0x00 [+20 ALL]"],
         dialogue: [
             {
                 question: "How does this work?",
