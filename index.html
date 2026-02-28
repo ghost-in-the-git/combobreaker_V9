@@ -3251,8 +3251,8 @@
         }
 
         function changeDestination(destValue) {
+            resetActiveMission();
             currentDestination = destValue;
-            game._missionEngaged = false;
 
             // Update description based on destination
             const zoneConfig = ZONE_DESTINATIONS[currentLocation];
@@ -3327,7 +3327,7 @@
             }
             currentLocation = locationKey;
             currentDestination = 'openworld';
-            game._missionEngaged = false;
+            resetActiveMission();
 
             // Update location image
             document.getElementById('location-image').src = LOCATIONS[locationKey].image;
@@ -4769,7 +4769,7 @@
                 leaveBtn.addEventListener('click', () => {
                     container.remove();
                     currentEncounter = null;
-                    game._missionEngaged = false;
+                    resetActiveMission();
                     addMessage(`You leave the area.`, 'system');
                     startWaveTimer();
                 });
@@ -5675,6 +5675,19 @@
             if (existing) existing.remove();
         }
 
+        // Reset the active mission's kill progress (called when leaving a mission)
+        function resetActiveMission() {
+            if (!game._missionEngaged) return;
+            const missionEnc = getMissionEncounterForDestination(currentDestination);
+            if (missionEnc) {
+                const progress = game.missions[missionEnc.missionKey];
+                if (progress && !progress.completed) {
+                    progress.kills = 0;
+                }
+            }
+            game._missionEngaged = false;
+        }
+
         // Look up mission encounter for the current destination name
         function getMissionEncounterForDestination(destName) {
             const allEncounters = LOCATIONS[currentLocation] && LOCATIONS[currentLocation].encounters;
@@ -6159,7 +6172,7 @@
                 checkLevelUp();
             } else {
                 game.deaths++;
-                game._missionEngaged = false;
+                resetActiveMission();
                 addMessage(`Your mech has been confirmed destroyed.`, 'system');
                 addMessage(`Systems resetting.`, 'system');
                 // Respawn with half HP
