@@ -756,6 +756,33 @@
             border-color: #ff8800;
         }
 
+        /* Broker Pilot Selector */
+        .broker-selector {
+            margin-bottom: 8px;
+        }
+
+        .broker-selector select {
+            width: 100%;
+            padding: 8px 24px 8px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #1a1a2e;
+            color: #ff8800;
+            border: 1px solid #ff880055;
+            border-radius: 4px;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23ff8800'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
+        .broker-selector select:focus {
+            outline: none;
+            border-color: #ff8800;
+        }
+
         /* Salvage Yard Selector */
         .salvage-selector {
             margin-bottom: 8px;
@@ -1834,6 +1861,11 @@
                     <div class="salvage-preview" id="salvage-preview"></div>
                     <button class="salvage-sell-btn" id="salvage-sell-btn" disabled>--</button>
                     <button class="salvage-sell-btn salvage-sell-all-btn" id="salvage-sell-all-btn" style="display: none;">--</button>
+                </div>
+                <div class="broker-selector" id="broker-selector" style="display: none;">
+                    <select id="broker-tier-select">
+                        <option value="">[SELECT PILOT TIER]</option>
+                    </select>
                 </div>
                 <div class="shop-item-wrapper" id="shop-wrapper-1">
                     <div class="shop-name" id="shop-name-1"></div>
@@ -3931,6 +3963,45 @@
             updateShopUI();
         }
 
+        // ========== BROKER PILOT FUNCTIONS ==========
+
+        // Populate the broker tier dropdown
+        function updateBrokerDropdown() {
+            const select = document.getElementById('broker-tier-select');
+            select.innerHTML = '<option value="">[SELECT PILOT TIER]</option>';
+
+            for (const tier of BROKER_TIERS) {
+                const option = document.createElement('option');
+                option.value = tier.tier;
+                option.textContent = `${tier.label} — +${tier.stat} ALL`;
+                select.appendChild(option);
+            }
+        }
+
+        // Handle broker tier dropdown selection — show 3 pilots for the selected tier
+        function onBrokerTierChange() {
+            const select = document.getElementById('broker-tier-select');
+            const tierValue = parseInt(select.value);
+
+            if (!tierValue) {
+                shopItems = [null, null, null, null];
+                updateShopUI();
+                return;
+            }
+
+            // Get the 3 pilots for this tier
+            const tierPilots = ALL_PILOTS.filter(p => p.tier === tierValue);
+
+            shopItems = [
+                tierPilots[0] ? findShopItem(tierPilots[0].name) : null,
+                tierPilots[1] ? findShopItem(tierPilots[1].name) : null,
+                tierPilots[2] ? findShopItem(tierPilots[2].name) : null,
+                null
+            ];
+
+            updateShopUI();
+        }
+
         // ========== SALVAGE YARD FUNCTIONS ==========
 
         // Calculate scrap value for an item
@@ -4271,25 +4342,36 @@
             const forgeSelector = document.getElementById('forge-selector');
             const salvageSelector = document.getElementById('salvage-selector');
             const decrypterSelector = document.getElementById('decrypter-selector');
+            const brokerSelector = document.getElementById('broker-selector');
             if (currentEncounter && currentEncounter.isForge) {
                 updateForgeDropdown();
                 forgeSelector.style.display = 'block';
                 salvageSelector.style.display = 'none';
                 decrypterSelector.style.display = 'none';
+                brokerSelector.style.display = 'none';
             } else if (currentEncounter && currentEncounter.isSalvageYard) {
                 updateSalvageDropdown();
                 salvageSelector.style.display = 'block';
                 forgeSelector.style.display = 'none';
                 decrypterSelector.style.display = 'none';
+                brokerSelector.style.display = 'none';
             } else if (currentEncounter && currentEncounter.isDecrypter) {
                 updateDecrypterDropdown();
                 decrypterSelector.style.display = 'block';
                 forgeSelector.style.display = 'none';
                 salvageSelector.style.display = 'none';
+                brokerSelector.style.display = 'none';
+            } else if (currentEncounter && currentEncounter.isBroker) {
+                updateBrokerDropdown();
+                brokerSelector.style.display = 'block';
+                forgeSelector.style.display = 'none';
+                salvageSelector.style.display = 'none';
+                decrypterSelector.style.display = 'none';
             } else {
                 forgeSelector.style.display = 'none';
                 salvageSelector.style.display = 'none';
                 decrypterSelector.style.display = 'none';
+                brokerSelector.style.display = 'none';
             }
 
             updateShopUI();
@@ -4304,8 +4386,10 @@
             document.getElementById('forge-selector').style.display = 'none';
             document.getElementById('salvage-selector').style.display = 'none';
             document.getElementById('decrypter-selector').style.display = 'none';
+            document.getElementById('broker-selector').style.display = 'none';
             document.getElementById('decrypter-key-select').value = '';
             document.getElementById('salvage-item-select').value = '';
+            document.getElementById('broker-tier-select').value = '';
             document.getElementById('salvage-preview').classList.remove('visible');
             document.getElementById('salvage-sell-btn').disabled = true;
             document.getElementById('salvage-sell-all-btn').style.display = 'none';
@@ -4396,6 +4480,10 @@
             if (currentEncounter && currentEncounter.isForge) {
                 updateForgeDropdown();
                 onForgeMineralChange();
+            } else if (currentEncounter && currentEncounter.isBroker) {
+                // Broker: remove purchased slot, keep dropdown visible
+                shopItems[index] = null;
+                updateShopUI();
             } else if (item.xpReward || item.refinedMineral) {
                 // Repeatable: services and mineral refining stay in slot
                 updateShopUI();
@@ -4430,7 +4518,7 @@
             currentEncounter = encounter;
 
             // Forge, Salvage Yard, and Decrypter use custom UI, not pre-generated items
-            if (encounter.isForge || encounter.isSalvageYard || encounter.isDecrypter) {
+            if (encounter.isForge || encounter.isSalvageYard || encounter.isDecrypter || encounter.isBroker) {
                 shopItems = [null, null, null, null];
             } else {
                 shopItems = generateShopItems(encounter);
@@ -6095,6 +6183,9 @@
         // Decrypter key dropdown listener
         document.getElementById('decrypter-key-select').addEventListener('change', onDecrypterKeyChange);
 
+        // Broker pilot tier dropdown listener
+        document.getElementById('broker-tier-select').addEventListener('change', onBrokerTierChange);
+
         // Salvage yard listeners
         document.getElementById('salvage-item-select').addEventListener('change', onSalvageItemChange);
         document.getElementById('salvage-sell-btn').addEventListener('click', sellSalvageItem);
@@ -6172,6 +6263,8 @@
                     this.wrapper.dataset.theme = 'yellow';
                 } else if (selectEl.closest('.decrypter-selector')) {
                     this.wrapper.dataset.theme = 'cyan';
+                } else if (selectEl.closest('.broker-selector')) {
+                    this.wrapper.dataset.theme = 'orange';
                 } else {
                     this.wrapper.dataset.theme = 'green';
                 }

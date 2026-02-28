@@ -1,13 +1,27 @@
 /**
  * ALL PILOT ITEMS
  *
- * Guild mercenary pilots only (+1 ALL through +20 ALL).
+ * Guild mercenary pilots — 30 total, 3 per tier.
+ * T1 (+1 ALL) through T10 (+10 ALL).
  * Merged into ITEMS at load time.
  */
 
+const BROKER_TIERS = [
+    { tier: 1, label: "T1 Pilots", stat: 1 },
+    { tier: 2, label: "T2 Pilots", stat: 2 },
+    { tier: 3, label: "T3 Pilots", stat: 3 },
+    { tier: 4, label: "T4 Pilots", stat: 4 },
+    { tier: 5, label: "T5 Pilots", stat: 5 },
+    { tier: 6, label: "T6 Pilots", stat: 6 },
+    { tier: 7, label: "T7 Pilots", stat: 7 },
+    { tier: 8, label: "T8 Pilots", stat: 8 },
+    { tier: 9, label: "T9 Pilots", stat: 9 },
+    { tier: 10, label: "T10 Pilots", stat: 10 }
+];
+
 const ALL_PILOTS = [
 
-    // ==================== GUILD MERCENARY PILOTS ====================
+    // ==================== TIER 1 — +1 ALL ====================
     {
         name: "Washout [+1 ALL]",
         type: "pilot",
@@ -17,8 +31,35 @@ const ALL_PILOTS = [
         dropRate: 50,
         droppedBy: [],
         cost: 300,
-        zone: "guild"
+        zone: "guild",
+        tier: 1
     },
+    {
+        name: "Drifter [+1 ALL]",
+        type: "pilot",
+        desc: "No home port, no allegiance. Sleeps in whatever cockpit will have him. The sync barely registers, but he shows up on time.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 1, attack: 1, speed: 1, defence: 1, breaker: 1, mining: 1, regen: 1 },
+        dropRate: 50,
+        droppedBy: [],
+        cost: 300,
+        zone: "guild",
+        tier: 1
+    },
+    {
+        name: "Scrub [+1 ALL]",
+        type: "pilot",
+        desc: "Got kicked out of a civilian hauler crew for sleeping on shift. Somehow still alive. That counts for something in this line of work.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 1, attack: 1, speed: 1, defence: 1, breaker: 1, mining: 1, regen: 1 },
+        dropRate: 50,
+        droppedBy: [],
+        cost: 300,
+        zone: "guild",
+        tier: 1
+    },
+
+    // ==================== TIER 2 — +2 ALL ====================
     {
         name: "Scab Jockey [+2 ALL]",
         type: "pilot",
@@ -28,8 +69,35 @@ const ALL_PILOTS = [
         dropRate: 47,
         droppedBy: [],
         cost: 450,
-        zone: "guild"
+        zone: "guild",
+        tier: 2
     },
+    {
+        name: "Grease Rat [+2 ALL]",
+        type: "pilot",
+        desc: "Grew up under a mech chassis. Knows more about neural links than half the engineers who build them. Cheap and reliable.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 2, attack: 2, speed: 2, defence: 2, breaker: 2, mining: 2, regen: 2 },
+        dropRate: 47,
+        droppedBy: [],
+        cost: 450,
+        zone: "guild",
+        tier: 2
+    },
+    {
+        name: "Runt [+2 ALL]",
+        type: "pilot",
+        desc: "Smallest pilot on the roster. Fits into cockpits that would crush anyone else. What she lacks in presence she makes up for in sync stability.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 2, attack: 2, speed: 2, defence: 2, breaker: 2, mining: 2, regen: 2 },
+        dropRate: 47,
+        droppedBy: [],
+        cost: 450,
+        zone: "guild",
+        tier: 2
+    },
+
+    // ==================== TIER 3 — +3 ALL ====================
     {
         name: "Hired Gun [+3 ALL]",
         type: "pilot",
@@ -39,8 +107,35 @@ const ALL_PILOTS = [
         dropRate: 45,
         droppedBy: [],
         cost: 650,
-        zone: "guild"
+        zone: "guild",
+        tier: 3
     },
+    {
+        name: "Patchwork [+3 ALL]",
+        type: "pilot",
+        desc: "Half his neural implants are aftermarket. The other half are held in with solder and hope. Somehow the sync holds together.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 3, attack: 3, speed: 3, defence: 3, breaker: 3, mining: 3, regen: 3 },
+        dropRate: 45,
+        droppedBy: [],
+        cost: 650,
+        zone: "guild",
+        tier: 3
+    },
+    {
+        name: "Dustrunner [+3 ALL]",
+        type: "pilot",
+        desc: "Made a name running convoys through the wastelands. Quick reflexes, steady hands, and a habit of talking to the mech like it can hear her.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 3, attack: 3, speed: 3, defence: 3, breaker: 3, mining: 3, regen: 3 },
+        dropRate: 45,
+        droppedBy: [],
+        cost: 650,
+        zone: "guild",
+        tier: 3
+    },
+
+    // ==================== TIER 4 — +4 ALL ====================
     {
         name: "Contract Runner [+4 ALL]",
         type: "pilot",
@@ -50,8 +145,35 @@ const ALL_PILOTS = [
         dropRate: 42,
         droppedBy: [],
         cost: 900,
-        zone: "guild"
+        zone: "guild",
+        tier: 4
     },
+    {
+        name: "Switchblade [+4 ALL]",
+        type: "pilot",
+        desc: "Former pit fighter who transitioned to mech piloting. Treats every engagement like a cage match. The sync runs hot but never breaks.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 4, attack: 4, speed: 4, defence: 4, breaker: 4, mining: 4, regen: 4 },
+        dropRate: 42,
+        droppedBy: [],
+        cost: 900,
+        zone: "guild",
+        tier: 4
+    },
+    {
+        name: "Longhaul [+4 ALL]",
+        type: "pilot",
+        desc: "Spent years running deep-route cargo through contested space. Never lost a shipment. Calm under fire, steady on the link.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 4, attack: 4, speed: 4, defence: 4, breaker: 4, mining: 4, regen: 4 },
+        dropRate: 42,
+        droppedBy: [],
+        cost: 900,
+        zone: "guild",
+        tier: 4
+    },
+
+    // ==================== TIER 5 — +5 ALL ====================
     {
         name: "Licensed Mercenary [+5 ALL]",
         type: "pilot",
@@ -61,8 +183,35 @@ const ALL_PILOTS = [
         dropRate: 39,
         droppedBy: [],
         cost: 1200,
-        zone: "guild"
+        zone: "guild",
+        tier: 5
     },
+    {
+        name: "Hardline [+5 ALL]",
+        type: "pilot",
+        desc: "Ex-military. Dishonourably discharged for insubordination. Still fights like she's got a squad behind her. The sync is textbook-perfect.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 5, attack: 5, speed: 5, defence: 5, breaker: 5, mining: 5, regen: 5 },
+        dropRate: 39,
+        droppedBy: [],
+        cost: 1200,
+        zone: "guild",
+        tier: 5
+    },
+    {
+        name: "Nomad [+5 ALL]",
+        type: "pilot",
+        desc: "No fixed address, no loyalty, no hesitation. Piloted frames on four continents and two orbital rings. The sync adapts to anything.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 5, attack: 5, speed: 5, defence: 5, breaker: 5, mining: 5, regen: 5 },
+        dropRate: 39,
+        droppedBy: [],
+        cost: 1200,
+        zone: "guild",
+        tier: 5
+    },
+
+    // ==================== TIER 6 — +6 ALL ====================
     {
         name: "Bonded Operative [+6 ALL]",
         type: "pilot",
@@ -72,8 +221,35 @@ const ALL_PILOTS = [
         dropRate: 36,
         droppedBy: [],
         cost: 1550,
-        zone: "guild"
+        zone: "guild",
+        tier: 6
     },
+    {
+        name: "Coldsnap [+6 ALL]",
+        type: "pilot",
+        desc: "Never raises her voice. Never flinches. Biometrics flatline during combat like she's asleep. The mech moves with eerie precision.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 6, attack: 6, speed: 6, defence: 6, breaker: 6, mining: 6, regen: 6 },
+        dropRate: 36,
+        droppedBy: [],
+        cost: 1550,
+        zone: "guild",
+        tier: 6
+    },
+    {
+        name: "Burnout [+6 ALL]",
+        type: "pilot",
+        desc: "Fried three neural rigs before the Guild would take him. Now he's dialled in. The sync runs ragged but the output is undeniable.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 6, attack: 6, speed: 6, defence: 6, breaker: 6, mining: 6, regen: 6 },
+        dropRate: 36,
+        droppedBy: [],
+        cost: 1550,
+        zone: "guild",
+        tier: 6
+    },
+
+    // ==================== TIER 7 — +7 ALL ====================
     {
         name: "Syndicate Ace [+7 ALL]",
         type: "pilot",
@@ -83,8 +259,35 @@ const ALL_PILOTS = [
         dropRate: 33,
         droppedBy: [],
         cost: 1950,
-        zone: "guild"
+        zone: "guild",
+        tier: 7
     },
+    {
+        name: "Voidrunner [+7 ALL]",
+        type: "pilot",
+        desc: "Flew deep-space salvage runs alone for six years. Came back different. Doesn't blink enough. Syncs with rigs that haven't been calibrated in decades like it's nothing.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 7, attack: 7, speed: 7, defence: 7, breaker: 7, mining: 7, regen: 7 },
+        dropRate: 33,
+        droppedBy: [],
+        cost: 1950,
+        zone: "guild",
+        tier: 7
+    },
+    {
+        name: "Kingpin [+7 ALL]",
+        type: "pilot",
+        desc: "Ran an underground fight ring for years. Every pilot in his stable answered to him. Now he answers to no one. The sync carries an authority the mech can feel.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 7, attack: 7, speed: 7, defence: 7, breaker: 7, mining: 7, regen: 7 },
+        dropRate: 33,
+        droppedBy: [],
+        cost: 1950,
+        zone: "guild",
+        tier: 7
+    },
+
+    // ==================== TIER 8 — +8 ALL ====================
     {
         name: "Black List Pilot [+8 ALL]",
         type: "pilot",
@@ -94,8 +297,35 @@ const ALL_PILOTS = [
         dropRate: 30,
         droppedBy: [],
         cost: 2400,
-        zone: "guild"
+        zone: "guild",
+        tier: 8
     },
+    {
+        name: "Ironclad [+8 ALL]",
+        type: "pilot",
+        desc: "Took a direct hit to the cockpit and kept fighting for forty minutes before anyone noticed the breach. Half her spine is titanium now. She says the mech feels lighter than she does.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 8, attack: 8, speed: 8, defence: 8, breaker: 8, mining: 8, regen: 8 },
+        dropRate: 30,
+        droppedBy: [],
+        cost: 2400,
+        zone: "guild",
+        tier: 8
+    },
+    {
+        name: "Warghost [+8 ALL]",
+        type: "pilot",
+        desc: "Survivor of the Ashfall Campaign. Every pilot in her squadron died. She kept fighting for three days alone. The debrief is still classified.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 8, attack: 8, speed: 8, defence: 8, breaker: 8, mining: 8, regen: 8 },
+        dropRate: 30,
+        droppedBy: [],
+        cost: 2400,
+        zone: "guild",
+        tier: 8
+    },
+
+    // ==================== TIER 9 — +9 ALL ====================
     {
         name: "Razor [+9 ALL]",
         type: "pilot",
@@ -105,8 +335,35 @@ const ALL_PILOTS = [
         dropRate: 27,
         droppedBy: [],
         cost: 2900,
-        zone: "guild"
+        zone: "guild",
+        tier: 9
     },
+    {
+        name: "Phantom Circuit [+9 ALL]",
+        type: "pilot",
+        desc: "Shows up on no scanner. Military records list him as deceased in three jurisdictions. The neural interface reads his brainwaves as static, but the mech moves like it's alive.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 9, attack: 9, speed: 9, defence: 9, breaker: 9, mining: 9, regen: 9 },
+        dropRate: 27,
+        droppedBy: [],
+        cost: 2900,
+        zone: "guild",
+        tier: 9
+    },
+    {
+        name: "Terminus [+9 ALL]",
+        type: "pilot",
+        desc: "Last assignment before retirement — every time. Has been 'retiring' for eleven years. The sync rate climbs every time like the frame is begging her to stay.",
+        image: "images/PILOT_ITEM.gif",
+        stats: { hp: 9, attack: 9, speed: 9, defence: 9, breaker: 9, mining: 9, regen: 9 },
+        dropRate: 27,
+        droppedBy: [],
+        cost: 2900,
+        zone: "guild",
+        tier: 9
+    },
+
+    // ==================== TIER 10 — +10 ALL ====================
     {
         name: "Deadbolt [+10 ALL]",
         type: "pilot",
@@ -116,116 +373,31 @@ const ALL_PILOTS = [
         dropRate: 24,
         droppedBy: [],
         cost: 3450,
-        zone: "guild"
+        zone: "guild",
+        tier: 10
     },
     {
-        name: "Voidrunner [+11 ALL]",
-        type: "pilot",
-        desc: "Flew deep-space salvage runs alone for six years. Came back different. Doesn't blink enough. Syncs with rigs that haven't been calibrated in decades like it's nothing.",
-        image: "images/PILOT_ITEM.gif",
-        stats: { hp: 11, attack: 11, speed: 11, defence: 11, breaker: 11, mining: 11, regen: 11 },
-        dropRate: 21,
-        droppedBy: [],
-        cost: 4050,
-        zone: "guild"
-    },
-    {
-        name: "Ironclad [+12 ALL]",
-        type: "pilot",
-        desc: "Took a direct hit to the cockpit and kept fighting for forty minutes before anyone noticed the breach. Half her spine is titanium now. She says the mech feels lighter than she does.",
-        image: "images/PILOT_ITEM.gif",
-        stats: { hp: 12, attack: 12, speed: 12, defence: 12, breaker: 12, mining: 12, regen: 12 },
-        dropRate: 18,
-        droppedBy: [],
-        cost: 4700,
-        zone: "guild"
-    },
-    {
-        name: "Phantom Circuit [+13 ALL]",
-        type: "pilot",
-        desc: "Shows up on no scanner. Military records list him as deceased in three different jurisdictions. The neural interface reads his brainwaves as static, but the mech moves like it's alive.",
-        image: "images/PILOT_ITEM.gif",
-        stats: { hp: 13, attack: 13, speed: 13, defence: 13, breaker: 13, mining: 13, regen: 13 },
-        dropRate: 16,
-        droppedBy: [],
-        cost: 5400,
-        zone: "guild"
-    },
-    {
-        name: "Warghost [+14 ALL]",
-        type: "pilot",
-        desc: "Survivor of the Ashfall Campaign. Every pilot in her squadron died. She kept fighting for three days alone. The debrief is still classified. The Broker won't say where he found her.",
-        image: "images/PILOT_ITEM.gif",
-        stats: { hp: 14, attack: 14, speed: 14, defence: 14, breaker: 14, mining: 14, regen: 14 },
-        dropRate: 14,
-        droppedBy: [],
-        cost: 6150,
-        zone: "guild"
-    },
-    {
-        name: "Null Frequency [+15 ALL]",
+        name: "Null Frequency [+10 ALL]",
         type: "pilot",
         desc: "Communicates through the neural link and nothing else. No voice. No gestures. Plugs in, fights, unplugs, leaves. The mech runs at specs that shouldn't be possible without hardware mods.",
         image: "images/PILOT_ITEM.gif",
-        stats: { hp: 15, attack: 15, speed: 15, defence: 15, breaker: 15, mining: 15, regen: 15 },
-        dropRate: 12,
+        stats: { hp: 10, attack: 10, speed: 10, defence: 10, breaker: 10, mining: 10, regen: 10 },
+        dropRate: 24,
         droppedBy: [],
-        cost: 6950,
-        zone: "guild"
+        cost: 3450,
+        zone: "guild",
+        tier: 10
     },
     {
-        name: "Terminus [+16 ALL]",
-        type: "pilot",
-        desc: "Last assignment before retirement — every time. Has been 'retiring' for eleven years. The sync rate climbs every time like the frame is begging her to stay.",
-        image: "images/PILOT_ITEM.gif",
-        stats: { hp: 16, attack: 16, speed: 16, defence: 16, breaker: 16, mining: 16, regen: 16 },
-        dropRate: 10,
-        droppedBy: [],
-        cost: 7800,
-        zone: "guild"
-    },
-    {
-        name: "Archon [+17 ALL]",
+        name: "Archon [+10 ALL]",
         type: "pilot",
         desc: "Designed sync protocols that three governments now use as standard. Left the lab, stole a rig, and never came back. The neural link doesn't just connect — it overwrites.",
         image: "images/PILOT_ITEM.gif",
-        stats: { hp: 17, attack: 17, speed: 17, defence: 17, breaker: 17, mining: 17, regen: 17 },
-        dropRate: 9,
+        stats: { hp: 10, attack: 10, speed: 10, defence: 10, breaker: 10, mining: 10, regen: 10 },
+        dropRate: 24,
         droppedBy: [],
-        cost: 8700,
-        zone: "guild"
-    },
-    {
-        name: "Omega Frame [+18 ALL]",
-        type: "pilot",
-        desc: "No one's sure where the pilot ends and the machine begins. Medical scans return errors. The Broker charges triple and says it's a bargain. He's not wrong.",
-        image: "images/PILOT_ITEM.gif",
-        stats: { hp: 18, attack: 18, speed: 18, defence: 18, breaker: 18, mining: 18, regen: 18 },
-        dropRate: 7,
-        droppedBy: [],
-        cost: 9650,
-        zone: "guild"
-    },
-    {
-        name: "The Unwritten [+19 ALL]",
-        type: "pilot",
-        desc: "No file. No intake. No record of payment. The Broker says the name once, quietly, and won't repeat it. When this pilot syncs, every diagnostic tool in the hangar flatlines for six seconds.",
-        image: "images/PILOT_ITEM.gif",
-        stats: { hp: 19, attack: 19, speed: 19, defence: 19, breaker: 19, mining: 19, regen: 19 },
-        dropRate: 6,
-        droppedBy: [],
-        cost: 10650,
-        zone: "guild"
-    },
-    {
-        name: "0x00 [+20 ALL]",
-        type: "pilot",
-        desc: "The zero address. The null pilot. Every system reads the cockpit as empty, but the mech moves anyway. Faster. Harder. Like something that was always inside it finally woke up.",
-        image: "images/PILOT_ITEM.gif",
-        stats: { hp: 20, attack: 20, speed: 20, defence: 20, breaker: 20, mining: 20, regen: 20 },
-        dropRate: 5,
-        droppedBy: [],
-        cost: 11700,
-        zone: "guild"
+        cost: 3450,
+        zone: "guild",
+        tier: 10
     }
 ];

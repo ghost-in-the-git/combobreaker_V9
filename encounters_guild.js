@@ -5,7 +5,7 @@
  * Pilots sell their services to whoever pays — no loyalty, no questions.
  * You're hiring them to sync with your systems.
  *
- * Uses standard shop slots with zone-filtered pilot items.
+ * Uses a tier-based dropdown (like the Forger) to browse pilots by tier.
  */
 
 const ENCOUNTERS_GUILD = [
@@ -18,12 +18,9 @@ const ENCOUNTERS_GUILD = [
         engageText: "She looks up. Eyes sharp, expression flat. 'You're not a pilot.' She studies your frame — the empty cockpit, the autonomous systems. 'But you're looking for one.' She slides a stack of dossiers across the desk. 'Everyone in here is for hire. No loyalty oaths, no long-term contracts. You pay, they sync, they fight. Simple.' She taps the desk. 'Who do you want?'",
         discoveredDescription: "The Guild's door is open. Smoke curls from inside. The Broker is at her desk, sorting new contracts.",
         discoveredEngageText: "She nods when you enter. 'Back for more muscle? Let's see who's available.'",
+        isBroker: true,
         appearanceRate: 100,
         minLevel: 1,
-        itemSlot1: ["Washout [+1 ALL]", "Scab Jockey [+2 ALL]", "Hired Gun [+3 ALL]", "Contract Runner [+4 ALL]", "Licensed Mercenary [+5 ALL]", "Bonded Operative [+6 ALL]", "Syndicate Ace [+7 ALL]", "Black List Pilot [+8 ALL]", "Razor [+9 ALL]", "Deadbolt [+10 ALL]", "Voidrunner [+11 ALL]", "Ironclad [+12 ALL]", "Phantom Circuit [+13 ALL]", "Warghost [+14 ALL]", "Null Frequency [+15 ALL]", "Terminus [+16 ALL]", "Archon [+17 ALL]", "Omega Frame [+18 ALL]", "The Unwritten [+19 ALL]", "0x00 [+20 ALL]"],
-        itemSlot2: ["Washout [+1 ALL]", "Scab Jockey [+2 ALL]", "Hired Gun [+3 ALL]", "Contract Runner [+4 ALL]", "Licensed Mercenary [+5 ALL]", "Bonded Operative [+6 ALL]", "Syndicate Ace [+7 ALL]", "Black List Pilot [+8 ALL]", "Razor [+9 ALL]", "Deadbolt [+10 ALL]", "Voidrunner [+11 ALL]", "Ironclad [+12 ALL]", "Phantom Circuit [+13 ALL]", "Warghost [+14 ALL]", "Null Frequency [+15 ALL]", "Terminus [+16 ALL]", "Archon [+17 ALL]", "Omega Frame [+18 ALL]", "The Unwritten [+19 ALL]", "0x00 [+20 ALL]"],
-        itemSlot3: ["Washout [+1 ALL]", "Scab Jockey [+2 ALL]", "Hired Gun [+3 ALL]", "Contract Runner [+4 ALL]", "Licensed Mercenary [+5 ALL]", "Bonded Operative [+6 ALL]", "Syndicate Ace [+7 ALL]", "Black List Pilot [+8 ALL]", "Razor [+9 ALL]", "Deadbolt [+10 ALL]", "Voidrunner [+11 ALL]", "Ironclad [+12 ALL]", "Phantom Circuit [+13 ALL]", "Warghost [+14 ALL]", "Null Frequency [+15 ALL]", "Terminus [+16 ALL]", "Archon [+17 ALL]", "Omega Frame [+18 ALL]", "The Unwritten [+19 ALL]", "0x00 [+20 ALL]"],
-        itemSlot4: ["Washout [+1 ALL]", "Scab Jockey [+2 ALL]", "Hired Gun [+3 ALL]", "Contract Runner [+4 ALL]", "Licensed Mercenary [+5 ALL]", "Bonded Operative [+6 ALL]", "Syndicate Ace [+7 ALL]", "Black List Pilot [+8 ALL]", "Razor [+9 ALL]", "Deadbolt [+10 ALL]", "Voidrunner [+11 ALL]", "Ironclad [+12 ALL]", "Phantom Circuit [+13 ALL]", "Warghost [+14 ALL]", "Null Frequency [+15 ALL]", "Terminus [+16 ALL]", "Archon [+17 ALL]", "Omega Frame [+18 ALL]", "The Unwritten [+19 ALL]", "0x00 [+20 ALL]"],
         dialogue: [
             {
                 question: "How does this work?",
