@@ -4742,7 +4742,19 @@
                 if (progress.completed) {
                     await addMessage(`[MISSION COMPLETE] ${currentEncounter.completionText}`, 'system');
                     currentEncounter = null;
-                    startWaveTimer();
+                    // Show leave button instead of restarting waves
+                    const completedLeaveContainer = document.createElement('div');
+                    completedLeaveContainer.className = 'action-btn-container';
+                    const completedLeaveBtn = document.createElement('button');
+                    completedLeaveBtn.className = 'action-btn engage';
+                    completedLeaveBtn.textContent = 'Leave';
+                    completedLeaveBtn.addEventListener('click', () => {
+                        completedLeaveContainer.remove();
+                        changeLocation('guild');
+                    });
+                    completedLeaveContainer.appendChild(completedLeaveBtn);
+                    chatMessages.appendChild(completedLeaveContainer);
+                    completedLeaveContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
                     return;
                 }
 
@@ -5711,6 +5723,11 @@
                 } else {
                     // Check if this is an active mission destination — spawn enemies instead of re-showing encounter
                     const missionEnc = getMissionEncounterForDestination(currentDestination);
+                    // If mission is completed, do nothing — player uses [Leave] button
+                    if (missionEnc) {
+                        const mProg = game.missions[missionEnc.missionKey];
+                        if (mProg && mProg.completed) return;
+                    }
                     if (missionEnc && game._missionEngaged) {
                         const progress = game.missions[missionEnc.missionKey] || { kills: 0, completed: false };
                         if (progress.completed) {
@@ -6162,6 +6179,24 @@
                                 progress.completed = true;
                                 game._missionEngaged = false;
                                 addMessage(`[MISSION COMPLETE] ${missionEnc.completionText}`, 'victory');
+
+                                // Stop waves and show leave button
+                                if (game.waveTimer) { clearInterval(game.waveTimer); game.waveTimer = null; }
+                                if (game.waveExpireTimer) { clearTimeout(game.waveExpireTimer); game.waveExpireTimer = null; }
+                                clearCountdown();
+
+                                const missionLeaveContainer = document.createElement('div');
+                                missionLeaveContainer.className = 'action-btn-container';
+                                const missionLeaveBtn = document.createElement('button');
+                                missionLeaveBtn.className = 'action-btn engage';
+                                missionLeaveBtn.textContent = 'Leave';
+                                missionLeaveBtn.addEventListener('click', () => {
+                                    missionLeaveContainer.remove();
+                                    changeLocation('guild');
+                                });
+                                missionLeaveContainer.appendChild(missionLeaveBtn);
+                                chatMessages.appendChild(missionLeaveContainer);
+                                missionLeaveContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
                             } else {
                                 const remaining = missionEnc.killsRequired - progress.kills;
                                 const lines = [
