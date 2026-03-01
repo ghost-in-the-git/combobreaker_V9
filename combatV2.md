@@ -31,15 +31,16 @@ Everything is automatic. Player has no input once combat starts.
 ## Proposed Round Flow (V2)
 
 ```
-1. TURN X announced
-2. [HEAVY] [LIGHT] [RANGED] [REGEN] buttons appear — player picks
-3. Action resolves (modifies ATK, DEF, hits, regen for this round)
-4. Breaker procs roll (same as before — action choice doesn't replace breakers)
-5. Player attacks with action modifiers applied
-6. Enemies attack back with action modifiers applied
-7. Defensive breakers roll per hit (same)
-8. End-of-round regen + painbreaker
-9. DEF restores
+1.  TURN X announced
+2.  [HEAVY] [LIGHT] [RANGED] [REGEN] buttons appear — player picks (fuel deducted)
+3.  Action resolves (modifies ATK, DEF, hits, regen for this round)
+4.  Breaker procs roll (same as before — action choice doesn't replace breakers)
+5.  Player attacks with action modifiers applied
+6.  Enemies attack back with action modifiers applied
+7.  Defensive breakers roll per hit (same)
+8.  End-of-round HP regen + painbreaker
+9.  DEF restores
+10. Fuel regen: +level fuel recovered (capped at max)
 ```
 
 The key change: **the player makes a tactical choice each round** that feeds into the existing combat math.
@@ -51,13 +52,31 @@ The key change: **the player makes a tactical choice each round** that feeds int
 Fuel is the player's core resource. It governs everything:
 
 - **Max fuel:** 100
-- **Regen:** +1 per 3 seconds (~20 per minute)
+- **Out-of-combat regen:** +1 per second (full tank in ~100 seconds)
+- **In-combat regen:** +level per round (at end of round, after DEF restores)
 - **Travel:** 0–100 fuel depending on zone distance
 - **Evade (pre-combat):** 50 fuel to dodge a wave entirely
 
+### Out-of-combat fuel regen
+
+Changed from +1 per 3 seconds to **+1 per second**. Faster recovery between fights means the player spends less time waiting and more time making decisions. Travel and evade still drain the tank — the player just refills quicker.
+
+### In-combat fuel regen
+
+At the end of each combat round, the player recovers fuel equal to their **level**. This replaces the old real-time regen (which is paused during combat).
+
+- **Level 1:** +1 fuel per round — barely anything, every action costs real fuel
+- **Level 5:** +5 fuel per round — HEAVY costs net 0, RANGED is free, REGEN profits
+- **Level 10:** +10 fuel per round — comfortable, can sustain HEAVY indefinitely
+- **Level 20+:** +20 fuel per round — fuel surplus, player is rewarded for progression
+
+This means **early game combat is expensive** — a new player picking HEAVY every round will drain fast. But as the player levels up, fuel becomes less punishing and the action system becomes about tactics, not scarcity. High-level players can focus on which action is *best* rather than which one they can *afford*.
+
+The level-based regen also gives levelling a tangible combat reward beyond raw stats. Every level-up makes every fight a little cheaper.
+
 Combat actions now **burn fuel every round**. A 5-round fight isn't free anymore — it's an investment. The player has to weigh whether the silicon/drops are worth the fuel they'll burn getting them, and whether to spend big on HEAVY/RANGED or conserve with LIGHT/REGEN.
 
-Running dry mid-fight means you're stuck on LIGHT (free but vanilla). Running dry after a fight means you can't travel or evade — you're pinned down.
+Running dry mid-fight means you're stuck on LIGHT (free but vanilla). Running dry after a fight means you can't travel or evade — you're pinned down. But the higher your level, the more fuel you recover each round — so progression naturally eases the pressure.
 
 ---
 
@@ -124,18 +143,30 @@ Best for: Surviving a bad round, recovering HP against a large squad. Cheap — 
 
 ### Fuel Budget Examples
 
-A typical fight is 3–8 rounds. Here's what different strategies cost:
+A typical fight is 3–8 rounds. Net fuel = cost - (level × rounds recovered).
 
-| Strategy | Rounds | Fuel spent | Notes |
-|----------|--------|------------|-------|
-| All LIGHT | 6 | 0 | Free but slow — safe for weak enemies |
-| All HEAVY | 4 | 20 | Fast kills, burns a fifth of your tank |
-| HEAVY opener → LIGHT finish | 6 | 5–10 | Burst the first enemy, coast the rest |
-| RANGED spam vs 4-squad | 5 | 15 | AoE clears fast, moderate cost |
-| REGEN + LIGHT alternating | 8 | 8 | Sustain tank for hard fights |
-| HEAVY + REGEN cycling | 6 | 21 | Glass cannon with recovery — expensive |
+**Level 1 player** (recovers +1/round — fuel is tight):
 
-**Post-fight cost:** After a 20-fuel fight, the player needs ~60 seconds of regen before they can afford to travel to a 20-fuel zone. This creates natural pacing — go hard and you need to breathe. Go light and you stay mobile.
+| Strategy | Rounds | Gross cost | Recovered | Net cost | Notes |
+|----------|--------|------------|-----------|----------|-------|
+| All LIGHT | 6 | 0 | 6 | +6 gain | Free + small regen bonus |
+| All HEAVY | 4 | 20 | 4 | 16 | Expensive early — real commitment |
+| HEAVY opener → LIGHT | 6 | 5–10 | 6 | ~0–4 | Efficient burst + coast |
+| RANGED spam vs 4-squad | 5 | 15 | 5 | 10 | AoE works but burns fuel |
+
+**Level 5 player** (recovers +5/round — fuel pressure eases):
+
+| Strategy | Rounds | Gross cost | Recovered | Net cost | Notes |
+|----------|--------|------------|-----------|----------|-------|
+| All LIGHT | 6 | 0 | 30 | +30 gain | Fuel-positive — prints fuel |
+| All HEAVY | 4 | 20 | 20 | 0 | HEAVY is now free at level 5 |
+| RANGED spam vs 4-squad | 5 | 15 | 25 | +10 gain | AoE is profitable |
+
+**Level 10+ player** (recovers +10/round — fuel is abundant):
+
+Every strategy is fuel-positive. The action system becomes purely tactical — pick the *best* action, not the cheapest.
+
+**Post-fight recovery:** Out-of-combat regen is +1/sec, so a 20-fuel deficit refills in 20 seconds. Fast enough that the player isn't waiting around, but still noticeable after a costly fight.
 
 ---
 
@@ -206,7 +237,12 @@ If the player doesn't choose within **60 seconds**, auto-select `[LIGHT]` (safe 
 5. **Attack loop:** if RANGED, loop over all enemies instead of single target. If REGEN, skip attack entirely
 6. **Defence phase:** apply DEF modifier from action before shieldbreaker
 7. **Regen phase:** if REGEN, apply 2x regen before painbreaker check. If HEAVY, skip regen
-8. **End of round:** no changes to DEF restore
+8. **DEF restore:** no changes
+9. **Fuel regen:** after DEF restore, add `game.player.level` fuel (capped at `maxFuel`), show message: `+N FUEL [REACTOR]`, call `updateStats()`
+
+### What changes in `startFuelRegen()`
+
+Change the interval from 3000ms to **1000ms** (+1 fuel per second instead of +1 per 3 seconds). Single line change.
 
 ### What stays the same
 
@@ -242,6 +278,6 @@ const ACTION_FUEL_COST = { heavy: 5, light: 0, ranged: 3, regen: 2 };
 
 5. **Flavour messages:** Each action should have 3-5 random combat messages. e.g. HEAVY: "You swing with everything — sparks fly as the impact lands." Keep them short.
 
-6. **Fuel regen paused during combat?** DECIDED: Yes — fuel regen pauses for the **entire** combat duration, including the action selection window. No free fuel between rounds. `startFuelRegen()` is already cleared in `engageBattle()` and restarted in `endBattle()`, so this works out of the box.
+6. **Fuel regen during combat?** DECIDED: Real-time fuel regen (the 1/sec interval) is paused during combat. Instead, the player recovers **+level fuel at end of each round**. This means early levels feel fuel-tight, mid levels break even, and high levels are fuel-abundant. `startFuelRegen()` is already cleared in `engageBattle()` and restarted in `endBattle()`, so the pause works out of the box — just add the per-round regen step.
 
 7. **Speed stat reduces fuel costs?** Could make speed reduce action fuel costs by a flat amount (e.g. -1 per 5 speed). So a fully geared speed build (10 SPD) would pay 3 for HEAVY instead of 5, 1 for RANGED instead of 3. Rewards speed investment with fuel efficiency. Or keep it simple — flat costs for everyone.
