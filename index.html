@@ -629,6 +629,67 @@
             box-shadow: 0 0 20px #ff880055;
         }
 
+        /* Combat Action Buttons (V2) */
+        .action-btn-container.combat-actions {
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn.heavy {
+            background: #2a1a1a;
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        .action-btn.heavy:hover:not(:disabled) {
+            background: #ff4444;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px #ff444455;
+        }
+
+        .action-btn.light {
+            background: #1a2a1a;
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .action-btn.light:hover:not(:disabled) {
+            background: #00ff88;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px #00ff8855;
+        }
+
+        .action-btn.ranged {
+            background: #1a1a2a;
+            border-color: #4488ff;
+            color: #4488ff;
+        }
+
+        .action-btn.ranged:hover:not(:disabled) {
+            background: #4488ff;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px #4488ff55;
+        }
+
+        .action-btn.combat-regen {
+            background: #2a2a1a;
+            border-color: #ffcc00;
+            color: #ffcc00;
+        }
+
+        .action-btn.combat-regen:hover:not(:disabled) {
+            background: #ffcc00;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px #ffcc0055;
+        }
+
+        .combat-action-timer {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            padding: 2px 0 6px 0;
+        }
+
         /* Dialogue Buttons */
         .dialogue-btn-container {
             display: flex;
@@ -5949,13 +6010,113 @@
             }, 1000);
         }
 
+        // Combat V2 — Action constants
+        const ACTION_FUEL_COST = { heavy: 5, light: 0, ranged: 3, regen: 2 };
+        const ACTION_ATK_MULT = { heavy: 1.5, light: 1, ranged: 0.5, regen: 0 };
+        const ACTION_DEF_MULT = { heavy: 0.5, light: 1, ranged: 1, regen: 2 };
+        const ACTION_LABELS = {
+            heavy: 'HEAVY -5',
+            light: 'LIGHT',
+            ranged: 'RANGED -3',
+            regen: 'REGEN -2'
+        };
+        const ACTION_FLAVOUR = {
+            heavy: [
+                "You drop your guard and swing with everything.",
+                "Full power. Maximum impact.",
+                "Sparks fly as the hammer falls.",
+                "All systems routed to weapons.",
+                "One shot. Make it count."
+            ],
+            light: [
+                "Quick strike. Keep your guard up.",
+                "Clean hit. Stay sharp.",
+                "Measured strike. No wasted motion.",
+                "Light and fast. Stay mobile.",
+                "Textbook strike. By the numbers."
+            ],
+            ranged: [
+                "Weapons free. Hit everything that moves.",
+                "Suppressive fire across the field.",
+                "Spreading the pain around.",
+                "Targeting all hostiles.",
+                "Full spread. Light em all up."
+            ],
+            regen: [
+                "You pull back and reroute power to repair systems.",
+                "Defensive posture. Repairs cycling.",
+                "Hunkering down. Let the nanites work.",
+                "Shields up. Reactor to repairs.",
+                "Standing down to recharge."
+            ]
+        };
+
+        // Show combat action buttons and wait for player choice
+        function awaitCombatAction() {
+            return new Promise((resolve) => {
+                const p = game.player;
+
+                const container = document.createElement('div');
+                container.className = 'action-btn-container combat-actions';
+
+                const actions = ['heavy', 'light', 'ranged', 'regen'];
+                const cssClasses = { heavy: 'heavy', light: 'light', ranged: 'ranged', regen: 'combat-regen' };
+
+                actions.forEach(action => {
+                    const btn = document.createElement('button');
+                    btn.className = `action-btn ${cssClasses[action]}`;
+                    btn.textContent = ACTION_LABELS[action];
+                    btn.disabled = ACTION_FUEL_COST[action] > p.fuel;
+                    btn.addEventListener('click', () => {
+                        clearTimeout(timer);
+                        container.remove();
+                        timerEl.remove();
+                        resolve(action);
+                    });
+                    container.appendChild(btn);
+                });
+
+                const timerEl = document.createElement('div');
+                timerEl.className = 'combat-action-timer';
+                let secondsLeft = 60;
+                timerEl.textContent = `Auto-select LIGHT in ${secondsLeft}s`;
+
+                chatMessages.appendChild(container);
+                chatMessages.appendChild(timerEl);
+                container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+                const countdown = setInterval(() => {
+                    secondsLeft--;
+                    if (secondsLeft > 0) {
+                        timerEl.textContent = `Auto-select LIGHT in ${secondsLeft}s`;
+                    }
+                }, 1000);
+
+                const timer = setTimeout(() => {
+                    clearInterval(countdown);
+                    container.remove();
+                    timerEl.remove();
+                    resolve('light');
+                }, 60000);
+
+                // Store refs so endBattle can clean up if player dies mid-selection
+                game._combatActionCleanup = () => {
+                    clearTimeout(timer);
+                    clearInterval(countdown);
+                    container.remove();
+                    timerEl.remove();
+                    game._combatActionCleanup = null;
+                };
+            });
+        }
+
         // Player attack helper - calculates damage vs enemy defence
         function calculateDamage(attackStat, defenceStat) {
             const damage = Math.max(1, attackStat - defenceStat);
             return damage;
         }
 
-        // Battle round - player attacks, then all enemies attack in sequence
+        // Battle round - player picks action, then attacks, then enemies attack
         async function battleRound() {
             const p = game.player;
             const wave = game.currentWave;
@@ -5974,6 +6135,21 @@
             wave.turn++;
             await addMessage(`<b>TURN ${numberToWord(wave.turn)}</b>`, 'turncounter', { html: true, label: 'COMBAT' });
 
+            // --- Combat V2: Player picks an action ---
+            const action = await awaitCombatAction();
+            wave.chosenAction = action;
+
+            // Deduct fuel
+            const fuelCost = ACTION_FUEL_COST[action];
+            if (fuelCost > 0) {
+                p.fuel = Math.max(0, p.fuel - fuelCost);
+                updateStats();
+            }
+
+            // Flavour message
+            const flavours = ACTION_FLAVOUR[action];
+            await addMessage(flavours[Math.floor(Math.random() * flavours.length)], 'player');
+
             // Determine breaker procs this turn (gated behind owning decrypted keys)
             let speedTriggered = hasBreaker("Wire's Speedbreaker Key") && Math.random() * 100 < getBreaker();
             let breakerTriggered = hasBreaker("Your Combobreaker Key") && Math.random() * 100 < getBreaker();
@@ -5982,83 +6158,133 @@
             let warTriggered = hasBreaker("Rex's Warbreaker Key") && (speedTriggered || breakerTriggered) && Math.random() * 100 < getBreaker();
             let attackCount = speedTriggered ? (warTriggered ? 4 : 2) : 1;
 
-            if (speedTriggered) {
-                await addMessage(`[<b>SPEEDBREAKER</b> TRIGGERED]`, 'player', { html: true });
-            }
-            if (strikeTriggered) {
-                await addMessage(`[<b>STRIKEBREAKER</b> TRIGGERED] Enemy DEF ignored!`, 'player', { html: true });
-            }
-            if (breakerTriggered) {
-                await addMessage(`[<b>COMBOBREAKER</b> TRIGGERED]`, 'player', { html: true });
-            }
-            if (crushTriggered) {
-                await addMessage(`[<b>CRUSHBREAKER</b> TRIGGERED] DMG hits all enemies!`, 'player', { html: true });
-            }
-            if (warTriggered) {
-                await addMessage(`[<b>WARBREAKER</b> TRIGGERED] Escalating to <b>4X</b>!`, 'player', { html: true });
-            }
+            // REGEN action: no attack at all
+            const isRegen = action === 'regen';
+            // RANGED action: hits all enemies (handled in attack loop)
+            const isRanged = action === 'ranged';
 
-            // Calculate damage (strikebreaker ignores enemy defence, combobreaker doubles/quadruples)
-            let playerDamage = calculateDamage(p.attack, strikeTriggered ? 0 : et.defence);
-            if (breakerTriggered) {
-                playerDamage *= warTriggered ? 4 : 2;
-            }
-
-            // Perform attacks
-            for (let atk = 1; atk <= attackCount; atk++) {
-                // If current enemy is dead, target next one
-                if (wave.currentEnemy === null) {
-                    if (wave.remaining <= 0) {
-                        endBattle(true);
-                        return;
-                    }
-                    wave.currentEnemy = et.hp;
+            if (!isRegen) {
+                if (speedTriggered) {
+                    await addMessage(`[<b>SPEEDBREAKER</b> TRIGGERED]`, 'player', { html: true });
+                }
+                if (strikeTriggered) {
+                    await addMessage(`[<b>STRIKEBREAKER</b> TRIGGERED] Enemy DEF ignored!`, 'player', { html: true });
+                }
+                if (breakerTriggered) {
+                    await addMessage(`[<b>COMBOBREAKER</b> TRIGGERED]`, 'player', { html: true });
+                }
+                if (crushTriggered) {
+                    await addMessage(`[<b>CRUSHBREAKER</b> TRIGGERED] DMG hits all enemies!`, 'player', { html: true });
+                }
+                if (warTriggered) {
+                    await addMessage(`[<b>WARBREAKER</b> TRIGGERED] Escalating to <b>4X</b>!`, 'player', { html: true });
                 }
 
-                const prevEnemyHp = wave.currentEnemy;
-                wave.currentEnemy -= playerDamage;
-                await addMessage(`<b>MECH</b> attacks <b>${et.name.toUpperCase()} #${wave.currentTarget}</b> for <b>${playerDamage} DMG</b>`, 'player', { html: true });
+                // Calculate damage with action ATK modifier applied
+                const atkMult = ACTION_ATK_MULT[action];
+                let playerDamage = Math.floor(calculateDamage(p.attack, strikeTriggered ? 0 : et.defence) * atkMult);
+                if (playerDamage < 1) playerDamage = 1;
+                if (breakerTriggered) {
+                    playerDamage *= warTriggered ? 4 : 2;
+                }
 
-                // Crushbreaker AoE: damage all other remaining enemies (first attack only)
-                if (crushTriggered && atk === 1 && wave.remaining > 1) {
-                    let backgroundCount = wave.remaining - 1;
-                    if (playerDamage >= et.hp) {
-                        for (let k = 0; k < backgroundCount; k++) {
+                // RANGED AoE: attack every remaining enemy once per attack count
+                if (isRanged) {
+                    for (let atk = 1; atk <= attackCount; atk++) {
+                        // Attack each living enemy in the wave
+                        for (let t = wave.currentTarget; t <= wave.count; t++) {
+                            if (wave.remaining <= 0) { endBattle(true); return; }
+
+                            // Make sure current target has HP
+                            if (t === wave.currentTarget && wave.currentEnemy === null) {
+                                wave.currentEnemy = et.hp;
+                            }
+
+                            if (t === wave.currentTarget) {
+                                // This is the "front" enemy with tracked HP
+                                const prevEnemyHp = wave.currentEnemy;
+                                wave.currentEnemy -= playerDamage;
+
+                                if (wave.currentEnemy <= 0) {
+                                    wave.remaining--;
+                                    const xpBonus = getXpBonus();
+                                    const killXp = et.xp + xpBonus;
+                                    wave.xpEarned = (wave.xpEarned || 0) + killXp;
+                                    await addMessage(`<b>MECH</b> fires at <b>${et.name.toUpperCase()} #${t}</b> for <b>${playerDamage} DMG</b> [KILL CONFIRMED] (+<b>${killXp} SIL</b>)`, 'player', { html: true, enemyHpBar: { current: 0, max: et.hp, from: prevEnemyHp } });
+                                    wave.currentTarget++;
+                                    wave.currentEnemy = null;
+                                } else {
+                                    await addMessage(`<b>MECH</b> fires at <b>${et.name.toUpperCase()} #${t}</b> for <b>${playerDamage} DMG</b>`, 'player', { html: true, enemyHpBar: { current: wave.currentEnemy, max: et.hp, from: prevEnemyHp } });
+                                }
+                            } else {
+                                // Background enemies: we track them as one-shot kill or chip damage message
+                                if (playerDamage >= et.hp) {
+                                    wave.remaining--;
+                                    const xpBonus = getXpBonus();
+                                    const killXp = et.xp + xpBonus;
+                                    wave.xpEarned = (wave.xpEarned || 0) + killXp;
+                                    await addMessage(`<b>MECH</b> fires at <b>${et.name.toUpperCase()} #${t}</b> for <b>${playerDamage} DMG</b> [KILL CONFIRMED] (+<b>${killXp} SIL</b>)`, 'player', { html: true, enemyHpBar: { current: 0, max: et.hp, from: et.hp } });
+                                    wave.count--;
+                                    t--; // Re-check this index since we removed one
+                                } else {
+                                    await addMessage(`<b>MECH</b> fires at <b>${et.name.toUpperCase()} #${t}</b> for <b>${playerDamage} DMG</b>`, 'player', { html: true });
+                                }
+                            }
+                        }
+                    }
+                    if (wave.remaining <= 0) { endBattle(true); return; }
+                } else {
+                    // Single-target attack (HEAVY or LIGHT)
+                    for (let atk = 1; atk <= attackCount; atk++) {
+                        if (wave.currentEnemy === null) {
+                            if (wave.remaining <= 0) { endBattle(true); return; }
+                            wave.currentEnemy = et.hp;
+                        }
+
+                        const prevEnemyHp = wave.currentEnemy;
+                        wave.currentEnemy -= playerDamage;
+                        await addMessage(`<b>MECH</b> attacks <b>${et.name.toUpperCase()} #${wave.currentTarget}</b> for <b>${playerDamage} DMG</b>`, 'player', { html: true });
+
+                        // Crushbreaker AoE: damage all other remaining enemies (first attack only)
+                        if (crushTriggered && atk === 1 && wave.remaining > 1) {
+                            let backgroundCount = wave.remaining - 1;
+                            if (playerDamage >= et.hp) {
+                                for (let k = 0; k < backgroundCount; k++) {
+                                    wave.remaining--;
+                                    const xpBonus = getXpBonus();
+                                    const killXp = et.xp + xpBonus;
+                                    wave.xpEarned = (wave.xpEarned || 0) + killXp;
+                                    await addMessage(`<b>${et.name.toUpperCase()}</b> takes <b>${playerDamage} DMG</b> [KILL CONFIRMED] (+<b>${killXp} SIL</b>)`, 'enemy', { html: true, overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp, from: et.hp } });
+                                }
+                                wave.count = wave.currentTarget;
+                            } else {
+                                await addMessage(`<b>CRUSHBREAKER</b> hits <b>${backgroundCount}</b> other ${backgroundCount === 1 ? 'enemy' : 'enemies'} for <b>${playerDamage} DMG</b> each.`, 'player', { html: true });
+                            }
+                        }
+
+                        if (wave.currentEnemy <= 0) {
                             wave.remaining--;
                             const xpBonus = getXpBonus();
                             const killXp = et.xp + xpBonus;
                             wave.xpEarned = (wave.xpEarned || 0) + killXp;
-                            await addMessage(`<b>${et.name.toUpperCase()}</b> takes <b>${playerDamage} DMG</b> [KILL CONFIRMED] (+<b>${killXp} SIL</b>)`, 'enemy', { html: true, overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp, from: et.hp } });
+                            await addMessage(`<b>${et.name.toUpperCase()} #${wave.currentTarget}</b> takes <b>${playerDamage} DMG</b> [KILL CONFIRMED] (+<b>${killXp} SIL</b>)`, 'enemy', { html: true, overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp, from: prevEnemyHp } });
+                            wave.currentTarget++;
+                            wave.currentEnemy = null;
+
+                            if (wave.remaining <= 0) { endBattle(true); return; }
+                        } else {
+                            await addMessage(`<b>${et.name.toUpperCase()} #${wave.currentTarget}</b> takes <b>${playerDamage} DMG</b>`, 'enemy', { html: true, enemyHpBar: { current: wave.currentEnemy, max: et.hp, from: prevEnemyHp } });
                         }
-                        wave.count = wave.currentTarget;
-                    } else {
-                        await addMessage(`<b>CRUSHBREAKER</b> hits <b>${backgroundCount}</b> other ${backgroundCount === 1 ? 'enemy' : 'enemies'} for <b>${playerDamage} DMG</b> each.`, 'player', { html: true });
                     }
-                }
-
-                // Check if current enemy
-                if (wave.currentEnemy <= 0) {
-                    wave.remaining--;
-                    const xpBonus = getXpBonus();
-                    const killXp = et.xp + xpBonus;
-                    wave.xpEarned = (wave.xpEarned || 0) + killXp;
-                    await addMessage(`<b>${et.name.toUpperCase()} #${wave.currentTarget}</b> takes <b>${playerDamage} DMG</b> [KILL CONFIRMED] (+<b>${killXp} SIL</b>)`, 'enemy', { html: true, overlay: 'images/fire2.gif', enemyHpBar: { current: 0, max: et.hp, from: prevEnemyHp } });
-                    wave.currentTarget++;
-                    wave.currentEnemy = null;
-
-                    if (wave.remaining <= 0) {
-                        endBattle(true);
-                        return;
-                    }
-                } else {
-                    await addMessage(`<b>${et.name.toUpperCase()} #${wave.currentTarget}</b> takes <b>${playerDamage} DMG</b>`, 'enemy', { html: true, enemyHpBar: { current: wave.currentEnemy, max: et.hp, from: prevEnemyHp } });
                 }
             }
 
-            // Use persisted defence from previous round (restored at end of round)
-            let remainingDefence = wave.remainingDefence;
+            // --- Defence phase ---
+            // Apply action DEF modifier before shieldbreaker
+            const defMult = ACTION_DEF_MULT[action];
+            let remainingDefence = Math.floor(wave.remainingDefence * defMult);
 
-            // Shieldbreaker: chance to double defence at start of round
+            // Shieldbreaker: chance to double defence at start of defence phase
             const shieldTriggered = hasBreaker("Sarge's Shieldbreaker Key") && Math.random() * 100 < getBreaker();
             if (shieldTriggered) {
                 remainingDefence *= 2;
@@ -6067,7 +6293,6 @@
             const roundMaxDefence = remainingDefence;
 
             // All remaining enemies attack in sequence
-
             for (let i = wave.currentTarget; i <= wave.count; i++) {
                 await addMessage(`<b>${et.name.toUpperCase()} #${i}</b> attacks <b>MECH</b> for <b>${et.attack} DMG</b>`, 'enemy', { html: true });
 
@@ -6131,11 +6356,13 @@
                 }
             }
 
-            // End-of-round regen
+            // --- End-of-round HP regen ---
+            // HEAVY: no regen this round. REGEN: 2x regen. Otherwise: normal.
             let regenHealed = 0;
             const hpBeforeRegen = p.hp;
-            if (p.regen > 0 && p.hp < p.maxHp) {
-                regenHealed = Math.min(p.regen, p.maxHp - p.hp);
+            if (action !== 'heavy' && p.regen > 0 && p.hp < p.maxHp) {
+                const regenMult = isRegen ? 2 : 1;
+                regenHealed = Math.min(p.regen * regenMult, p.maxHp - p.hp);
                 p.hp += regenHealed;
                 updateStats();
             }
@@ -6149,7 +6376,7 @@
                 updateStats();
             }
 
-            // End-of-round defence restore
+            // End-of-round defence restore (always restores to base, ignoring action modifier)
             const defBeforeRestore = remainingDefence;
             remainingDefence = p.defence;
             wave.remainingDefence = remainingDefence;
@@ -6157,6 +6384,16 @@
                 await addMessage(`<b>MECH</b> regenerates <b>${regenHealed} HP</b> and restores <b>DEF to ${remainingDefence}</b>`, 'player', { html: true, hpBar: { current: p.hp, max: p.maxHp, from: hpBeforeRegen }, defBar: { current: remainingDefence, max: p.defence, from: defBeforeRestore } });
             } else {
                 await addMessage(`<b>DEF</b> restored to <b>${remainingDefence}</b>.`, 'player', { html: true, hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence, from: defBeforeRestore } });
+            }
+
+            // --- End-of-round fuel regen: +level fuel ---
+            const fuelRegen = p.level;
+            if (fuelRegen > 0 && p.fuel < p.maxFuel) {
+                const prevFuel = p.fuel;
+                p.fuel = Math.min(p.maxFuel, p.fuel + fuelRegen);
+                const gained = p.fuel - prevFuel;
+                await addMessage(`<b>+${gained} FUEL</b> [REACTOR]`, 'system', { html: true });
+                updateStats();
             }
         }
 
@@ -6329,7 +6566,13 @@
             btnRetreat.textContent = 'Evade';
             updateStats();
             startRegen();
+            startFuelRegen();
             startWaveTimer();
+
+            // Clean up any pending action selection UI
+            if (game._combatActionCleanup) {
+                game._combatActionCleanup();
+            }
         }
 
         // Start HP regeneration (1 regen = 1 HP per second)
@@ -6350,7 +6593,7 @@
             }, 1000);
         }
 
-        // Fuel regeneration (1 fuel per 3 seconds, always running)
+        // Fuel regeneration (+1 fuel per second, paused during combat)
         function startFuelRegen() {
             if (game.fuelRegenInterval) clearInterval(game.fuelRegenInterval);
             game.fuelRegenInterval = setInterval(() => {
@@ -6358,7 +6601,7 @@
                     game.player.fuel = Math.min(game.player.maxFuel, game.player.fuel + 1);
                     updateStats();
                 }
-            }, 3000);
+            }, 1000);
         }
 
         // Utility delay
@@ -6383,6 +6626,12 @@
             if (game.regenInterval) {
                 clearInterval(game.regenInterval);
                 game.regenInterval = null;
+            }
+
+            // Pause fuel regen during combat (replaced by per-round +level regen)
+            if (game.fuelRegenInterval) {
+                clearInterval(game.fuelRegenInterval);
+                game.fuelRegenInterval = null;
             }
 
             const et = game.currentWave.enemyType;
