@@ -690,6 +690,38 @@
             padding: 2px 0 6px 0;
         }
 
+        .combat-fuel-gauge {
+            position: relative;
+            background: #1a1a2e;
+            border: 1px solid #ff8800;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 20px;
+            margin: 0 auto 8px auto;
+            max-width: 400px;
+        }
+
+        .combat-fuel-gauge .fuel-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff8800, #cc6600);
+            transition: width 0.6s ease;
+        }
+
+        .combat-fuel-gauge .fuel-gauge-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #fff;
+            text-shadow: 0 0 3px #000;
+            pointer-events: none;
+        }
+
         /* Dialogue Buttons */
         .dialogue-btn-container {
             display: flex;
@@ -6051,11 +6083,44 @@
             ]
         };
 
-        // Show combat action buttons and wait for player choice
+        // Show combat fuel gauge (with regen animation) then action buttons, wait for choice
         function awaitCombatAction() {
             return new Promise((resolve) => {
                 const p = game.player;
 
+                // --- Apply fuel regen and build gauge ---
+                const fuelRegen = p.level;
+                const prevFuel = p.fuel;
+                if (fuelRegen > 0 && p.fuel < p.maxFuel) {
+                    p.fuel = Math.min(p.maxFuel, p.fuel + fuelRegen);
+                    updateStats();
+                }
+
+                const wrapper = document.createElement('div');
+
+                // Fuel gauge
+                const gauge = document.createElement('div');
+                gauge.className = 'combat-fuel-gauge';
+                const fill = document.createElement('div');
+                fill.className = 'fuel-fill';
+                const fromPct = Math.min(100, Math.max(0, (prevFuel / p.maxFuel) * 100));
+                const toPct = Math.min(100, Math.max(0, (p.fuel / p.maxFuel) * 100));
+                fill.style.width = `${fromPct}%`;
+                const label = document.createElement('span');
+                label.className = 'fuel-gauge-label';
+                label.textContent = `FUEL ${p.fuel} / ${p.maxFuel}`;
+                gauge.appendChild(fill);
+                gauge.appendChild(label);
+                wrapper.appendChild(gauge);
+
+                // Animate fill after render
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        fill.style.width = `${toPct}%`;
+                    });
+                });
+
+                // Action buttons
                 const container = document.createElement('div');
                 container.className = 'action-btn-container combat-actions';
 
@@ -6069,21 +6134,24 @@
                     btn.disabled = ACTION_FUEL_COST[action] > p.fuel;
                     btn.addEventListener('click', () => {
                         clearTimeout(timer);
-                        container.remove();
+                        clearInterval(countdown);
+                        wrapper.remove();
                         timerEl.remove();
                         resolve(action);
                     });
                     container.appendChild(btn);
                 });
+                wrapper.appendChild(container);
 
+                // Countdown timer
                 const timerEl = document.createElement('div');
                 timerEl.className = 'combat-action-timer';
                 let secondsLeft = 60;
                 timerEl.textContent = `Auto-select LIGHT in ${secondsLeft}s`;
 
-                chatMessages.appendChild(container);
+                chatMessages.appendChild(wrapper);
                 chatMessages.appendChild(timerEl);
-                container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                wrapper.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
                 const countdown = setInterval(() => {
                     secondsLeft--;
@@ -6094,7 +6162,7 @@
 
                 const timer = setTimeout(() => {
                     clearInterval(countdown);
-                    container.remove();
+                    wrapper.remove();
                     timerEl.remove();
                     resolve('light');
                 }, 60000);
@@ -6103,7 +6171,7 @@
                 game._combatActionCleanup = () => {
                     clearTimeout(timer);
                     clearInterval(countdown);
-                    container.remove();
+                    wrapper.remove();
                     timerEl.remove();
                     game._combatActionCleanup = null;
                 };
@@ -6386,15 +6454,6 @@
                 await addMessage(`<b>DEF</b> restored to <b>${remainingDefence}</b>.`, 'player', { html: true, hpBar: { current: p.hp, max: p.maxHp }, defBar: { current: remainingDefence, max: p.defence, from: defBeforeRestore } });
             }
 
-            // --- End-of-round fuel regen: +level fuel ---
-            const fuelRegen = p.level;
-            if (fuelRegen > 0 && p.fuel < p.maxFuel) {
-                const prevFuel = p.fuel;
-                p.fuel = Math.min(p.maxFuel, p.fuel + fuelRegen);
-                const gained = p.fuel - prevFuel;
-                await addMessage(`<b>+${gained} FUEL</b> [REACTOR]`, 'system', { html: true });
-                updateStats();
-            }
         }
 
         // End battle
