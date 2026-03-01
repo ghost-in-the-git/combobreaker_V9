@@ -191,7 +191,7 @@ Each button shows its fuel cost inline: `[HEAVY -5]`, `[LIGHT]`, `[RANGED -3]`, 
 
 ### Timeout / Auto-pick
 
-If the player doesn't choose within **10 seconds**, auto-select `[LIGHT]` (safe default, zero fuel cost). Show countdown on the buttons or a small timer. This keeps combat flowing and prevents stalling. Auto-pick is always LIGHT because it's the only action guaranteed to be affordable.
+If the player doesn't choose within **60 seconds**, auto-select `[LIGHT]` (safe default, zero fuel cost). Show countdown on the buttons or a small timer. Fuel regen is **paused** for the entire duration of combat — including while waiting for action selection — so the player can't stall to recover fuel between rounds. Auto-pick is always LIGHT because it's the only action guaranteed to be affordable.
 
 ---
 
@@ -242,6 +242,6 @@ const ACTION_FUEL_COST = { heavy: 5, light: 0, ranged: 3, regen: 2 };
 
 5. **Flavour messages:** Each action should have 3-5 random combat messages. e.g. HEAVY: "You swing with everything — sparks fly as the impact lands." Keep them short.
 
-6. **Fuel regen paused during combat?** Currently fuel regens at +1/3s always. Should it pause during combat so fights are a pure drain? Or keep regen ticking so long fights partially offset the cost? Current plan: **pause fuel regen during combat** (same as how `startFuelRegen` is already cleared in `engageBattle()`). Fuel only regens between fights.
+6. **Fuel regen paused during combat?** DECIDED: Yes — fuel regen pauses for the **entire** combat duration, including the action selection window. No free fuel between rounds. `startFuelRegen()` is already cleared in `engageBattle()` and restarted in `endBattle()`, so this works out of the box.
 
 7. **Speed stat reduces fuel costs?** Could make speed reduce action fuel costs by a flat amount (e.g. -1 per 5 speed). So a fully geared speed build (10 SPD) would pay 3 for HEAVY instead of 5, 1 for RANGED instead of 3. Rewards speed investment with fuel efficiency. Or keep it simple — flat costs for everyone.
