@@ -11,9 +11,10 @@ Replace the hardcoded 4 combat actions (HEAVY, LIGHT, RANGED, REGEN) with a **mo
 | Question | Answer |
 |----------|--------|
 | **Starting mods** | Player starts with none. Sorted separately later. |
-| **How to get mods** | Sold by **The Modder**, a new encounter type. Not dropped by enemies. |
+| **How to get mods** | Sold by **The Modder**, a unique encounter. Not dropped by enemies. |
 | **Empty slots** | Show a greyed-out "EMPTY" button in combat. |
 | **Duplicates** | One copy per slot. A mod equipped in slot 1 can't also be in slot 2. |
+| **Access** | The Mapmaker in Old Battlefield sells `Map: The Mod Shop`. |
 
 ---
 
@@ -27,11 +28,112 @@ Replace the hardcoded 4 combat actions (HEAVY, LIGHT, RANGED, REGEN) with a **mo
 
 ---
 
-## New Architecture
+## The Modder — Unique Encounter
 
-### mods.js — Mod Definitions
+Follows the same pattern as The Forge, The Guild, and Mech Graveyard:
 
-Each mod is an object with all the properties needed to function as a combat action:
+### Zone Setup
+
+A new unique zone `modshop` with a single destination:
+
+```js
+// LOCATION_MAP_ITEMS
+modshop: 'Map: The Mod Shop'
+
+// ZONE_DESTINATIONS
+modshop: {
+    openWorldName: null,
+    openWorldDesc: null,
+    destinations: [
+        { encounterName: "The Modder", mapItem: "The Mod Shop: The Modder" }
+    ]
+}
+```
+
+### Map Sold By Mapmaker (Old Battlefield)
+
+The Mapmaker in Old Battlefield gets a new item slot:
+
+```js
+// encounters_oldbattlefield.js — The Mapmaker entry
+itemSlot1: ["Map: Downtown"],
+itemSlot2: ["Map: The Forge"],
+itemSlot3: ["Map: The Mod Shop"],   // NEW
+```
+
+### Story Items Needed
+
+```js
+// storyitems.js additions
+{ name: "Map: The Mod Shop", category: "map", desc: "Coordinates to a stripped-down workshop..." }
+{ name: "The Mod Shop: The Modder", category: "locationmap", desc: "Bay number for The Modder's workshop..." }
+```
+
+### Encounter File — encounters_modshop.js
+
+```js
+const ENCOUNTERS_MODSHOP = [
+    {
+        name: "The Modder",
+        characterImage: "images/MODDER.gif",
+        type: "shop",
+        autoEngage: true,
+        isModder: true,                    // flag for shop panel logic
+        description: "A cluttered workshop...",
+        engageText: "...",
+        discoveredDescription: "...",
+        discoveredEngageText: "...",
+        appearanceRate: 100,
+        minLevel: 1,
+        dialogue: [
+            { question: "What are mods?", response: "..." },
+            { question: "What do you have?", response: "..." }
+        ]
+    }
+];
+```
+
+### Shop Panel Integration
+
+When `isModder` is true, show a modder-specific dropdown selector (like the Broker's tier dropdown):
+
+```html
+<div class="modder-selector" id="modder-selector" style="display: none;">
+    <select id="modder-category-select">
+        <option value="">[SELECT MOD CATEGORY]</option>
+        <option value="attack">ATTACK MODS</option>
+        <option value="defence">DEFENCE MODS</option>
+        <option value="utility">UTILITY MODS</option>
+    </select>
+</div>
+```
+
+`showShopPanel()` adds:
+```js
+} else if (currentEncounter && currentEncounter.isModder) {
+    updateModderDropdown();
+    modderSelector.style.display = 'block';
+    // hide all other selectors...
+}
+```
+
+`onModderCategoryChange()` filters `MODS` by category and populates the 4 shop slots. Already-owned mods (in `game.inventory`) are marked as "OWNED".
+
+`buyItem()` adds:
+```js
+} else if (currentEncounter && currentEncounter.isModder) {
+    shopItems[index] = null;
+    updateShopUI();
+}
+```
+
+`hideShopPanel()` adds reset for modder dropdown.
+
+---
+
+## mods.js — Mod Definitions
+
+Each mod is a self-contained combat action:
 
 ```js
 const MODS = [
@@ -51,7 +153,7 @@ const MODS = [
             "Quick strike. Keep your guard up.",
             "Clean hit. Stay sharp.",
         ],
-        cost: 50,                  // silicon cost at The Modder
+        cost: 50,
     },
     {
         id: 'heavy_slam',
@@ -187,12 +289,6 @@ Save/load works automatically since it stores item names and MODS are looked up 
 
 ---
 
-## The Modder (new encounter — future)
-
-A new NPC encounter (like the Broker/Forger). Sells mods for silicon. Stock varies by zone. Details TBD — will be its own implementation after the mod system is wired up.
-
----
-
 ## Starter Mods
 
 5 mods to start with. More added later per zone. Future ideas:
@@ -209,4 +305,7 @@ A new NPC encounter (like the Broker/Forger). Sells mods for silicon. Stock vari
 | File | Change |
 |------|--------|
 | `mods.js` (NEW) | All mod definitions |
-| `index.html` | Add `<script src="mods.js">`, add 4 mod dropdowns to pilot panel, update `game.equipment` with mod1-4, update `awaitCombatAction` to read mods, update attack/defence phase to use mod properties, update save/load, remove hardcoded ACTION_* constants |
+| `encounters_modshop.js` (NEW) | The Modder encounter definition |
+| `index.html` | Add `<script>` tags for new files, add `modshop` zone config, add modder selector HTML, add `isModder` handling to `showShopPanel`/`buyItem`/`hideShopPanel`, add 4 mod dropdowns to pilot panel, update `game.equipment` with mod1-4, update `awaitCombatAction` to read mods, update attack/defence phase to use mod properties, update save/load, remove hardcoded ACTION_* constants |
+| `encounters_oldbattlefield.js` | Add `Map: The Mod Shop` to Mapmaker's itemSlot3 |
+| `storyitems.js` | Add map and location map items for The Mod Shop |
