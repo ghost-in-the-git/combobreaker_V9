@@ -108,6 +108,21 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot4: null
     },
     {
+        name: "Shade",
+        type: "shop",
+        discoverable: true,
+        description: "A hooded figure works at a dim bench in a dead-end alley, face hidden behind a visor that reflects no light. The mods on the bench seem to absorb the neon around them.",
+        engageText: "A whisper from the hood. 'Void mods. They don't burn, they don't shock — they erase.' A gloved hand turns a mod casing over. 'The energy goes somewhere. Don't ask where.'",
+        discoveredDescription: "Shade's alley bench is darker than the space around it. The mods on display drink the light.",
+        discoveredEngageText: "The hood tilts toward you. 'You came back. That means you understand what void does.' A pause. 'Good.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Swift Void Strike"],
+        itemSlot2: ["Heavy Void Strike"],
+        itemSlot3: ["Keen Void Pierce"],
+        itemSlot4: ["Deep Void Restore"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",

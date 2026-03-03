@@ -108,6 +108,21 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         itemSlot4: null
     },
     {
+        name: "Ember",
+        type: "shop",
+        discoverable: true,
+        description: "A burn-scarred woman crouches beside a portable mod bench, its power cell jury-rigged to a still-smouldering munitions crate. Heat shimmers off every surface.",
+        engageText: "She blows ash off a mod casing. 'Fire mods. Built from ordnance that didn't detonate the first time.' She grins, teeth white against soot. 'Works better the second time around.'",
+        discoveredDescription: "Ember's mod bench glows between the craters. She's already testing a casing when you approach.",
+        discoveredEngageText: "She tosses a hot mod from hand to hand. 'Back for more heat? Good. I just finished a batch.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Swift Fire Strike"],
+        itemSlot2: ["Heavy Fire Strike"],
+        itemSlot3: ["Keen Fire Pierce"],
+        itemSlot4: ["Wide Fire Barrage"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",

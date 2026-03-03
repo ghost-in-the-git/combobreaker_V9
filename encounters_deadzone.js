@@ -98,6 +98,21 @@ const ENCOUNTERS_DEADZONE = [
         itemSlot4: null
     },
     {
+        name: "Null",
+        type: "shop",
+        discoverable: true,
+        description: "A silent figure in a sealed radiation suit sits behind a bench of void-touched mod casings. Each one seems to bend the light around it, edges soft and indistinct.",
+        engageText: "The visor turns toward you. A flat, filtered voice: 'Void mods. Built at the edge of the blackout zone. The interference changes the crystal structure.' A gloved hand pushes a mod forward. 'They hit differently here.'",
+        discoveredDescription: "Null's bench warps the air around it. The void mods look less solid than last time — or maybe your eyes are adjusting.",
+        discoveredEngageText: "The visor turns. 'More void work. The rads are getting into the lattice. Makes them stronger.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Spread Void Shot"],
+        itemSlot2: ["Power Void Surge"],
+        itemSlot3: ["Wide Void Barrage"],
+        itemSlot4: ["Hard Void Guard"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",

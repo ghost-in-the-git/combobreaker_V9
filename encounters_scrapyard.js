@@ -107,6 +107,21 @@ const ENCOUNTERS_SCRAPYARD = [
         itemSlot4: null
     },
     {
+        name: "Bolt",
+        type: "shop",
+        discoverable: true,
+        description: "A young man hunches over a workbench made from a crushed mech cockpit. Mod casings and loose wires cover every surface. A soldering iron glows in his left hand.",
+        engageText: "He doesn't look up. 'Steel mods. Hardened, reinforced, built from scrap that used to be somebody's armour.' He taps a finished mod casing. 'Now it's yours. If you've got the silicon.'",
+        discoveredDescription: "Bolt's scrapyard workbench is buried under fresh mod casings. He's already soldering when you arrive.",
+        discoveredEngageText: "He glances up. 'More steel work. Same bench, same quality. Take a look.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Swift Steel Strike"],
+        itemSlot2: ["Heavy Steel Strike"],
+        itemSlot3: ["Iron Steel Bulwark"],
+        itemSlot4: ["Quick Steel Repair"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",

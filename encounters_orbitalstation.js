@@ -108,6 +108,21 @@ const ENCOUNTERS_ORBITALSTATION = [
         itemSlot4: null
     },
     {
+        name: "Pulse",
+        type: "shop",
+        discoverable: true,
+        description: "A wiry man with electrical burns on both forearms sits behind a workstation crackling with static discharge. Every mod on his rack hums with stored charge.",
+        engageText: "He taps a mod and a spark arcs between his fingers. 'Volt mods. Capacitor-driven, field-tested in vacuum. The charge builds until you release it.' He grins. 'Try not to ground yourself.'",
+        discoveredDescription: "Pulse's workstation crackles and hums. The static gets worse every time you visit.",
+        discoveredEngageText: "He waves you closer, sparks trailing his fingertips. 'Fresh charge on the whole rack. Pick your voltage.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Swift Volt Strike"],
+        itemSlot2: ["Heavy Volt Strike"],
+        itemSlot3: ["Spread Volt Shot"],
+        itemSlot4: ["Power Volt Surge"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",

@@ -2457,16 +2457,17 @@
             // Restore forged items registry before inventory lookup
             restoreForgedItems(data.forgedItems);
 
-            // Restore inventory
+            // Restore inventory (with mod name migration for old saves)
             game.inventory = [];
             if (data.inventory && Array.isArray(data.inventory)) {
                 data.inventory.forEach(itemName => {
-                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName) || MODS.find(i => i.name === itemName);
+                    const migrated = MOD_NAME_MIGRATION[itemName] || itemName;
+                    const item = ITEMS.find(i => i.name === migrated) || FORGER_ITEMS.find(i => i.name === migrated) || MODS.find(i => i.name === migrated);
                     if (item) game.inventory.push(item);
                 });
             }
 
-            // Restore equipment
+            // Restore equipment (with mod name migration for old saves)
             if (data.equipment) {
                 game.equipment = {
                     body: data.equipment.body || null,
@@ -2479,10 +2480,10 @@
                     drill: data.equipment.drill || null,
                     implant: data.equipment.implant || null,
                     mindsync: data.equipment.mindsync || null,
-                    mod1: data.equipment.mod1 || null,
-                    mod2: data.equipment.mod2 || null,
-                    mod3: data.equipment.mod3 || null,
-                    mod4: data.equipment.mod4 || null
+                    mod1: MOD_NAME_MIGRATION[data.equipment.mod1] || data.equipment.mod1 || null,
+                    mod2: MOD_NAME_MIGRATION[data.equipment.mod2] || data.equipment.mod2 || null,
+                    mod3: MOD_NAME_MIGRATION[data.equipment.mod3] || data.equipment.mod3 || null,
+                    mod4: MOD_NAME_MIGRATION[data.equipment.mod4] || data.equipment.mod4 || null
                 };
             }
 
@@ -2607,18 +2608,19 @@
                 // Restore forged items registry before inventory lookup
                 restoreForgedItems(data.forgedItems);
 
-                // Restore inventory (convert names back to item objects)
+                // Restore inventory (convert names back to item objects, with mod name migration)
                 game.inventory = [];
                 if (data.inventory && Array.isArray(data.inventory)) {
                     data.inventory.forEach(itemName => {
-                        const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName) || MODS.find(i => i.name === itemName);
+                        const migrated = MOD_NAME_MIGRATION[itemName] || itemName;
+                        const item = ITEMS.find(i => i.name === migrated) || FORGER_ITEMS.find(i => i.name === migrated) || MODS.find(i => i.name === migrated);
                         if (item) {
                             game.inventory.push(item);
                         }
                     });
                 }
 
-                // Restore equipment
+                // Restore equipment (with mod name migration)
                 if (data.equipment) {
                     game.equipment = {
                         body: data.equipment.body || null,
@@ -2631,10 +2633,10 @@
                         drill: data.equipment.drill || null,
                         implant: data.equipment.implant || null,
                         mindsync: data.equipment.mindsync || null,
-                        mod1: data.equipment.mod1 || null,
-                        mod2: data.equipment.mod2 || null,
-                        mod3: data.equipment.mod3 || null,
-                        mod4: data.equipment.mod4 || null
+                        mod1: MOD_NAME_MIGRATION[data.equipment.mod1] || data.equipment.mod1 || null,
+                        mod2: MOD_NAME_MIGRATION[data.equipment.mod2] || data.equipment.mod2 || null,
+                        mod3: MOD_NAME_MIGRATION[data.equipment.mod3] || data.equipment.mod3 || null,
+                        mod4: MOD_NAME_MIGRATION[data.equipment.mod4] || data.equipment.mod4 || null
                     };
                 }
 
@@ -4001,7 +4003,12 @@
 
                 if (item) {
                     usedItems.add(item.name);
-                    items.push(item);
+                    // Mark mods as already owned if player has them
+                    if (item.type === 'mod' && game.inventory.some(inv => inv.name === item.name)) {
+                        items.push(Object.assign({}, item, { alreadyOwned: true }));
+                    } else {
+                        items.push(item);
+                    }
                 } else {
                     items.push(null);
                 }
@@ -4228,7 +4235,8 @@
 
         // ========== MODDER FUNCTIONS ==========
 
-        // Handle modder category dropdown selection — show mods for the selected category
+        // Handle modder category dropdown selection — show neutral mods for the selected category
+        // Elemental mods are sold by zone-specific modders (Bolt, Ember, Shade, etc.)
         function onModderCategoryChange() {
             const select = document.getElementById('modder-category-select');
             const category = select.value;
@@ -4239,17 +4247,21 @@
                 return;
             }
 
-            // Filter mods by category
-            const categoryMods = MODS.filter(m => m.category === category);
+            // Filter to neutral mods only (elemental mods sold by zone modders)
+            const categoryMods = MODS.filter(m => m.category === category && m.element === null);
 
             // Check which mods the player already owns
             const ownedNames = game.inventory.filter(item => item.type === 'mod').map(item => item.name);
 
+            // Sort: unowned first, then owned — so new mods fill the 4 visible slots
+            const unowned = categoryMods.filter(m => !ownedNames.includes(m.name));
+            const owned = categoryMods.filter(m => ownedNames.includes(m.name));
+            const sorted = [...unowned, ...owned];
+
             shopItems = [null, null, null, null];
-            for (let i = 0; i < Math.min(categoryMods.length, 4); i++) {
-                const mod = categoryMods[i];
+            for (let i = 0; i < Math.min(sorted.length, 4); i++) {
+                const mod = sorted[i];
                 if (ownedNames.includes(mod.name)) {
-                    // Show as owned (disabled)
                     shopItems[i] = Object.assign({}, mod, { alreadyOwned: true });
                 } else {
                     shopItems[i] = Object.assign({}, mod);
@@ -4890,21 +4902,21 @@
                 await addMessage(`"Here — take this. It's a map to The Ratpile. Not much down there but rats, but it's a start."\n\nHe pauses, then jerks his thumb toward the next bay. "And go see Spark before you head out. She does mods — combat modules. Grab some off her, or you'll be unable to hurt a fly."`, 'system', { label: currentEncounter.name, image: currentEncounter.characterImage, characterDialogue: !!currentEncounter.characterImage });
             }
 
-            // Spark gives starter mods (Light Strike + Repair) on first visit
-            if (currentEncounter.name === 'Spark' && !game.inventory.some(i => i.name === 'Light Strike')) {
-                const lightStrike = MODS.find(m => m.name === 'Light Strike');
-                const repair = MODS.find(m => m.name === 'Repair');
-                if (lightStrike) addItemToInventory(lightStrike);
-                if (repair) addItemToInventory(repair);
+            // Spark gives starter mods (Swift Strike + Quick Repair) on first visit
+            if (currentEncounter.name === 'Spark' && !game.inventory.some(i => i.name === 'Swift Strike')) {
+                const swiftStrike = MODS.find(m => m.name === 'Swift Strike');
+                const quickRepair = MODS.find(m => m.name === 'Quick Repair');
+                if (swiftStrike) addItemToInventory(swiftStrike);
+                if (quickRepair) addItemToInventory(quickRepair);
                 // Auto-equip into first two mod slots if empty
-                if (!game.equipment.mod1 && lightStrike) {
-                    game.equipment.mod1 = lightStrike.name;
+                if (!game.equipment.mod1 && swiftStrike) {
+                    game.equipment.mod1 = swiftStrike.name;
                 }
-                if (!game.equipment.mod2 && repair) {
-                    game.equipment.mod2 = repair.name;
+                if (!game.equipment.mod2 && quickRepair) {
+                    game.equipment.mod2 = quickRepair.name;
                 }
                 updateEquipmentUI();
-                await addMessage(`She pulls two mod cylinders off the rack and slots them into your chassis before you can object.\n\n'Light Strike — basic attack, no fuel cost, keeps you swinging. And Repair — burns a little fuel, but patches you up mid-fight.' She steps back and admires her work.\n\n'There. Now you've got options. Two mod slots filled, two to go. You can grab more from the Modder out in the sector — she's got the fancy stuff.' She grins. 'But these'll keep you alive.'`, 'system', { label: 'Spark', image: currentEncounter.characterImage, characterDialogue: true });
+                await addMessage(`She pulls two mod cylinders off the rack and slots them into your chassis before you can object.\n\n'Swift Strike — basic attack, no fuel cost, keeps you swinging. And Quick Repair — burns a little fuel, but patches you up mid-fight.' She steps back and admires her work.\n\n'There. Now you've got options. Two mod slots filled, two to go. You can grab more from the Modder out in the sector — she's got the fancy stuff.' She grins. 'But these'll keep you alive.'`, 'system', { label: 'Spark', image: currentEncounter.characterImage, characterDialogue: true });
             }
 
             // The dead Mapmaker in the Dead Zone carries his sealed key

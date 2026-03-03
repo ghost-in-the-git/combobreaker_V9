@@ -83,11 +83,11 @@ const ENCOUNTERS_HOME = [
         dialogue: [
             {
                 question: "What are mods?",
-                response: "'OK so —' She grabs a small chrome cylinder off her bench. 'This is a mod. Combat module. It plugs into your action bus — right here —' She taps a panel on your side. 'And it gives you a move. An action you can use in a fight.'\n\nShe holds up four fingers. 'You've got four mod slots. Four slots, four moves in combat. Light Strike hits things. Repair fixes you up. There are attack mods, defence mods, utility mods — all sorts.'\n\nShe slots the cylinder back into a rack. 'Empty slots mean empty buttons. No mod, no action. So don't go out there naked, yeah?'"
+                response: "'OK so —' She grabs a small chrome cylinder off her bench. 'This is a mod. Combat module. It plugs into your action bus — right here —' She taps a panel on your side. 'And it gives you a move. An action you can use in a fight.'\n\nShe holds up four fingers. 'You've got four mod slots. Four slots, four moves in combat. Swift Strike hits things. Quick Repair fixes you up. There are attack mods, defence mods, utility mods — all sorts.'\n\nShe slots the cylinder back into a rack. 'Empty slots mean empty buttons. No mod, no action. So don't go out there naked, yeah?'"
             },
             {
                 question: "How do I use them?",
-                response: "'You equip them on your Pilot panel — the mod slots at the top. Drag a mod into a slot and it shows up as a combat button when you fight.' She mimes pressing buttons.\n\n'Each mod has a fuel cost. Light Strike is free — zero fuel. Heavier stuff burns fuel every time you use it. Keep an eye on your fuel gauge or you'll be stuck clicking the free stuff.'\n\nShe grins. 'The Modder out in the sector sells the fancy ones. Elements, status effects, weird stuff. But what I gave you will keep you alive for now.'"
+                response: "'You equip them on your Pilot panel — the mod slots at the top. Drag a mod into a slot and it shows up as a combat button when you fight.' She mimes pressing buttons.\n\n'Each mod has a fuel cost. Swift Strike is free — zero fuel. Heavier stuff burns fuel every time you use it. Keep an eye on your fuel gauge or you'll be stuck clicking the free stuff.'\n\nShe grins. 'The Modder out in the sector sells the fancy ones. And each zone has its own modder selling elemental mods — fire, cryo, acid, all that. But what I gave you will keep you alive for now.'"
             },
             {
                 question: "Who are you?",

@@ -108,6 +108,21 @@ const ENCOUNTERS_UNDERCITY = [
         itemSlot4: null
     },
     {
+        name: "Stitch",
+        type: "shop",
+        discoverable: true,
+        description: "A figure in stained surgical gear works under a UV lamp, grafting organic components into mod casings. Jars of bio-neural tissue line the shelf behind them.",
+        engageText: "They don't look up from the graft. 'Flesh mods. Living circuitry — adapts, heals, learns.' A wet click as a component seats itself. 'The mod grows into your system. Literally.'",
+        discoveredDescription: "Stitch's underground lab hums with bio-luminescence. The jars have new specimens since your last visit.",
+        discoveredEngageText: "They glance up through surgical loupes. 'The cultures are ready. Strongest organic mods I've grown yet.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Swift Flesh Strike"],
+        itemSlot2: ["Heavy Flesh Strike"],
+        itemSlot3: ["Quick Flesh Repair"],
+        itemSlot4: ["Deep Flesh Restore"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",

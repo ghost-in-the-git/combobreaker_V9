@@ -104,6 +104,21 @@ const ENCOUNTERS_FROZENREACH = [
         itemSlot4: null
     },
     {
+        name: "Frost",
+        type: "shop",
+        discoverable: true,
+        description: "A bundled figure works at a cryo-cooled mod bench, breath visible in clouds. Each mod casing is rimmed with ice crystals that never melt.",
+        engageText: "They crack ice off a finished mod. 'Cryo mods. The cold is the weapon — locks joints, freezes circuits, makes steel brittle.' They blow on their fingers. 'Handle them with insulated gloves.'",
+        discoveredDescription: "Frost's cryo bench hums in the cold, mod casings glittering with permanent ice. They're already prepping a fresh batch.",
+        discoveredEngageText: "They stamp their boots. 'Cooler's been running hot. Which means colder mods. Take your pick.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Swift Cryo Strike"],
+        itemSlot2: ["Heavy Cryo Strike"],
+        itemSlot3: ["Power Cryo Surge"],
+        itemSlot4: ["Iron Cryo Bulwark"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",

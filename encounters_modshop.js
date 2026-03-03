@@ -28,7 +28,7 @@ const ENCOUNTERS_MODSHOP = [
             },
             {
                 question: "What do you have?",
-                response: "'Three categories.' She ticks them off on grease-stained fingers. 'Attack mods hit things. Defence mods stop things from hitting you. Utility mods do everything else — repairs, buffs, weird stuff.'\n\nShe shrugs. 'Use the selector. Browse by category. Everything's priced in Silicon.'"
+                response: "'Three categories.' She ticks them off on grease-stained fingers. 'Attack mods hit things. Defence mods stop things from hitting you. Utility mods do everything else — repairs, buffs, weird stuff.'\n\nShe shrugs. 'I stock the neutral stuff — no element, works on anything. If you want elemental mods — fire, cryo, acid, all that — you'll need to find the zone modders. Each zone's got one. They specialise.'"
             },
             {
                 question: "Where do you get these?",

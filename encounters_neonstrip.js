@@ -104,6 +104,21 @@ const ENCOUNTERS_NEONSTRIP = [
         itemSlot4: null
     },
     {
+        name: "Lux",
+        type: "shop",
+        discoverable: true,
+        description: "A woman in mirrored armour works behind a glass display case, each mod inside pulsing with white-gold light. Holographic price tags rotate slowly above them.",
+        engageText: "She adjusts her shades against the glow. 'Light mods. Photonic resonance — hits like a spotlight through smoke.' She tilts a mod and the whole alley brightens. 'Nothing hides from these.'",
+        discoveredDescription: "Lux's glass display pulses with light mods, each one casting shifting patterns across the alley walls.",
+        discoveredEngageText: "She flicks her shades down. 'New collection. Brighter than last time. Try not to stare directly at them.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Swift Light Strike"],
+        itemSlot2: ["Heavy Light Strike"],
+        itemSlot3: ["Spread Light Shot"],
+        itemSlot4: ["Wide Light Barrage"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",

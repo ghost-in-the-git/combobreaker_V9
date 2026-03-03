@@ -21,16 +21,19 @@
  * - cssClass:  CSS class for the combat button
  * - flavour:   Array of random flavour messages
  * - cost:      Purchase price in Silicon
+ *
+ * GENERATION: 10 base mods × 9 variants (neutral + 8 elements) = 90 mods
+ * Naming: "Swift Strike" → "Swift Fire Strike", "Swift Cryo Strike", etc.
  */
 
-const MODS = [
+// ========== MOD BASE DEFINITIONS ==========
+
+const MOD_BASES = [
     {
-        id: 'light_strike',
-        name: 'Light Strike',
-        type: 'mod',
+        baseName: 'Swift Strike',
+        baseId: 'swift_strike',
         category: 'attack',
-        element: null,
-        desc: 'Balanced strike. No fuel cost.',
+        desc: 'Quick strike. No fuel cost.',
         image: 'images/mods/light_strike.gif',
         fuel: 0,
         atkMult: 1,
@@ -48,11 +51,9 @@ const MODS = [
         cost: 50
     },
     {
-        id: 'heavy_slam',
-        name: 'Heavy Slam',
-        type: 'mod',
+        baseName: 'Heavy Strike',
+        baseId: 'heavy_strike',
         category: 'attack',
-        element: null,
         desc: 'Full power swing. High damage, lower defence.',
         image: 'images/mods/heavy_slam.gif',
         fuel: 5,
@@ -71,11 +72,9 @@ const MODS = [
         cost: 100
     },
     {
-        id: 'spread_fire',
-        name: 'Spread Fire',
-        type: 'mod',
+        baseName: 'Spread Shot',
+        baseId: 'spread_shot',
         category: 'attack',
-        element: null,
         desc: 'Suppressive fire. Hits all enemies.',
         image: 'images/mods/spread_fire.gif',
         fuel: 3,
@@ -94,11 +93,9 @@ const MODS = [
         cost: 150
     },
     {
-        id: 'bulwark',
-        name: 'Bulwark',
-        type: 'mod',
+        baseName: 'Iron Bulwark',
+        baseId: 'iron_bulwark',
         category: 'defence',
-        element: null,
         desc: 'Brace for impact. Maximum defence, no offence.',
         image: 'images/mods/bulwark.gif',
         fuel: 2,
@@ -117,11 +114,9 @@ const MODS = [
         cost: 120
     },
     {
-        id: 'repair',
-        name: 'Repair',
-        type: 'mod',
+        baseName: 'Quick Repair',
+        baseId: 'quick_repair',
         category: 'utility',
-        element: null,
         desc: 'Reroute power to repair systems.',
         image: 'images/mods/repair.gif',
         fuel: 2,
@@ -138,6 +133,111 @@ const MODS = [
             "Standing down to recharge."
         ],
         cost: 80
+    },
+    {
+        baseName: 'Keen Pierce',
+        baseId: 'keen_pierce',
+        category: 'attack',
+        desc: 'Precision strike. Targets weak points.',
+        image: 'images/mods/keen_pierce.gif',
+        fuel: 4,
+        atkMult: 1.3,
+        defMult: 0.7,
+        targeting: 'single',
+        isRegen: false,
+        cssClass: 'light',
+        flavour: [
+            "Targeting weak point. Firing.",
+            "Precision over power. Find the gap.",
+            "Lock on. Thread the needle.",
+            "One clean shot through the armour seam.",
+            "Surgical strike. No wasted energy."
+        ],
+        cost: 200
+    },
+    {
+        baseName: 'Power Surge',
+        baseId: 'power_surge',
+        category: 'attack',
+        desc: 'Reactor overload. Devastating damage, paper-thin defence.',
+        image: 'images/mods/power_surge.gif',
+        fuel: 8,
+        atkMult: 2,
+        defMult: 0.3,
+        targeting: 'single',
+        isRegen: false,
+        cssClass: 'heavy',
+        flavour: [
+            "Reactor overload. All power to weapons.",
+            "Maximum output. Damn the consequences.",
+            "Systems red-lined. This is gonna hurt.",
+            "Everything you've got. Leave nothing in reserve.",
+            "Full burn. Hope it's enough."
+        ],
+        cost: 300
+    },
+    {
+        baseName: 'Wide Barrage',
+        baseId: 'wide_barrage',
+        category: 'attack',
+        desc: 'Heavy area suppression. Hits all enemies hard.',
+        image: 'images/mods/wide_barrage.gif',
+        fuel: 5,
+        atkMult: 0.8,
+        defMult: 0.8,
+        targeting: 'aoe',
+        isRegen: false,
+        cssClass: 'ranged',
+        flavour: [
+            "Saturating the zone. Nothing untouched.",
+            "Full barrage. Cover everything.",
+            "Area denial. Make them scatter.",
+            "Heavy fire across all vectors.",
+            "Blanket the field. No escape."
+        ],
+        cost: 250
+    },
+    {
+        baseName: 'Hard Guard',
+        baseId: 'hard_guard',
+        category: 'defence',
+        desc: 'Defensive stance with counter-readiness.',
+        image: 'images/mods/hard_guard.gif',
+        fuel: 3,
+        atkMult: 0.5,
+        defMult: 2.5,
+        targeting: 'none',
+        isRegen: false,
+        cssClass: 'combat-regen',
+        flavour: [
+            "Braced and ready. Counterattack primed.",
+            "Shield wall. Watching for an opening.",
+            "Defensive stance. Waiting for the gap.",
+            "Locked down, but not helpless.",
+            "Let them swing. Then make them pay."
+        ],
+        cost: 200
+    },
+    {
+        baseName: 'Deep Restore',
+        baseId: 'deep_restore',
+        category: 'utility',
+        desc: 'Full system repair cycle. Maximum regeneration.',
+        image: 'images/mods/deep_restore.gif',
+        fuel: 4,
+        atkMult: 0,
+        defMult: 1.5,
+        targeting: 'none',
+        isRegen: true,
+        cssClass: 'combat-regen',
+        flavour: [
+            "Full system diagnostic. Rerouting all power.",
+            "Deep repair cycle initiated.",
+            "Core systems rebuilding. Hold the line.",
+            "Nanite surge. Give it time.",
+            "Shutting down non-essentials. Full repair mode."
+        ],
+        cost: 250
     }
 ];
 
@@ -170,3 +270,74 @@ function getDefenceTypeBonus(attackElement, defenceType) {
     if (defenceType === 'magnetic' && MAGNETIC_ELEMENTS.includes(attackElement)) return 1.15;
     return 1;
 }
+
+// ========== MOD GENERATION ==========
+
+const ELEMENT_VARIANTS = [null, 'steel', 'flesh', 'fire', 'cryo', 'acid', 'volt', 'light', 'void'];
+
+const ELEMENT_LABELS = {
+    steel: 'Steel', flesh: 'Flesh', fire: 'Fire', cryo: 'Cryo',
+    acid: 'Acid', volt: 'Volt', light: 'Light', void: 'Void'
+};
+
+const ELEMENT_DESC_PREFIX = {
+    steel: 'Steel-forged.',
+    flesh: 'Bio-grafted.',
+    fire: 'Flame-infused.',
+    cryo: 'Cryo-locked.',
+    acid: 'Acid-laced.',
+    volt: 'Volt-charged.',
+    light: 'Light-attuned.',
+    void: 'Void-touched.'
+};
+
+/**
+ * Generate mod name from base name and element.
+ * "Swift Strike" + fire → "Swift Fire Strike"
+ * "Wide Barrage" + cryo → "Wide Cryo Barrage"
+ */
+function generateModName(baseName, element) {
+    if (!element) return baseName;
+    const words = baseName.split(' ');
+    return words[0] + ' ' + ELEMENT_LABELS[element] + ' ' + words.slice(1).join(' ');
+}
+
+function generateModId(baseId, element) {
+    return element ? baseId + '_' + element : baseId;
+}
+
+// Generate all 90 mods (10 bases × 9 variants)
+const MODS = [];
+for (let b = 0; b < MOD_BASES.length; b++) {
+    const base = MOD_BASES[b];
+    for (let e = 0; e < ELEMENT_VARIANTS.length; e++) {
+        const element = ELEMENT_VARIANTS[e];
+        MODS.push({
+            id: generateModId(base.baseId, element),
+            name: generateModName(base.baseName, element),
+            type: 'mod',
+            category: base.category,
+            element: element,
+            desc: element ? (ELEMENT_DESC_PREFIX[element] + ' ' + base.desc) : base.desc,
+            image: base.image,
+            fuel: base.fuel,
+            atkMult: base.atkMult,
+            defMult: base.defMult,
+            targeting: base.targeting,
+            isRegen: base.isRegen || false,
+            cssClass: element ? (base.cssClass + ' element-' + element) : base.cssClass,
+            flavour: base.flavour,
+            cost: element ? base.cost * 2 : base.cost
+        });
+    }
+}
+
+// ========== LEGACY NAME MIGRATION ==========
+// Maps old mod names to new names for save compatibility
+const MOD_NAME_MIGRATION = {
+    'Light Strike': 'Swift Strike',
+    'Heavy Slam': 'Heavy Strike',
+    'Spread Fire': 'Spread Shot',
+    'Bulwark': 'Iron Bulwark',
+    'Repair': 'Quick Repair'
+};

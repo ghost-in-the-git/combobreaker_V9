@@ -104,6 +104,21 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot4: null
     },
     {
+        name: "Rivet",
+        type: "shop",
+        discoverable: true,
+        description: "A heavyset woman operates a mod press built into an assembly line station. Robotic arms feed steel blanks while she programs each casing by hand.",
+        engageText: "She stamps a mod flat with one hand. 'Steel mods. Industrial grade — same alloy as the factory walls. Takes a beating and keeps firing.' She slides it across the counter. 'Built to last.'",
+        discoveredDescription: "Rivet's assembly line clanks in rhythm. A fresh rack of steel mods sits cooling on the output belt.",
+        discoveredEngageText: "She taps the counter. 'New run just came off the line. Tighter tolerances this batch.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Spread Steel Shot"],
+        itemSlot2: ["Keen Steel Pierce"],
+        itemSlot3: ["Power Steel Surge"],
+        itemSlot4: ["Wide Steel Barrage"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",

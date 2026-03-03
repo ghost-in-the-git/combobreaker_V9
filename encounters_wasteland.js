@@ -108,6 +108,21 @@ const ENCOUNTERS_WASTELAND = [
         itemSlot4: null
     },
     {
+        name: "Blight",
+        type: "shop",
+        discoverable: true,
+        description: "A woman in a corroded apron works over bubbling chemical baths, dipping mod casings in solutions that hiss and smoke. Her gloves are eaten through at the fingertips.",
+        engageText: "She holds up a mod dripping with green residue. 'Acid mods. The casing dissolves on impact, delivers the payload inside the armour.' She drops it in a rinse bath. 'Messy, but effective.'",
+        discoveredDescription: "Blight's chemical baths bubble and smoke between the dunes. The smell hits before you see her.",
+        discoveredEngageText: "She waves a corroded tong. 'New batch just finished the soak. Strongest acid I've cooked yet.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Swift Acid Strike"],
+        itemSlot2: ["Heavy Acid Strike"],
+        itemSlot3: ["Iron Acid Bulwark"],
+        itemSlot4: ["Quick Acid Repair"]
+    },
+    {
         name: "The Herald",
         characterImage: "images/THE_HERALD.gif",
         type: "shop",
