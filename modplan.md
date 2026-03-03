@@ -192,20 +192,20 @@ const MODS = [
         cost: 150,
     },
     {
-        id: 'evade',
-        name: 'Evade',
+        id: 'bulwark',
+        name: 'Bulwark',
         type: 'mod',
         category: 'defence',
-        desc: 'Dodge incoming attacks. No offence this round.',
-        image: 'images/mods/evade.gif',
+        desc: 'Brace for impact. Maximum defence, no offence.',
+        image: 'images/mods/bulwark.gif',
         fuel: 2,
         atkMult: 0,
         defMult: 3,
         targeting: 'none',
         cssClass: 'combat-regen',
         flavour: [
-            "Thrusters fire. You sidestep the incoming blows.",
-            "Evasive manoeuvres. Nothing touches you.",
+            "Systems locked. Bracing for impact.",
+            "Full defensive. Nothing gets through.",
         ],
         cost: 120,
     },
@@ -297,6 +297,32 @@ Save/load works automatically since it stores item names and MODS are looked up 
 - **Drain** — low damage, steals HP
 - **EMP** — reduces enemy ATK next round
 - **Counter** — no attack, reflects next hit
+
+---
+
+## Element System
+
+Every mod can have an `element` property. Elements affect damage through a weakness/resistance chart.
+
+### Main Elements
+
+| Element | Strong vs | Weak vs |
+|---------|-----------|---------|
+| **Steel** | Flesh, Cryo | Acid, Volt |
+| **Flesh** | Acid, Volt | Steel, Fire |
+| **Fire** | Flesh, Steel | Cryo, Acid |
+| **Cryo** | Fire, Volt | Steel, Flesh |
+| **Acid** | Steel, Flesh | Cryo, Volt |
+| **Volt** | Steel, Acid | Cryo, Flesh |
+
+### Special Rivalry
+
+| Element | Strong vs | Weak vs |
+|---------|-----------|---------|
+| **Light** | Void | Void |
+| **Void** | Light | Light |
+
+Light and Void interact normally/neutral with all other elements.
 
 ---
 
