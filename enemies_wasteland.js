@@ -8,6 +8,8 @@
 const ENEMIES_WASTELAND = [
     {
         name: "Rad Roach Swarm",
+        element: 'acid',
+        defenceType: 'physical',
         attack: 14,
         defence: 2,
         hp: 40,
@@ -22,6 +24,8 @@ const ENEMIES_WASTELAND = [
     },
     {
         name: "Dust Crawler",
+        element: 'flesh',
+        defenceType: 'physical',
         attack: 18,
         defence: 5,
         hp: 46,
@@ -36,6 +40,8 @@ const ENEMIES_WASTELAND = [
     },
     {
         name: "Irradiated Scavenger",
+        element: 'acid',
+        defenceType: 'physical',
         attack: 22,
         defence: 4,
         hp: 44,
@@ -50,6 +56,8 @@ const ENEMIES_WASTELAND = [
     },
     {
         name: "Sand Stalker",
+        element: 'void',
+        defenceType: 'physical',
         attack: 28,
         defence: 3,
         hp: 42,
@@ -64,6 +72,8 @@ const ENEMIES_WASTELAND = [
     },
     {
         name: "Wasteland Brute",
+        element: 'flesh',
+        defenceType: 'physical',
         attack: 20,
         defence: 9,
         hp: 48,
@@ -78,6 +88,8 @@ const ENEMIES_WASTELAND = [
     },
     {
         name: "Irradiated Colossus",
+        element: 'acid',
+        defenceType: 'physical',
         attack: 30,
         defence: 7,
         hp: 50,

@@ -8,6 +8,8 @@
 const ENEMIES_DOWNTOWN = [
     {
         name: "Street Modder",
+        element: 'flesh',
+        defenceType: 'physical',
         attack: 7,
         defence: 1,
         hp: 20,
@@ -22,6 +24,8 @@ const ENEMIES_DOWNTOWN = [
     },
     {
         name: "Corp Security Drone",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 10,
         defence: 3,
         hp: 22,
@@ -36,6 +40,8 @@ const ENEMIES_DOWNTOWN = [
     },
     {
         name: "Neon Ronin",
+        element: 'light',
+        defenceType: 'physical',
         attack: 14,
         defence: 2,
         hp: 24,
@@ -50,6 +56,8 @@ const ENEMIES_DOWNTOWN = [
     },
     {
         name: "Sentinel",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 12,
         defence: 4,
         hp: 28,
@@ -64,6 +72,8 @@ const ENEMIES_DOWNTOWN = [
     },
     {
         name: "Corporate Mech Squad",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 10,
         defence: 5,
         hp: 30,
@@ -78,6 +88,8 @@ const ENEMIES_DOWNTOWN = [
     },
     {
         name: "Black Market Enforcer",
+        element: 'flesh',
+        defenceType: 'physical',
         attack: 18,
         defence: 4,
         hp: 26,

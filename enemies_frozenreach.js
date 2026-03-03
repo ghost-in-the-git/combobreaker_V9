@@ -8,6 +8,8 @@
 const ENEMIES_FROZENREACH = [
     {
         name: "Frost Skimmer",
+        element: 'cryo',
+        defenceType: 'magnetic',
         attack: 30,
         defence: 8,
         hp: 70,
@@ -22,6 +24,8 @@ const ENEMIES_FROZENREACH = [
     },
     {
         name: "Cryo Sentry",
+        element: 'cryo',
+        defenceType: 'magnetic',
         attack: 28,
         defence: 12,
         hp: 74,
@@ -36,6 +40,8 @@ const ENEMIES_FROZENREACH = [
     },
     {
         name: "Blizzard Drone",
+        element: 'cryo',
+        defenceType: 'magnetic',
         attack: 40,
         defence: 9,
         hp: 72,
@@ -50,6 +56,8 @@ const ENEMIES_FROZENREACH = [
     },
     {
         name: "Glacial Prowler",
+        element: 'cryo',
+        defenceType: 'magnetic',
         attack: 45,
         defence: 11,
         hp: 76,
@@ -64,6 +72,8 @@ const ENEMIES_FROZENREACH = [
     },
     {
         name: "Permafrost Mauler",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 38,
         defence: 16,
         hp: 78,
@@ -78,6 +88,8 @@ const ENEMIES_FROZENREACH = [
     },
     {
         name: "Cryo Warlord",
+        element: 'cryo',
+        defenceType: 'magnetic',
         attack: 55,
         defence: 17,
         hp: 80,

@@ -23,6 +23,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Scrap Fields",
         enemy: {
             name: "Rusted KV-8 Grinder",
+            element: 'steel',
+            defenceType: 'magnetic',
             attack: 10,
             defence: 10,
             hp: 100,
@@ -46,6 +48,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Old Battlefield",
         enemy: {
             name: "Shelled MK-IV Bulwark",
+            element: 'steel',
+            defenceType: 'magnetic',
             attack: 15,
             defence: 12,
             hp: 150,
@@ -72,6 +76,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Downtown",
         enemy: {
             name: "Shadowed S-12 Wraith",
+            element: 'void',
+            defenceType: 'magnetic',
             attack: 20,
             defence: 15,
             hp: 220,
@@ -98,6 +104,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Orbital Station",
         enemy: {
             name: "Depressurized DR-7 Prospector",
+            element: 'steel',
+            defenceType: 'magnetic',
             attack: 28,
             defence: 22,
             hp: 320,
@@ -124,6 +132,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Wasteland",
         enemy: {
             name: "Irradiated AX-3 Ravager",
+            element: 'acid',
+            defenceType: 'magnetic',
             attack: 35,
             defence: 28,
             hp: 420,
@@ -150,6 +160,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Undercity",
         enemy: {
             name: "Corroded SC-1 Flicker",
+            element: 'volt',
+            defenceType: 'magnetic',
             attack: 42,
             defence: 35,
             hp: 550,
@@ -176,6 +188,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Industrial Zone",
         enemy: {
             name: "Slag-Coated HG-6 Devastator",
+            element: 'fire',
+            defenceType: 'magnetic',
             attack: 50,
             defence: 42,
             hp: 720,
@@ -202,6 +216,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Frozen Reach",
         enemy: {
             name: "Frozen MD-5 Lifeline",
+            element: 'cryo',
+            defenceType: 'magnetic',
             attack: 60,
             defence: 50,
             hp: 950,
@@ -228,6 +244,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Neon Strip",
         enemy: {
             name: "Gilded EN-9 Tinker",
+            element: 'volt',
+            defenceType: 'magnetic',
             attack: 75,
             defence: 60,
             hp: 1200,
@@ -254,6 +272,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Dead Zone",
         enemy: {
             name: "Blighted EW-0 Phantom",
+            element: 'void',
+            defenceType: 'magnetic',
             attack: 100,
             defence: 80,
             hp: 1800,
@@ -280,6 +300,8 @@ const BOSS_ENCOUNTERS = [
         beacon: "Beacon: Frontline",
         enemy: {
             name: "Scorched CM-1 Sovereign",
+            element: 'fire',
+            defenceType: 'magnetic',
             attack: 130,
             defence: 100,
             hp: 2500,
@@ -306,6 +328,8 @@ const BOSS_ENCOUNTERS = [
         beacon: null,
         enemy: {
             name: "Morningstar",
+            element: 'void',
+            defenceType: 'magnetic',
             attack: 200,
             defence: 150,
             hp: 5000,

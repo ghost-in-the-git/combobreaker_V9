@@ -8,6 +8,8 @@
 const ENEMIES_INDUSTRIALZONE = [
     {
         name: "Assembly Drone",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 24,
         defence: 6,
         hp: 60,
@@ -22,6 +24,8 @@ const ENEMIES_INDUSTRIALZONE = [
     },
     {
         name: "Loader Mech",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 20,
         defence: 10,
         hp: 66,
@@ -36,6 +40,8 @@ const ENEMIES_INDUSTRIALZONE = [
     },
     {
         name: "Arc Welder Unit",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 35,
         defence: 6,
         hp: 62,
@@ -50,6 +56,8 @@ const ENEMIES_INDUSTRIALZONE = [
     },
     {
         name: "Furnace Guardian",
+        element: 'fire',
+        defenceType: 'magnetic',
         attack: 30,
         defence: 12,
         hp: 68,
@@ -64,6 +72,8 @@ const ENEMIES_INDUSTRIALZONE = [
     },
     {
         name: "Overclocked Foreman",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 40,
         defence: 9,
         hp: 64,
@@ -78,6 +88,8 @@ const ENEMIES_INDUSTRIALZONE = [
     },
     {
         name: "Reactor Sentinel",
+        element: 'fire',
+        defenceType: 'magnetic',
         attack: 45,
         defence: 15,
         hp: 70,

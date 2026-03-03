@@ -1762,6 +1762,24 @@
 
         <div class="panel-page" id="page-pilot">
             <div class="equipment-panel">
+                <div class="mod-slots">
+                    <div class="equip-slot">
+                        <select id="equip-mod1"><option value="">-- None --</option></select>
+                        <div class="equip-desc" id="equip-desc-mod1"></div>
+                    </div>
+                    <div class="equip-slot">
+                        <select id="equip-mod2"><option value="">-- None --</option></select>
+                        <div class="equip-desc" id="equip-desc-mod2"></div>
+                    </div>
+                    <div class="equip-slot">
+                        <select id="equip-mod3"><option value="">-- None --</option></select>
+                        <div class="equip-desc" id="equip-desc-mod3"></div>
+                    </div>
+                    <div class="equip-slot">
+                        <select id="equip-mod4"><option value="">-- None --</option></select>
+                        <div class="equip-desc" id="equip-desc-mod4"></div>
+                    </div>
+                </div>
                 <div class="equip-slot">
                     <select id="equip-pilot"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-pilot"></div>
@@ -1956,6 +1974,14 @@
                         <option value="">[SELECT PILOT TIER]</option>
                     </select>
                 </div>
+                <div class="broker-selector" id="modder-selector" style="display: none;">
+                    <select id="modder-category-select">
+                        <option value="">[SELECT MOD CATEGORY]</option>
+                        <option value="attack">ATTACK MODS</option>
+                        <option value="defence">DEFENCE MODS</option>
+                        <option value="utility">UTILITY MODS</option>
+                    </select>
+                </div>
                 <div class="shop-item-wrapper" id="shop-wrapper-1">
                     <div class="shop-name" id="shop-name-1"></div>
                     <div class="shop-desc" id="shop-desc-1"></div>
@@ -2088,6 +2114,7 @@
     <script src="encounters_guild.js"></script>
     <script src="encounters_salvageyard.js"></script>
     <script src="encounters_decrypter.js"></script>
+    <script src="encounters_modshop.js"></script>
     <script src="encounters_ratpile.js"></script>
     <script src="encounters_scrapyard.js"></script>
     <script src="encounters_oldbattlefield.js"></script>
@@ -2114,6 +2141,7 @@
     <script src="mining_asteroidbelt.js"></script>
     <script src="refined_minerals.js"></script>
     <script src="forger_items.js"></script>
+    <script src="mods.js"></script>
     <script>
         // Game State
         const game = {
@@ -2340,7 +2368,7 @@
             game.minerals = {};
             game.storyItems = ['Mysterious Note', 'Unknown Sealed Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
             game.inventory = [];
-            game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null, implant: null, mindsync: null };
+            game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null, implant: null, mindsync: null, mod1: null, mod2: null, mod3: null, mod4: null };
             currentLocation = 'home';
             currentDestination = 'openworld';
 
@@ -2433,7 +2461,7 @@
             game.inventory = [];
             if (data.inventory && Array.isArray(data.inventory)) {
                 data.inventory.forEach(itemName => {
-                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName);
+                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName) || MODS.find(i => i.name === itemName);
                     if (item) game.inventory.push(item);
                 });
             }
@@ -2450,7 +2478,11 @@
                     pilot: data.equipment.pilot || null,
                     drill: data.equipment.drill || null,
                     implant: data.equipment.implant || null,
-                    mindsync: data.equipment.mindsync || null
+                    mindsync: data.equipment.mindsync || null,
+                    mod1: data.equipment.mod1 || null,
+                    mod2: data.equipment.mod2 || null,
+                    mod3: data.equipment.mod3 || null,
+                    mod4: data.equipment.mod4 || null
                 };
             }
 
@@ -2579,7 +2611,7 @@
                 game.inventory = [];
                 if (data.inventory && Array.isArray(data.inventory)) {
                     data.inventory.forEach(itemName => {
-                        const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName);
+                        const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName) || MODS.find(i => i.name === itemName);
                         if (item) {
                             game.inventory.push(item);
                         }
@@ -2598,7 +2630,11 @@
                         pilot: data.equipment.pilot || null,
                         drill: data.equipment.drill || null,
                         implant: data.equipment.implant || null,
-                        mindsync: data.equipment.mindsync || null
+                        mindsync: data.equipment.mindsync || null,
+                        mod1: data.equipment.mod1 || null,
+                        mod2: data.equipment.mod2 || null,
+                        mod3: data.equipment.mod3 || null,
+                        mod4: data.equipment.mod4 || null
                     };
                 }
 
@@ -2892,6 +2928,15 @@
                 desc: "A sealed bunker humming with power. Banks of cipher machines line the walls. Someone is cracking codes.",
                 image: "images/IMAGE.gif"
             },
+            modshop: {
+                enemies: null,
+                encounters: ENCOUNTERS_MODSHOP,
+                mining: null,
+                ambush: null,
+                fuelCost: 5,
+                desc: "A cluttered workshop buried under cables and circuit boards. Mod casings line every wall.",
+                image: "images/IMAGE.gif"
+            },
             home: {
                 enemies: null,
                 encounters: ENCOUNTERS_HOME,
@@ -2957,6 +3002,7 @@
             guild: 'THE GUILD',
             salvageyard: 'MECH GRAVEYARD',
             decrypter: 'THE DECRYPTER',
+            modshop: 'THE MOD SHOP',
             home: 'HOME'
         };
 
@@ -2983,7 +3029,8 @@
             morningstar: 'Map: Morningstar\'s Destruction',
             forge: 'Map: The Forge',
             salvageyard: 'Map: Mech Graveyard',
-            decrypter: 'Map: The Decrypter'
+            decrypter: 'Map: The Decrypter',
+            modshop: 'Map: The Mod Shop'
         };
 
         // Zone destinations: open world name + discoverable encounter locations per zone
@@ -3254,6 +3301,13 @@
                 openWorldDesc: null,
                 destinations: [
                     { encounterName: "Abandoned Monolith", mapItem: "Mech Graveyard: Abandoned Monolith" }
+                ]
+            },
+            modshop: {
+                openWorldName: null,
+                openWorldDesc: null,
+                destinations: [
+                    { encounterName: "The Modder", mapItem: "The Mod Shop: The Modder" }
                 ]
             }
         };
@@ -3657,7 +3711,7 @@
             for (const slot in game.equipment) {
                 const itemName = game.equipment[slot];
                 if (itemName) {
-                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName);
+                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName) || MODS.find(i => i.name === itemName);
                     if (item && item.stats) {
                         if (item.stats.hp) p.maxHp += item.stats.hp;
                         if (item.stats.attack) p.attack += item.stats.attack;
@@ -3690,19 +3744,29 @@
         // Update equipment dropdowns with inventory items
         const SLOT_LABELS = {
             body: 'BODY', legs: 'LEGS', arms: 'ARMS', weapon: 'WEAPON',
-            chip: 'CHIP', processor: 'PROC', implant: 'IMPLANT', pilot: 'PILOT', drill: 'DRILL', mindsync: 'MINDSYNC'
+            chip: 'CHIP', processor: 'PROC', implant: 'IMPLANT', pilot: 'PILOT', drill: 'DRILL', mindsync: 'MINDSYNC',
+            mod1: 'MOD 1', mod2: 'MOD 2', mod3: 'MOD 3', mod4: 'MOD 4'
         };
 
         function updateEquipmentUI() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant', 'mindsync'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant', 'mindsync', 'mod1', 'mod2', 'mod3', 'mod4'];
 
             slots.forEach(slot => {
                 const select = document.getElementById(`equip-${slot}`);
                 const currentValue = game.equipment[slot] || '';
                 const tag = SLOT_LABELS[slot];
 
+                // Mod slots: show all type === 'mod' items, excluding mods equipped in other mod slots
+                let slotItems;
+                if (slot.startsWith('mod')) {
+                    const otherModSlots = ['mod1', 'mod2', 'mod3', 'mod4'].filter(s => s !== slot);
+                    const equippedElsewhere = otherModSlots.map(s => game.equipment[s]).filter(Boolean);
+                    slotItems = game.inventory.filter(item => item.type === 'mod' && !equippedElsewhere.includes(item.name));
+                } else {
+                    slotItems = game.inventory.filter(item => item.type === slot);
+                }
+
                 // Clear and rebuild options
-                const slotItems = game.inventory.filter(item => item.type === slot);
                 select.innerHTML = `<option value="">[${tag}] ${slotItems.length} items</option>`;
 
                 // Add items from inventory that match this slot
@@ -3721,12 +3785,12 @@
 
         // Update equipment description text under each dropdown
         function updateEquipmentDescs() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant', 'mindsync'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant', 'mindsync', 'mod1', 'mod2', 'mod3', 'mod4'];
             slots.forEach(slot => {
                 const descEl = document.getElementById(`equip-desc-${slot}`);
                 const itemName = game.equipment[slot];
                 if (itemName) {
-                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName);
+                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName) || MODS.find(i => i.name === itemName);
                     if (item && item.desc) {
                         const img = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
                         descEl.innerHTML = `<div class="storage-desc-content">${img}<span>${item.desc}</span></div>`;
@@ -3748,6 +3812,8 @@
 
             game.equipment[slot] = itemName || null;
             recalculateStats();
+            // When a mod slot changes, refresh all mod dropdowns to update exclusion filtering
+            if (slot.startsWith('mod')) updateEquipmentUI();
             updateEquipmentDescs();
             startRegen();
             saveGame();
@@ -3755,7 +3821,7 @@
 
         // Lock/unlock equipment dropdowns
         function setEquipmentLocked(locked) {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant', 'mindsync'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant', 'mindsync', 'mod1', 'mod2', 'mod3', 'mod4'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).disabled = locked;
             });
@@ -3896,7 +3962,7 @@
 
         // Find item by name in ITEMS or STORY_ITEMS
         function findShopItem(name) {
-            return ITEMS.find(i => i.name === name) || STORY_ITEMS.find(i => i.name === name) || REFINED_MINERALS.find(i => i.name === name) || FORGER_ITEMS.find(i => i.name === name) || null;
+            return ITEMS.find(i => i.name === name) || STORY_ITEMS.find(i => i.name === name) || REFINED_MINERALS.find(i => i.name === name) || FORGER_ITEMS.find(i => i.name === name) || MODS.find(i => i.name === name) || null;
         }
 
         // Generate shop items based on encounter slot configuration
@@ -3971,7 +4037,11 @@
                     const img = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
                     descEl.innerHTML = item.desc ? `<div class="storage-desc-content">${img}<span>${item.desc}</span></div>` : '';
 
-                    if (item.isDecrypterItem) {
+                    if (item.alreadyOwned) {
+                        nameEl.classList.add('cant-afford');
+                        buyBtn.textContent = `[OWNED]`;
+                        buyBtn.disabled = true;
+                    } else if (item.isDecrypterItem) {
                         nameEl.classList.remove('cant-afford');
                         buyBtn.textContent = `[Decrypt: ${item.decrypterKey}]`;
                         buyBtn.disabled = false;
@@ -4149,6 +4219,39 @@
                             missionLockLabel: mission.mapItem
                         });
                     }
+                }
+            }
+
+            updateShopUI();
+        }
+
+        // ========== MODDER FUNCTIONS ==========
+
+        // Handle modder category dropdown selection — show mods for the selected category
+        function onModderCategoryChange() {
+            const select = document.getElementById('modder-category-select');
+            const category = select.value;
+
+            if (!category) {
+                shopItems = [null, null, null, null];
+                updateShopUI();
+                return;
+            }
+
+            // Filter mods by category
+            const categoryMods = MODS.filter(m => m.category === category);
+
+            // Check which mods the player already owns
+            const ownedNames = game.inventory.filter(item => item.type === 'mod').map(item => item.name);
+
+            shopItems = [null, null, null, null];
+            for (let i = 0; i < Math.min(categoryMods.length, 4); i++) {
+                const mod = categoryMods[i];
+                if (ownedNames.includes(mod.name)) {
+                    // Show as owned (disabled)
+                    shopItems[i] = Object.assign({}, mod, { alreadyOwned: true });
+                } else {
+                    shopItems[i] = Object.assign({}, mod);
                 }
             }
 
@@ -4496,35 +4599,47 @@
             const salvageSelector = document.getElementById('salvage-selector');
             const decrypterSelector = document.getElementById('decrypter-selector');
             const brokerSelector = document.getElementById('broker-selector');
+            const modderSelector = document.getElementById('modder-selector');
             if (currentEncounter && currentEncounter.isForge) {
                 updateForgeDropdown();
                 forgeSelector.style.display = 'block';
                 salvageSelector.style.display = 'none';
                 decrypterSelector.style.display = 'none';
                 brokerSelector.style.display = 'none';
+                modderSelector.style.display = 'none';
             } else if (currentEncounter && currentEncounter.isSalvageYard) {
                 updateSalvageDropdown();
                 salvageSelector.style.display = 'block';
                 forgeSelector.style.display = 'none';
                 decrypterSelector.style.display = 'none';
                 brokerSelector.style.display = 'none';
+                modderSelector.style.display = 'none';
             } else if (currentEncounter && currentEncounter.isDecrypter) {
                 updateDecrypterDropdown();
                 decrypterSelector.style.display = 'block';
                 forgeSelector.style.display = 'none';
                 salvageSelector.style.display = 'none';
                 brokerSelector.style.display = 'none';
+                modderSelector.style.display = 'none';
             } else if (currentEncounter && currentEncounter.isBroker) {
                 updateBrokerDropdown();
                 brokerSelector.style.display = 'block';
                 forgeSelector.style.display = 'none';
                 salvageSelector.style.display = 'none';
                 decrypterSelector.style.display = 'none';
+                modderSelector.style.display = 'none';
+            } else if (currentEncounter && currentEncounter.isModder) {
+                modderSelector.style.display = 'block';
+                forgeSelector.style.display = 'none';
+                salvageSelector.style.display = 'none';
+                decrypterSelector.style.display = 'none';
+                brokerSelector.style.display = 'none';
             } else {
                 forgeSelector.style.display = 'none';
                 salvageSelector.style.display = 'none';
                 decrypterSelector.style.display = 'none';
                 brokerSelector.style.display = 'none';
+                modderSelector.style.display = 'none';
             }
 
             updateShopUI();
@@ -4540,9 +4655,11 @@
             document.getElementById('salvage-selector').style.display = 'none';
             document.getElementById('decrypter-selector').style.display = 'none';
             document.getElementById('broker-selector').style.display = 'none';
+            document.getElementById('modder-selector').style.display = 'none';
             document.getElementById('decrypter-key-select').value = '';
             document.getElementById('salvage-item-select').value = '';
             document.getElementById('broker-tier-select').value = '';
+            document.getElementById('modder-category-select').value = '';
             document.getElementById('salvage-preview').classList.remove('visible');
             document.getElementById('salvage-sell-btn').disabled = true;
             document.getElementById('salvage-sell-all-btn').style.display = 'none';
@@ -4553,7 +4670,7 @@
         // Handle shop purchase
         function purchaseItem(index) {
             const item = shopItems[index];
-            if (!item || item.forgerPlaceholder || item.missionLocked) return;
+            if (!item || item.forgerPlaceholder || item.missionLocked || item.alreadyOwned) return;
 
             if (item.isDecrypterItem) {
                 // Decrypter: consume the key, grant the powerup
@@ -4619,7 +4736,11 @@
                 // XP cost purchase
                 if (game.player.xp < item.cost) return;
                 game.player.xp -= item.cost;
-                if (item.category) {
+                if (item.type === 'mod') {
+                    // Mods go to inventory, not story items
+                    const modRef = MODS.find(m => m.name === item.name);
+                    if (modRef) addItemToInventory(modRef);
+                } else if (item.category) {
                     addStoryItem(item.name);
                 } else {
                     addItemToInventory(item);
@@ -4638,6 +4759,10 @@
                 shopItems[index] = null;
                 updateShopUI();
                 updateDestinationDropdown();
+            } else if (currentEncounter && currentEncounter.isModder) {
+                // Modder: remove purchased slot, keep dropdown visible
+                shopItems[index] = null;
+                updateShopUI();
             } else if (item.xpReward || item.refinedMineral) {
                 // Repeatable: services and mineral refining stay in slot
                 updateShopUI();
@@ -4672,7 +4797,7 @@
             currentEncounter = encounter;
 
             // Forge, Salvage Yard, and Decrypter use custom UI, not pre-generated items
-            if (encounter.isForge || encounter.isSalvageYard || encounter.isDecrypter || encounter.isBroker) {
+            if (encounter.isForge || encounter.isSalvageYard || encounter.isDecrypter || encounter.isBroker || encounter.isModder) {
                 shopItems = [null, null, null, null];
             } else {
                 shopItems = generateShopItems(encounter);
@@ -6042,48 +6167,15 @@
             }, 1000);
         }
 
-        // Combat V2 — Action constants
-        const ACTION_FUEL_COST = { heavy: 5, light: 0, ranged: 3, regen: 2 };
-        const ACTION_ATK_MULT = { heavy: 1.5, light: 1, ranged: 0.5, regen: 0 };
-        const ACTION_DEF_MULT = { heavy: 0.5, light: 1, ranged: 1, regen: 2 };
-        const ACTION_LABELS = {
-            heavy: 'HEAVY -5',
-            light: 'LIGHT',
-            ranged: 'RANGED -3',
-            regen: 'REGEN -2'
-        };
-        const ACTION_FLAVOUR = {
-            heavy: [
-                "You drop your guard and swing with everything.",
-                "Full power. Maximum impact.",
-                "Sparks fly as the hammer falls.",
-                "All systems routed to weapons.",
-                "One shot. Make it count."
-            ],
-            light: [
-                "Quick strike. Keep your guard up.",
-                "Clean hit. Stay sharp.",
-                "Measured strike. No wasted motion.",
-                "Light and fast. Stay mobile.",
-                "Textbook strike. By the numbers."
-            ],
-            ranged: [
-                "Weapons free. Hit everything that moves.",
-                "Suppressive fire across the field.",
-                "Spreading the pain around.",
-                "Targeting all hostiles.",
-                "Full spread. Light em all up."
-            ],
-            regen: [
-                "You pull back and reroute power to repair systems.",
-                "Defensive posture. Repairs cycling.",
-                "Hunkering down. Let the nanites work.",
-                "Shields up. Reactor to repairs.",
-                "Standing down to recharge."
-            ]
-        };
+        // Resolve equipped mod object from a slot name, returns mod or null
+        function getEquippedMod(slotKey) {
+            const modName = game.equipment[slotKey];
+            if (!modName) return null;
+            return MODS.find(m => m.name === modName) || null;
+        }
 
         // Show combat fuel gauge (with regen animation) then action buttons, wait for choice
+        // Resolves with the full mod object (or null if all slots empty and timeout fires)
         function awaitCombatAction() {
             return new Promise((resolve) => {
                 const p = game.player;
@@ -6120,34 +6212,46 @@
                     });
                 });
 
-                // Action buttons
+                // Action buttons — driven by equipped mods
                 const container = document.createElement('div');
                 container.className = 'action-btn-container combat-actions';
 
-                const actions = ['heavy', 'light', 'ranged', 'regen'];
-                const cssClasses = { heavy: 'heavy', light: 'light', ranged: 'ranged', regen: 'combat-regen' };
+                const modSlots = ['mod1', 'mod2', 'mod3', 'mod4'];
+                let firstEquippedMod = null;
 
-                actions.forEach(action => {
+                modSlots.forEach(slotKey => {
+                    const mod = getEquippedMod(slotKey);
+                    if (mod && !firstEquippedMod) firstEquippedMod = mod;
+
                     const btn = document.createElement('button');
-                    btn.className = `action-btn ${cssClasses[action]}`;
-                    btn.textContent = ACTION_LABELS[action];
-                    btn.disabled = ACTION_FUEL_COST[action] > p.fuel;
-                    btn.addEventListener('click', () => {
-                        clearTimeout(timer);
-                        clearInterval(countdown);
-                        wrapper.remove();
-                        timerEl.remove();
-                        resolve(action);
-                    });
+                    if (mod) {
+                        const fuelLabel = mod.fuel > 0 ? ` -${mod.fuel}` : '';
+                        btn.className = `action-btn ${mod.cssClass}`;
+                        btn.textContent = `${mod.name.toUpperCase()}${fuelLabel}`;
+                        btn.disabled = mod.fuel > p.fuel;
+                        btn.addEventListener('click', () => {
+                            clearTimeout(timer);
+                            clearInterval(countdown);
+                            wrapper.remove();
+                            timerEl.remove();
+                            resolve(mod);
+                        });
+                    } else {
+                        btn.className = 'action-btn empty';
+                        btn.textContent = 'EMPTY';
+                        btn.disabled = true;
+                    }
                     container.appendChild(btn);
                 });
                 wrapper.appendChild(container);
 
-                // Countdown timer
+                // Countdown timer — auto-selects first equipped mod (or null)
+                const autoMod = firstEquippedMod;
+                const autoLabel = autoMod ? autoMod.name.toUpperCase() : 'EMPTY';
                 const timerEl = document.createElement('div');
                 timerEl.className = 'combat-action-timer';
                 let secondsLeft = 60;
-                timerEl.textContent = `Auto-select LIGHT in ${secondsLeft}s`;
+                timerEl.textContent = `Auto-select ${autoLabel} in ${secondsLeft}s`;
 
                 chatMessages.appendChild(wrapper);
                 chatMessages.appendChild(timerEl);
@@ -6156,7 +6260,7 @@
                 const countdown = setInterval(() => {
                     secondsLeft--;
                     if (secondsLeft > 0) {
-                        timerEl.textContent = `Auto-select LIGHT in ${secondsLeft}s`;
+                        timerEl.textContent = `Auto-select ${autoLabel} in ${secondsLeft}s`;
                     }
                 }, 1000);
 
@@ -6164,7 +6268,7 @@
                     clearInterval(countdown);
                     wrapper.remove();
                     timerEl.remove();
-                    resolve('light');
+                    resolve(autoMod);
                 }, 60000);
 
                 // Store refs so endBattle can clean up if player dies mid-selection
@@ -6202,20 +6306,22 @@
             wave.turn++;
             await addMessage(`<b>TURN ${numberToWord(wave.turn)}</b>`, 'turncounter', { html: true, label: 'COMBAT' });
 
-            // --- Combat V2: Player picks an action ---
-            const action = await awaitCombatAction();
-            wave.chosenAction = action;
+            // --- Combat V2: Player picks a mod ---
+            const mod = await awaitCombatAction();
+            wave.chosenAction = mod ? mod.id : null;
 
-            // Deduct fuel
-            const fuelCost = ACTION_FUEL_COST[action];
-            if (fuelCost > 0) {
-                p.fuel = Math.max(0, p.fuel - fuelCost);
-                updateStats();
+            // If no mod equipped (all slots empty), skip to defence phase
+            if (mod) {
+                // Deduct fuel
+                if (mod.fuel > 0) {
+                    p.fuel = Math.max(0, p.fuel - mod.fuel);
+                    updateStats();
+                }
+
+                // Flavour message
+                const flavours = mod.flavour;
+                await addMessage(flavours[Math.floor(Math.random() * flavours.length)], 'player');
             }
-
-            // Flavour message
-            const flavours = ACTION_FLAVOUR[action];
-            await addMessage(flavours[Math.floor(Math.random() * flavours.length)], 'player');
 
             // Determine breaker procs this turn (gated behind owning decrypted keys)
             let speedTriggered = hasBreaker("Wire's Speedbreaker Key") && Math.random() * 100 < getBreaker();
@@ -6225,12 +6331,12 @@
             let warTriggered = hasBreaker("Rex's Warbreaker Key") && (speedTriggered || breakerTriggered) && Math.random() * 100 < getBreaker();
             let attackCount = speedTriggered ? (warTriggered ? 4 : 2) : 1;
 
-            // REGEN action: no attack at all
-            const isRegen = action === 'regen';
-            // RANGED action: hits all enemies (handled in attack loop)
-            const isRanged = action === 'ranged';
+            // Mod-driven action flags
+            const isRegen = mod && mod.isRegen;
+            const isAoe = mod && mod.targeting === 'aoe';
+            const hasAttack = mod && mod.atkMult > 0;
 
-            if (!isRegen) {
+            if (hasAttack) {
                 if (speedTriggered) {
                     await addMessage(`[<b>SPEEDBREAKER</b> TRIGGERED]`, 'player', { html: true });
                 }
@@ -6248,9 +6354,20 @@
                 }
 
                 // Calculate raw attack power (before enemy defence)
-                const atkMult = ACTION_ATK_MULT[action];
-                let rawAttack = Math.floor(p.attack * atkMult);
+                let rawAttack = Math.floor(p.attack * mod.atkMult);
                 if (rawAttack < 1) rawAttack = 1;
+
+                // Element bonus vs enemy element
+                if (mod.element && et.element) {
+                    const elemBonus = getElementBonus(mod.element, et.element);
+                    rawAttack = Math.floor(rawAttack * elemBonus);
+                }
+                // Element bonus vs enemy defence type
+                if (mod.element && et.defenceType) {
+                    const defTypeBonus = getDefenceTypeBonus(mod.element, et.defenceType);
+                    rawAttack = Math.floor(rawAttack * defTypeBonus);
+                }
+
                 if (breakerTriggered) {
                     rawAttack *= warTriggered ? 4 : 2;
                 }
@@ -6258,9 +6375,8 @@
                 const playerDamage = calculateDamage(rawAttack, enemyDef);
 
                 // Helper: narrate a player attack against an enemy the same way enemy→player works
-                // Returns the actual damage dealt after defence
                 async function narratePlayerAttack(targetLabel, rawAtk, def, dmg, opts) {
-                    const actionVerb = isRanged ? 'fires at' : 'attacks';
+                    const actionVerb = isAoe ? 'fires at' : 'attacks';
                     // 1. Announce raw attack
                     await addMessage(`<b>MECH</b> ${actionVerb} <b>${targetLabel}</b> for <b>${rawAtk} DMG</b>`, 'player', { html: true });
 
@@ -6279,8 +6395,8 @@
                     }
                 }
 
-                // RANGED AoE: attack every remaining enemy once per attack count
-                if (isRanged) {
+                // AoE: attack every remaining enemy once per attack count
+                if (isAoe) {
                     for (let atk = 1; atk <= attackCount; atk++) {
                         for (let t = wave.currentTarget; t <= wave.count; t++) {
                             if (wave.remaining <= 0) { endBattle(true); return; }
@@ -6325,7 +6441,7 @@
                     }
                     if (wave.remaining <= 0) { endBattle(true); return; }
                 } else {
-                    // Single-target attack (HEAVY or LIGHT)
+                    // Single-target attack
                     for (let atk = 1; atk <= attackCount; atk++) {
                         if (wave.currentEnemy === null) {
                             if (wave.remaining <= 0) { endBattle(true); return; }
@@ -6389,8 +6505,8 @@
             }
 
             // --- Defence phase ---
-            // Apply action DEF modifier before shieldbreaker
-            const defMult = ACTION_DEF_MULT[action];
+            // Apply mod DEF modifier before shieldbreaker
+            const defMult = mod ? mod.defMult : 1;
             let remainingDefence = Math.floor(wave.remainingDefence * defMult);
 
             // Shieldbreaker: chance to double defence at start of defence phase
@@ -6466,10 +6582,10 @@
             }
 
             // --- End-of-round HP regen ---
-            // HEAVY: no regen this round. REGEN: 2x regen. Otherwise: normal.
+            // Low-defence mods (defMult < 1) forfeit regen. isRegen mods get 2x regen.
             let regenHealed = 0;
             const hpBeforeRegen = p.hp;
-            if (action !== 'heavy' && p.regen > 0 && p.hp < p.maxHp) {
+            if ((!mod || mod.defMult >= 1) && p.regen > 0 && p.hp < p.maxHp) {
                 const regenMult = isRegen ? 2 : 1;
                 regenHealed = Math.min(p.regen * regenMult, p.maxHp - p.hp);
                 p.hp += regenHealed;
@@ -6840,6 +6956,9 @@
         // Broker pilot tier dropdown listener
         document.getElementById('broker-tier-select').addEventListener('change', onBrokerTierChange);
 
+        // Modder category dropdown listener
+        document.getElementById('modder-category-select').addEventListener('change', onModderCategoryChange);
+
         // Salvage yard listeners
         document.getElementById('salvage-item-select').addEventListener('change', onSalvageItemChange);
         document.getElementById('salvage-sell-btn').addEventListener('click', sellSalvageItem);
@@ -6854,7 +6973,7 @@
             localStorage.removeItem('combobreaker_landing_action');
 
             // Set up equipment dropdown event listeners
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant', 'mindsync'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant', 'mindsync', 'mod1', 'mod2', 'mod3', 'mod4'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).addEventListener('change', (e) => {
                     onEquipmentChange(slot, e.target.value);

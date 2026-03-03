@@ -9,6 +9,8 @@
 const ENEMIES_TRENCHWORKS = [
     {
         name: "Entrenched Sentry",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 48,
         defence: 18,
         hp: 95,
@@ -23,6 +25,8 @@ const ENEMIES_TRENCHWORKS = [
     },
     {
         name: "Trench Gunner",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 58,
         defence: 14,
         hp: 98,
@@ -37,6 +41,8 @@ const ENEMIES_TRENCHWORKS = [
     },
     {
         name: "Burrower Frame",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 55,
         defence: 20,
         hp: 100,
@@ -51,6 +57,8 @@ const ENEMIES_TRENCHWORKS = [
     },
     {
         name: "Turret Nest Controller",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 70,
         defence: 12,
         hp: 96,
@@ -65,6 +73,8 @@ const ENEMIES_TRENCHWORKS = [
     },
     {
         name: "Armoured Dugout Guard",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 60,
         defence: 28,
         hp: 104,
@@ -79,6 +89,8 @@ const ENEMIES_TRENCHWORKS = [
     },
     {
         name: "Trenchmaster",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 82,
         defence: 32,
         hp: 108,

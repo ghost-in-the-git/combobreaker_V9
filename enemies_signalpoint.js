@@ -10,6 +10,8 @@
 const ENEMIES_SIGNALPOINT = [
     {
         name: "Relay Guard",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 58,
         defence: 20,
         hp: 112,
@@ -24,6 +26,8 @@ const ENEMIES_SIGNALPOINT = [
     },
     {
         name: "Signal Scrambler",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 72,
         defence: 18,
         hp: 114,
@@ -38,6 +42,8 @@ const ENEMIES_SIGNALPOINT = [
     },
     {
         name: "Frequency Hunter",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 88,
         defence: 16,
         hp: 110,
@@ -52,6 +58,8 @@ const ENEMIES_SIGNALPOINT = [
     },
     {
         name: "Uplink Sentinel",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 75,
         defence: 30,
         hp: 116,
@@ -66,6 +74,8 @@ const ENEMIES_SIGNALPOINT = [
     },
     {
         name: "Broadcast Override",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 95,
         defence: 32,
         hp: 118,
@@ -80,6 +90,8 @@ const ENEMIES_SIGNALPOINT = [
     },
     {
         name: "Signal Point Commander",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 98,
         defence: 40,
         hp: 120,

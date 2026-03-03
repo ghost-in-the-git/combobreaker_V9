@@ -8,6 +8,8 @@
 const ENEMIES_SCRAPYARD = [
     {
         name: "Scout",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 2,
         defence: 0,
         hp: 2,
@@ -22,6 +24,8 @@ const ENEMIES_SCRAPYARD = [
     },
     {
         name: "Heavy Tank",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 1,
         defence: 2,
         hp: 9,
@@ -36,6 +40,8 @@ const ENEMIES_SCRAPYARD = [
     },
     {
         name: "Enforcer",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 5,
         defence: 1,
         hp: 6,
@@ -50,6 +56,8 @@ const ENEMIES_SCRAPYARD = [
     },
     {
         name: "Scrap Drone",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 3,
         defence: 0,
         hp: 4,
@@ -64,6 +72,8 @@ const ENEMIES_SCRAPYARD = [
     },
     {
         name: "Junkyard Golem",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 6,
         defence: 3,
         hp: 8,
@@ -78,6 +88,8 @@ const ENEMIES_SCRAPYARD = [
     },
     {
         name: "Destroyer",
+        element: 'fire',
+        defenceType: 'magnetic',
         attack: 10,
         defence: 5,
         hp: 10,

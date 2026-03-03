@@ -79,7 +79,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         minLevel: 1,
         itemSlot1: ["Map: Downtown"],
         itemSlot2: ["Map: The Forge"],
-        itemSlot3: null,
+        itemSlot3: ["Map: The Mod Shop"],
         itemSlot4: null,
         dialogue: [
             {

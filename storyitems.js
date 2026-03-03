@@ -813,6 +813,13 @@ const STORY_ITEMS = [
         cost: 100
     },
     {
+        name: "Map: The Mod Shop",
+        desc: "Coordinates to a stripped-down workshop on the edge of the sector. Someone scrawled 'MODS' on the back in marker.",
+        category: "map",
+        image: "images/IMAGE.gif",
+        cost: 75
+    },
+    {
         name: "Map: Orbital Station",
         desc: "A schematic of the station's deck layout. Several sections are labelled DEPRESSURISED.",
         category: "map",
@@ -1486,6 +1493,14 @@ const STORY_ITEMS = [
         name: "Reactor Core Clearance",
         desc: "Meltdown report from the Dead Zone reactor core. Power grid collapsed, hostile network dark. The Broker will want to see this.",
         category: "mission_clearance",
+        image: "images/IMAGE.gif"
+    },
+
+    // Mod Shop Location Maps
+    {
+        name: "The Mod Shop: The Modder",
+        desc: "Bay number for The Modder's workshop. Scrawled on a circuit board in permanent marker.",
+        category: "locationmap",
         image: "images/IMAGE.gif"
     }
 ];

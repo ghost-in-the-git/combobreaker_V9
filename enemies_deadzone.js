@@ -8,6 +8,8 @@
 const ENEMIES_DEADZONE = [
     {
         name: "Corrupted Probe",
+        element: 'void',
+        defenceType: 'magnetic',
         attack: 45,
         defence: 11,
         hp: 90,
@@ -22,6 +24,8 @@ const ENEMIES_DEADZONE = [
     },
     {
         name: "Toxic Shambler",
+        element: 'acid',
+        defenceType: 'physical',
         attack: 50,
         defence: 16,
         hp: 96,
@@ -36,6 +40,8 @@ const ENEMIES_DEADZONE = [
     },
     {
         name: "Blight Walker",
+        element: 'acid',
+        defenceType: 'physical',
         attack: 60,
         defence: 14,
         hp: 94,
@@ -50,6 +56,8 @@ const ENEMIES_DEADZONE = [
     },
     {
         name: "Kill-Swarm Node",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 70,
         defence: 10,
         hp: 92,
@@ -64,6 +72,8 @@ const ENEMIES_DEADZONE = [
     },
     {
         name: "Corrupted Warden",
+        element: 'void',
+        defenceType: 'magnetic',
         attack: 55,
         defence: 22,
         hp: 98,
@@ -78,6 +88,8 @@ const ENEMIES_DEADZONE = [
     },
     {
         name: "Plague Engine",
+        element: 'acid',
+        defenceType: 'magnetic',
         attack: 80,
         defence: 27,
         hp: 100,

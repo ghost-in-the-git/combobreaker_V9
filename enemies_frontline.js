@@ -8,6 +8,8 @@
 const ENEMIES_FRONTLINE = [
     {
         name: "Patrol Frame",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 55,
         defence: 15,
         hp: 110,
@@ -22,6 +24,8 @@ const ENEMIES_FRONTLINE = [
     },
     {
         name: "Enforcer Mech",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 65,
         defence: 20,
         hp: 114,
@@ -36,6 +40,8 @@ const ENEMIES_FRONTLINE = [
     },
     {
         name: "Shock Lancer",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 85,
         defence: 16,
         hp: 112,
@@ -50,6 +56,8 @@ const ENEMIES_FRONTLINE = [
     },
     {
         name: "Siege Breaker",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 70,
         defence: 30,
         hp: 116,
@@ -64,6 +72,8 @@ const ENEMIES_FRONTLINE = [
     },
     {
         name: "Black Ops Frame",
+        element: 'void',
+        defenceType: 'magnetic',
         attack: 100,
         defence: 35,
         hp: 118,
@@ -78,6 +88,8 @@ const ENEMIES_FRONTLINE = [
     },
     {
         name: "Squadron Commander",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 90,
         defence: 40,
         hp: 120,

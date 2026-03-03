@@ -8,6 +8,8 @@
 const ENEMIES_UNDERCITY = [
     {
         name: "Tunnel Rat",
+        element: 'flesh',
+        defenceType: 'physical',
         attack: 18,
         defence: 4,
         hp: 50,
@@ -22,6 +24,8 @@ const ENEMIES_UNDERCITY = [
     },
     {
         name: "Sewer Drone",
+        element: 'acid',
+        defenceType: 'magnetic',
         attack: 22,
         defence: 6,
         hp: 56,
@@ -36,6 +40,8 @@ const ENEMIES_UNDERCITY = [
     },
     {
         name: "Pipe Lurker",
+        element: 'void',
+        defenceType: 'physical',
         attack: 28,
         defence: 5,
         hp: 54,
@@ -50,6 +56,8 @@ const ENEMIES_UNDERCITY = [
     },
     {
         name: "Black-Ops Infiltrator",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 35,
         defence: 4,
         hp: 52,
@@ -64,6 +72,8 @@ const ENEMIES_UNDERCITY = [
     },
     {
         name: "Chem Sprayer",
+        element: 'acid',
+        defenceType: 'magnetic',
         attack: 25,
         defence: 9,
         hp: 58,
@@ -78,6 +88,8 @@ const ENEMIES_UNDERCITY = [
     },
     {
         name: "Subterranean Warden",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 38,
         defence: 12,
         hp: 60,

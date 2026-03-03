@@ -8,6 +8,8 @@
 const ENEMIES_ORBITALSTATION = [
     {
         name: "Micro Drone Cluster",
+        element: 'volt',
+        defenceType: 'magnetic',
         attack: 10,
         defence: 2,
         hp: 30,
@@ -22,6 +24,8 @@ const ENEMIES_ORBITALSTATION = [
     },
     {
         name: "Station Security Bot",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 14,
         defence: 4,
         hp: 34,
@@ -36,6 +40,8 @@ const ENEMIES_ORBITALSTATION = [
     },
     {
         name: "Void Welder",
+        element: 'void',
+        defenceType: 'magnetic',
         attack: 18,
         defence: 3,
         hp: 32,
@@ -50,6 +56,8 @@ const ENEMIES_ORBITALSTATION = [
     },
     {
         name: "Orbital Sentry",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 16,
         defence: 6,
         hp: 38,
@@ -64,6 +72,8 @@ const ENEMIES_ORBITALSTATION = [
     },
     {
         name: "Zero-G Interceptor",
+        element: 'cryo',
+        defenceType: 'magnetic',
         attack: 22,
         defence: 4,
         hp: 36,
@@ -78,6 +88,8 @@ const ENEMIES_ORBITALSTATION = [
     },
     {
         name: "Hijacked Defense Turret",
+        element: 'fire',
+        defenceType: 'magnetic',
         attack: 25,
         defence: 7,
         hp: 40,

@@ -8,6 +8,8 @@
 const ENEMIES_OLDBATTLEFIELD = [
     {
         name: "Reactivated Scout",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 4,
         defence: 0,
         hp: 10,
@@ -22,6 +24,8 @@ const ENEMIES_OLDBATTLEFIELD = [
     },
     {
         name: "Rusted Artillery Drone",
+        element: 'fire',
+        defenceType: 'magnetic',
         attack: 8,
         defence: 1,
         hp: 12,
@@ -36,6 +40,8 @@ const ENEMIES_OLDBATTLEFIELD = [
     },
     {
         name: "Ghosted Warframe",
+        element: 'void',
+        defenceType: 'magnetic',
         attack: 10,
         defence: 2,
         hp: 14,
@@ -50,6 +56,8 @@ const ENEMIES_OLDBATTLEFIELD = [
     },
     {
         name: "Enforcer",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 12,
         defence: 3,
         hp: 18,
@@ -64,6 +72,8 @@ const ENEMIES_OLDBATTLEFIELD = [
     },
     {
         name: "Heavy Tank",
+        element: 'steel',
+        defenceType: 'magnetic',
         attack: 6,
         defence: 5,
         hp: 20,
@@ -78,6 +88,8 @@ const ENEMIES_OLDBATTLEFIELD = [
     },
     {
         name: "Assassin",
+        element: 'void',
+        defenceType: 'magnetic',
         attack: 20,
         defence: 1,
         hp: 16,
