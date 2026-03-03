@@ -3039,7 +3039,8 @@
                 openWorldName: null,
                 openWorldDesc: null,
                 destinations: [
-                    { encounterName: "The Professor", mapItem: "Home: The Professor" }
+                    { encounterName: "The Professor", mapItem: "Home: The Professor" },
+                    { encounterName: "Spark", mapItem: "Home: Spark" }
                 ]
             },
             ratpile: {
@@ -4885,6 +4886,23 @@
             if (currentEncounter.name === 'The Professor' && !(game.storyItems || []).includes('Map: The Ratpile')) {
                 addStoryItem('Map: The Ratpile');
                 await addMessage(`"Here — take this. It's a map to The Ratpile. Not much down there but rats, but it's a start."`, 'system', { label: currentEncounter.name, image: currentEncounter.characterImage, characterDialogue: !!currentEncounter.characterImage });
+            }
+
+            // Spark gives starter mods (Light Strike + Repair) on first visit
+            if (currentEncounter.name === 'Spark' && !game.inventory.some(i => i.name === 'Light Strike')) {
+                const lightStrike = MODS.find(m => m.name === 'Light Strike');
+                const repair = MODS.find(m => m.name === 'Repair');
+                if (lightStrike) addItemToInventory(lightStrike);
+                if (repair) addItemToInventory(repair);
+                // Auto-equip into first two mod slots if empty
+                if (!game.equipment.mod1 && lightStrike) {
+                    game.equipment.mod1 = lightStrike.name;
+                }
+                if (!game.equipment.mod2 && repair) {
+                    game.equipment.mod2 = repair.name;
+                }
+                updateEquipmentUI();
+                await addMessage(`She pulls two mod cylinders off the rack and slots them into your chassis before you can object.\n\n'Light Strike — basic attack, no fuel cost, keeps you swinging. And Repair — burns a little fuel, but patches you up mid-fight.' She steps back and admires her work.\n\n'There. Now you've got options. Two mod slots filled, two to go. You can grab more from the Modder out in the sector — she's got the fancy stuff.' She grins. 'But these'll keep you alive.'`, 'system', { label: 'Spark', image: currentEncounter.characterImage, characterDialogue: true });
             }
 
             // The dead Mapmaker in the Dead Zone carries his sealed key
