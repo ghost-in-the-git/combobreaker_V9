@@ -324,6 +324,13 @@ Every mod can have an `element` property. Elements affect damage through a weakn
 
 Light and Void interact normally/neutral with all other elements.
 
+### Defence Interaction
+
+Elements also interact with defence types:
+
+- **Steel, Flesh, Fire** — effective against **Physical** defence
+- **Cryo, Acid, Volt** — effective against **Magnetic** defence
+
 ---
 
 ## Files to Create/Modify
