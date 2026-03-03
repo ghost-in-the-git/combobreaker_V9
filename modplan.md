@@ -2,7 +2,18 @@
 
 ## Concept
 
-Replace the hardcoded 4 combat actions (HEAVY, LIGHT, RANGED, REGEN) with a **mod-driven system**. The player equips 4 mods into slots on the Pilot panel, and those mods determine the 4 buttons that appear in combat. No mods = no actions.
+Replace the hardcoded 4 combat actions (HEAVY, LIGHT, RANGED, REGEN) with a **mod-driven system**. The player equips 4 mods into slots on the Pilot panel, and those mods determine the 4 buttons that appear in combat. Empty slots show a greyed-out "EMPTY" button.
+
+---
+
+## Decisions
+
+| Question | Answer |
+|----------|--------|
+| **Starting mods** | Player starts with none. Sorted separately later. |
+| **How to get mods** | Sold by **The Modder**, a new encounter type. Not dropped by enemies. |
+| **Empty slots** | Show a greyed-out "EMPTY" button in combat. |
+| **Duplicates** | One copy per slot. A mod equipped in slot 1 can't also be in slot 2. |
 
 ---
 
@@ -27,21 +38,20 @@ const MODS = [
     {
         id: 'light_strike',
         name: 'Light Strike',
-        type: 'mod',              // item type for equipment system
-        category: 'attack',       // attack | defence | utility
+        type: 'mod',
+        category: 'attack',
         desc: 'Balanced strike. No fuel cost.',
         image: 'images/mods/light_strike.gif',
-        fuel: 0,                  // fuel cost
-        atkMult: 1,               // attack multiplier (0 = no attack)
-        defMult: 1,               // defence multiplier for the round
-        targeting: 'single',      // single | aoe
-        cssClass: 'light',        // button colour class
+        fuel: 0,
+        atkMult: 1,
+        defMult: 1,
+        targeting: 'single',       // single | aoe | none
+        cssClass: 'light',
         flavour: [
             "Quick strike. Keep your guard up.",
             "Clean hit. Stay sharp.",
         ],
-        dropRate: 30,
-        zone: 'zone_scrapyard',
+        cost: 50,                  // silicon cost at The Modder
     },
     {
         id: 'heavy_slam',
@@ -59,8 +69,7 @@ const MODS = [
             "Full power. Maximum impact.",
             "One shot. Make it count.",
         ],
-        dropRate: 20,
-        zone: 'zone_scrapyard',
+        cost: 100,
     },
     {
         id: 'spread_fire',
@@ -78,8 +87,7 @@ const MODS = [
             "Weapons free. Hit everything that moves.",
             "Full spread. Light em all up.",
         ],
-        dropRate: 15,
-        zone: 'zone_scrapyard',
+        cost: 150,
     },
     {
         id: 'evade',
@@ -89,16 +97,15 @@ const MODS = [
         desc: 'Dodge incoming attacks. No offence this round.',
         image: 'images/mods/evade.gif',
         fuel: 2,
-        atkMult: 0,               // no attack
-        defMult: 3,               // massive DEF boost
+        atkMult: 0,
+        defMult: 3,
         targeting: 'none',
-        cssClass: 'combat-regen', // reuse defensive colour or new one
+        cssClass: 'combat-regen',
         flavour: [
             "Thrusters fire. You sidestep the incoming blows.",
             "Evasive manoeuvres. Nothing touches you.",
         ],
-        dropRate: 15,
-        zone: 'zone_scrapyard',
+        cost: 120,
     },
     {
         id: 'repair',
@@ -110,51 +117,30 @@ const MODS = [
         fuel: 2,
         atkMult: 0,
         defMult: 2,
-        targeting: 'none',        // no attack, triggers regen
-        isRegen: true,            // flag for the regen heal logic
+        targeting: 'none',
+        isRegen: true,
         cssClass: 'combat-regen',
         flavour: [
             "Pull back and reroute power to repair systems.",
             "Defensive posture. Repairs cycling.",
         ],
-        dropRate: 20,
-        zone: 'zone_scrapyard',
+        cost: 80,
     },
 ];
 ```
-
-### Questions to decide:
-
-**Q1: Starting mods** — Does the player start with any mods pre-equipped, or do they need to find/buy them before they can fight? Options:
-- a) Start with Light Strike and Repair pre-equipped (safe default)
-- b) Start with all 4 slots filled with basic mods
-- c) Start empty, first mods given via intro quest
-
-**Q2: Mod drops** — Should mods drop from enemies like regular items and go into the inventory? Or are they a separate loot pool?
-- a) Same inventory system as equipment (drop from enemies, appear in storage, equip from dropdown) — simplest, reuses all existing code
-- b) Separate mod inventory
-
-**Q3: Empty slots** — If a player has fewer than 4 mods equipped, what happens?
-- a) Fewer buttons in combat (could be just 1 button if only 1 mod)
-- b) Empty slots get a greyed-out "EMPTY" button
-- c) Must have at least 1 mod equipped at all times
-
-**Q4: Duplicate mods** — Can the player equip the same mod in multiple slots?
-- a) No, each mod can only go in one slot
-- b) Yes, if they have multiple copies in inventory (e.g., two Light Strikes for two slots)
 
 ---
 
 ## Pilot Panel Changes
 
-Currently the pilot panel has 3 slots:
+Currently:
 ```
 [PILOT dropdown]
 [IMPLANT dropdown]
 [MINDSYNC dropdown]
 ```
 
-Adding 4 mod slots:
+New layout:
 ```
 [MOD 1 dropdown]  [MOD 2 dropdown]
 [MOD 3 dropdown]  [MOD 4 dropdown]
@@ -164,59 +150,57 @@ Adding 4 mod slots:
 [MINDSYNC dropdown]
 ```
 
-The mod dropdowns filter `game.inventory` by `item.type === 'mod'` — same pattern as other equipment slots. Selecting a mod stores its ID/name in `game.equipment.mod1` through `game.equipment.mod4`.
+The mod dropdowns filter `game.inventory` by `item.type === 'mod'`. A mod already equipped in another slot is excluded from the dropdown (no duplicates across slots). Selecting a mod stores its name in `game.equipment.mod1` through `game.equipment.mod4`.
 
 ---
 
 ## Combat Changes
 
-`awaitCombatAction()` changes from:
+`awaitCombatAction()` reads the 4 mod slots:
 ```js
-const actions = ['heavy', 'light', 'ranged', 'regen'];
+const modSlots = ['mod1', 'mod2', 'mod3', 'mod4'];
 ```
 
-To reading from the 4 mod slots:
-```js
-const equippedMods = getEquippedMods(); // returns array of 0-4 mod objects
-```
+For each slot:
+- **Mod equipped** → button with mod's name, cssClass, fuel cost. Disabled if not enough fuel.
+- **No mod** → greyed-out "EMPTY" button, always disabled.
 
-Each button is built from the mod's properties instead of the hardcoded constants. The `ACTION_FUEL_COST`, `ACTION_ATK_MULT`, `ACTION_DEF_MULT`, `ACTION_LABELS`, `ACTION_FLAVOUR` constants can be removed entirely — all that data lives on the mod object.
-
-The attack phase reads `mod.atkMult`, `mod.defMult`, `mod.fuel`, `mod.targeting`, `mod.isRegen` instead of looking up from the old constant objects.
+The hardcoded `ACTION_FUEL_COST`, `ACTION_ATK_MULT`, `ACTION_DEF_MULT`, `ACTION_LABELS`, `ACTION_FLAVOUR` constants are removed. The attack phase reads `mod.atkMult`, `mod.defMult`, `mod.fuel`, `mod.targeting`, `mod.isRegen` directly from the resolved mod object.
 
 ---
 
 ## Equipment System Integration
 
-Mods use `type: 'mod'` — a new item type alongside body/legs/arms/weapon/chip/processor/pilot/drill/implant/mindsync.
-
-New equipment slots added to `game.equipment`:
+New equipment slots in `game.equipment`:
 ```js
-equipment: {
-    // ... existing slots ...
-    mod1: null,
-    mod2: null,
-    mod3: null,
-    mod4: null,
-}
+mod1: null,
+mod2: null,
+mod3: null,
+mod4: null,
 ```
 
 `SLOT_LABELS` gets: `mod1: 'MOD 1', mod2: 'MOD 2', mod3: 'MOD 3', mod4: 'MOD 4'`
 
-The existing `updateEquipmentUI()`, `onEquipmentChange()`, `recalculateStats()` functions already loop over all slots — they just need mod slots added. Mods don't give passive stat bonuses (their stats are combat-action properties, not player stats), so `recalculateStats()` can skip them or mods can just have no `stats` object.
+Mods don't give passive stat bonuses — no `stats` object. `recalculateStats()` skips them naturally.
 
-Save/load works automatically since it stores item names.
+Save/load works automatically since it stores item names and MODS are looked up by name.
+
+---
+
+## The Modder (new encounter — future)
+
+A new NPC encounter (like the Broker/Forger). Sells mods for silicon. Stock varies by zone. Details TBD — will be its own implementation after the mod system is wired up.
 
 ---
 
 ## Starter Mods
 
-The 5 mods listed above are the initial set. More can be added to `mods.js` later — zone-specific, boss-dropped, forger-crafted, etc. Some future ideas:
-- **Shield Bash** — low damage but stuns enemy for 1 turn
-- **Overcharge** — massive damage but costs HP
+5 mods to start with. More added later per zone. Future ideas:
+- **Shield Bash** — low damage, stuns enemy 1 turn
+- **Overcharge** — massive damage, costs HP
 - **Drain** — low damage, steals HP
-- **EMP** — reduces enemy ATK for next round
-- **Counter** — no attack, but reflects next hit
+- **EMP** — reduces enemy ATK next round
+- **Counter** — no attack, reflects next hit
 
 ---
 
