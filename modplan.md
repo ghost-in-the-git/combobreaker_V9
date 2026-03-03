@@ -331,6 +331,24 @@ Elements also interact with defence types:
 - **Steel, Flesh, Fire** — effective against **Physical** defence
 - **Cryo, Acid, Volt** — effective against **Magnetic** defence
 
+### Enemy Element & Defence Type
+
+Every enemy gets two new properties:
+
+```js
+element: 'steel',          // steel | flesh | fire | cryo | acid | volt | light | void
+defenceType: 'physical',   // physical | magnetic
+```
+
+- **`element`** — determines how the enemy's attacks interact with the element chart (and how incoming elemental attacks affect them)
+- **`defenceType`** — either `physical` or `magnetic`
+  - **Physical** — organic creatures, beasts, unshielded humanoids
+  - **Magnetic** — machines, shielded mechs, drones, anything running energy barriers
+
+This means the player has two layers to consider when picking mods:
+1. What **element** beats this enemy's element?
+2. What **element group** cracks this enemy's defence type?
+
 ---
 
 ## Files to Create/Modify
