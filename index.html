@@ -6614,12 +6614,11 @@
             }
 
             // --- End-of-round HP regen ---
-            // Low-defence mods (defMult < 1) forfeit regen. isRegen mods get 2x regen.
+            // Only REGEN mods (Quick Repair, Deep Restore) trigger in-combat healing.
             let regenHealed = 0;
             const hpBeforeRegen = p.hp;
-            if ((!mod || mod.defMult >= 1) && p.regen > 0 && p.hp < p.maxHp) {
-                const regenMult = isRegen ? 2 : 1;
-                regenHealed = Math.min(p.regen * regenMult, p.maxHp - p.hp);
+            if (isRegen && p.regen > 0 && p.hp < p.maxHp) {
+                regenHealed = Math.min(p.regen * 2, p.maxHp - p.hp);
                 p.hp += regenHealed;
                 updateStats();
             }

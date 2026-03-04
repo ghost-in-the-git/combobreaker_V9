@@ -88,7 +88,7 @@ Running dry mid-fight means you're stuck on LIGHT (free but vanilla). Running dr
 - **ATK multiplier:** 1.5x base damage
 - **DEF penalty:** DEF halved this round
 - **Hits:** 1 (single target)
-- **Regen:** None this round
+- **Regen:** None (same as LIGHT/RANGED — only REGEN mods heal)
 - **Flavour:** "You drop your guard and swing with everything."
 
 Best for: Finishing off a tough enemy, high-risk burst. Expensive — 5 rounds of HEAVY costs 25 fuel (a quarter of your tank).
@@ -99,7 +99,7 @@ Best for: Finishing off a tough enemy, high-risk burst. Expensive — 5 rounds o
 - **ATK multiplier:** 1x base damage
 - **DEF penalty:** None
 - **Hits:** 1 (single target)
-- **Regen:** Normal end-of-round regen
+- **Regen:** None (must use REGEN mod to heal in combat)
 - **Flavour:** "Quick strike. Keep your guard up."
 
 Best for: Default safe option, consistent damage with full defence. Free — the only action you can always afford. Also the auto-pick if you don't choose in time.
@@ -110,7 +110,7 @@ Best for: Default safe option, consistent damage with full defence. Free — the
 - **ATK multiplier:** 0.5x base damage
 - **DEF penalty:** None
 - **Hits:** All enemies (AoE — each enemy takes the reduced damage)
-- **Regen:** Normal end-of-round regen
+- **Regen:** None (must use REGEN mod to heal in combat)
 - **Flavour:** "Weapons free. Hit everything that moves."
 
 Best for: Softening up or finishing groups, works like a manual crushbreaker. Cheaper than HEAVY — you can sustain it longer, but you're paying for spread, not power.
@@ -125,7 +125,7 @@ Light rewards single-target focus (full damage, no fuel cost). Ranged sacrifices
 - **ATK multiplier:** 0x (no attack this round)
 - **DEF bonus:** DEF doubled this round
 - **Hits:** 0 (no attack)
-- **Regen:** 2x regen stat applied immediately + normal end-of-round regen
+- **Regen:** 2x regen stat (only way to heal HP in combat)
 - **Flavour:** "You pull back and reroute power to repair systems."
 
 Best for: Surviving a bad round, recovering HP against a large squad. Cheap — you're paying for survival, not damage. Still costs something because free healing with zero risk would be broken.
@@ -137,9 +137,9 @@ Best for: Surviving a bad round, recovering HP against a large squad. Cheap — 
 | Action   | Fuel | ATK     | DEF         | Hits       | Regen              |
 |----------|------|---------|-------------|------------|--------------------|
 | HEAVY    | 5    | 1.5x   | 0.5x        | 1 (single) | None               |
-| LIGHT    | 0    | 1.0x   | 1.0x        | 1 (single) | Normal             |
-| RANGED   | 3    | 0.5x   | 1.0x        | All (AoE)  | Normal             |
-| REGEN    | 2    | 0x     | 2.0x        | 0 (none)   | 2x regen + normal  |
+| LIGHT    | 0    | 1.0x   | 1.0x        | 1 (single) | None               |
+| RANGED   | 3    | 0.5x   | 1.0x        | All (AoE)  | None               |
+| REGEN    | 2    | 0x     | 2.0x        | 0 (none)   | 2x regen stat      |
 
 ### Fuel Budget Examples
 
@@ -236,7 +236,7 @@ If the player doesn't choose within **60 seconds**, auto-select `[LIGHT]` (safe 
 4. **Damage calc:** multiply `playerDamage` by action ATK modifier before breakers
 5. **Attack loop:** if RANGED, loop over all enemies instead of single target. If REGEN, skip attack entirely
 6. **Defence phase:** apply DEF modifier from action before shieldbreaker
-7. **Regen phase:** if REGEN, apply 2x regen before painbreaker check. If HEAVY, skip regen
+7. **Regen phase:** if REGEN mod, apply 2x regen before painbreaker check. All other actions skip regen
 8. **DEF restore:** no changes
 9. **Fuel regen:** after DEF restore, add `game.player.level` fuel (capped at `maxFuel`), show message: `+N FUEL [REACTOR]`, call `updateStats()`
 
