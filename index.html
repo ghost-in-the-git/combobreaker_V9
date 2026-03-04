@@ -6063,7 +6063,7 @@
                         if (game.currentWave) {
                             const et = game.currentWave.enemyType;
                             addMessage(`[MISSION] ${missionEnc.name} — ${progress.kills}/${missionEnc.killsRequired} squads destroyed`, 'system');
-                            addMessage(`[TARGET ACQUIRED]> ${game.currentWave.count} ${et.name}s are within engagement range [ATK:${et.attack} DEF:${et.defence} HP:${et.hp}]`, 'enemy');
+                            addMessage(`ENEMY DETECTED: &nbsp;${et.name.toUpperCase()}<br>SQUAD SIZE: ${game.currentWave.count} &nbsp;| &nbsp;ATK:${et.attack} &nbsp;| &nbsp;DEF:${et.defence} &nbsp;| &nbsp;HP:${et.hp} &nbsp;| &nbsp;TYPE: ${et.element.toUpperCase()}`, 'enemy', { html: true });
 
                             let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
                             const countdownMsg = document.createElement('div');
@@ -6144,7 +6144,7 @@
 
             game.currentWave = generateWave();
             const et = game.currentWave.enemyType;
-            addMessage(`[TARGET ACQUIRED]> ${game.currentWave.count} ${et.name}s are within engagement range [ATK:${et.attack} DEF:${et.defence} HP:${et.hp}]`, 'enemy');
+            addMessage(`ENEMY DETECTED: &nbsp;${et.name.toUpperCase()}<br>SQUAD SIZE: ${game.currentWave.count} &nbsp;| &nbsp;ATK:${et.attack} &nbsp;| &nbsp;DEF:${et.defence} &nbsp;| &nbsp;HP:${et.hp} &nbsp;| &nbsp;TYPE: ${et.element.toUpperCase()}`, 'enemy', { html: true });
 
             // Create countdown message
             let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
